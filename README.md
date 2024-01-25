@@ -8,4 +8,4 @@ This is the repository for our group in CPRO2501
 
 ################################################
 
-Group members: Ryan, Kayden, Bergen, Joel
+Group members: Ryan, Kayden, Bergen, Joel, Annette
