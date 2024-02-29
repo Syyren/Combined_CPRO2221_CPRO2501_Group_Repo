@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route} from 'react-router-dom' //importing the react router dom to set my routes
+import About from './pages/About'
+import Home from './pages/Home'
+import NoPage from './pages/NoPage' //importing each of my pages
 
-function App() {
+export default function App() { //setting the app routes
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={ <Home /> } />
+          <Route path="/home" element={ <Home /> } /> {/* Setting a second home path for clean routing */}
+          <Route path="/about" element={ <About /> } />
+          <Route path="*" element={ <NoPage /> } /> {/* All undefined routes will raise the 404 page here */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;
