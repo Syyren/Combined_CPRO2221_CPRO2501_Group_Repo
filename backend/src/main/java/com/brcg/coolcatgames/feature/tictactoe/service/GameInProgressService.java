@@ -5,6 +5,7 @@ import com.brcg.coolcatgames.feature.tictactoe.repository.IGameInProgressReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -19,7 +20,16 @@ public class GameInProgressService {
     }
 
     public GameInProgress saveGameInProgress(GameInProgress game) {
-            return repository.save(game);
+        if (game.getPlayer2() == null || game.getPlayer2() == "null") {
+            game.setPlayer2("CPU");
+        }
+        if (game.getId().contains("null")) {
+            game.setId(game.getPlayer1()+"_"+game.getPlayer2());
+        }
+        if (game.getLastMoveTime() == null) {
+            game.setLastMoveTime(new Date());
+        }
+        return repository.save(game);
     }
 
     public List<GameInProgress> getGamesByUserId(String userId) {
@@ -28,8 +38,8 @@ public class GameInProgressService {
         return Stream.concat(player1List.stream(), player2List.stream()).toList();
     }
 
-    public Optional<GameInProgress> getGameById(String gameId) {
-        return repository.findById(gameId);
+    public GameInProgress getGameById(String gameId) {
+        return repository.findById(gameId).get();
     }
 
     public String deleteGameById(String gameId) {
@@ -41,5 +51,22 @@ public class GameInProgressService {
         catch (Exception E) {
             return E.toString();
         }
+    }
+
+    public GameInProgress updateBoardState(String gameId, String playerId,int position) {
+        GameInProgress game = getGameById(gameId);
+        if (position >=0 && position <=8) {
+            String[] boardState = game.getBoardState();
+            if (boardState[position] == null) {
+                boardState[position] = playerId;
+                game.setBoardState(boardState);
+            }
+            else {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
+        return repository.save(game);
     }
 }

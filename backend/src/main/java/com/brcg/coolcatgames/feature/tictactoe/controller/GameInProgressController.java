@@ -31,12 +31,17 @@ public class GameInProgressController {
     }
 
     @GetMapping("/game/{gameId}")
-    public Optional<GameInProgress> getGameById(@PathVariable String gameId) {
+    public GameInProgress getGameById(@PathVariable String gameId) {
         return service.getGameById(gameId);
     }
 
     @DeleteMapping("/delete/{gameId}")
     public String deleteGameById(@PathVariable String gameId) {
         return service.deleteGameById(gameId);
+    }
+
+    @PutMapping("/update/{gameId}")
+    public GameInProgress updateBoardState(@PathVariable String gameId,@RequestBody String playerId,@RequestBody int position) {
+        return service.updateBoardState(gameId,playerId,position);
     }
 }

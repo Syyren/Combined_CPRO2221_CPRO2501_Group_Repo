@@ -18,6 +18,6 @@ public class GameInProgress {
     private String player2;
     @Id
     private String id = player1 + "_" + player2;
-    private Boolean[] boardState ={null,null,null,null,null,null,null,null,null};
+    private String[] boardState ={null,null,null,null,null,null,null,null,null};
     private Date lastMoveTime;
 }
