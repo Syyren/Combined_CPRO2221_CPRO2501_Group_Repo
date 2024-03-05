@@ -12,5 +12,4 @@ public interface IGameInProgressRepository extends MongoRepository<GameInProgres
     public List<GameInProgress> findByPlayer1(String player1);
     public List<GameInProgress> findByPlayer2(String player2);
     public List<GameInProgress> findAll();
-
 }

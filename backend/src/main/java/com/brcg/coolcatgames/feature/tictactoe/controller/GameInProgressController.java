@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController("/tictactoe")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,5 +27,10 @@ public class GameInProgressController {
     @PostMapping("/save")
     public GameInProgress saveGameInProgress(@RequestBody GameInProgress gameInProgress) {
         return service.saveGameInProgress(gameInProgress);
+    }
+
+    @GetMapping("/game/{gameId}")
+    public Optional<GameInProgress> getGameById(@PathVariable String gameId) {
+        return service.getGameById(gameId);
     }
 }
