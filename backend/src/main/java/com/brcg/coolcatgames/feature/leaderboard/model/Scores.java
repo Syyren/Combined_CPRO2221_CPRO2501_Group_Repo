@@ -17,6 +17,7 @@ public abstract class Scores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    // If manually entering test data please set the gameName to "test" for easier data cleaning
     private String gameName;
     private String userId;
     private int score;
