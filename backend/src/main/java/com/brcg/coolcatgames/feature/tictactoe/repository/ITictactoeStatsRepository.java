@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Document(collection = "Scores")
-public interface ITictactoeStatsRepository extends MongoRepository<TictactoeStats, Long> {
+public interface ITictactoeStatsRepository extends MongoRepository<TictactoeStats, String> {
 }

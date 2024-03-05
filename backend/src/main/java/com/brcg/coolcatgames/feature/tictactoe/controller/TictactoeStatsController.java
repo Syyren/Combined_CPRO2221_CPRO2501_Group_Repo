@@ -18,11 +18,13 @@ public class TictactoeStatsController {
     TictactoeStatsService service;
 
 
+    // Gets a list of scores right now, but since none are saved, it's an empty list
     @GetMapping("/allscores")
     public List<TictactoeStats> getAllGamesInProgress() {
         return service.getAllScores();
     }
 
+    // Save a score
     @PostMapping("/save")
     public Scores saveScore(@RequestBody TictactoeStats tictactoeStats) {
         return service.saveTictactoeStats(tictactoeStats);

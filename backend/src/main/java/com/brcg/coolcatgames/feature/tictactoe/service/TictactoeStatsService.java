@@ -17,6 +17,7 @@ public class TictactoeStatsService {
     }
 
     public Scores saveTictactoeStats(TictactoeStats tictactoeStats) {
+        tictactoeStats.setGameName("tictactoe");
         return repository.save(tictactoeStats);
     }
 
