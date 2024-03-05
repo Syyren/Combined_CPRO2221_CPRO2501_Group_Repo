@@ -45,4 +45,8 @@ public class GameInProgressController {
         return service.updateBoardState(gameId,playerId,position);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleException(Exception E) {
+        return E.getMessage();
+    }
 }

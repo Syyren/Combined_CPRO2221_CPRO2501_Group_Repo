@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -55,7 +56,8 @@ public class GameInProgressService {
 
     public GameInProgress updateBoardState(String gameId, String playerId,int position) throws IllegalArgumentException {
         GameInProgress game = getGameById(gameId);
-        if (game.getPlayer1() == playerId || game.getPlayer2() == playerId) {
+        //System.out.println("Player 1:" +game.getPlayer1() +"\nPlayer 2:" + game.getPlayer2() +"\nActive player:"+ playerId);
+        if (Objects.equals(game.getPlayer1(), playerId) || Objects.equals(game.getPlayer2(), playerId)) {
             if (game.getLastPlayerMoved() != playerId) {
                 if (position >= 0 && position <= 8) {
                     String[] boardState = game.getBoardState();
