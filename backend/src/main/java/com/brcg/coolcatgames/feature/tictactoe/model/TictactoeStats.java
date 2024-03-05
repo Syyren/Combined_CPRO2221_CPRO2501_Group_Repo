@@ -10,10 +10,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+// TODO: Make impliment IScore from Bergen's Leaderboard feature branch
 public class TictactoeStats {
+    // Game for Interface
+    private String game = "TicTacToe";
+    // User Id for Interface
     @Id
     private String userId;
     private int gamesWon;
     private int gamesLost;
     private int gamesDrawn;
+    // Score for Interface, implementing an Elo score
+    private int score;
+    // Interface variable
+    private String leaderboardType = "Elo";
 }
