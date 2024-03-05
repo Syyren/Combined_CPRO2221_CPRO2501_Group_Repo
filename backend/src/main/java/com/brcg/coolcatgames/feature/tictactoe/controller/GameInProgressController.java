@@ -34,4 +34,9 @@ public class GameInProgressController {
     public Optional<GameInProgress> getGameById(@PathVariable String gameId) {
         return service.getGameById(gameId);
     }
+
+    @DeleteMapping("/delete/{gameId}")
+    public String deleteGameById(@PathVariable String gameId) {
+        return service.deleteGameById(gameId);
+    }
 }

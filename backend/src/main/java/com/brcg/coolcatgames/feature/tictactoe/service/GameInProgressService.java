@@ -31,4 +31,15 @@ public class GameInProgressService {
     public Optional<GameInProgress> getGameById(String gameId) {
         return repository.findById(gameId);
     }
+
+    public String deleteGameById(String gameId) {
+        try {
+            repository.deleteById(gameId);
+
+            return "Successfully delete game with Id "+gameId;
+        }
+        catch (Exception E) {
+            return E.toString();
+        }
+    }
 }
