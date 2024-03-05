@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.feature;
+package com.brcg.coolcatgames.feature.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
