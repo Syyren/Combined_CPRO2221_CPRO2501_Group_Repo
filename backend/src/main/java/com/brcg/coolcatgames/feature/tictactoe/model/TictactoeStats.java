@@ -1,5 +1,7 @@
 package com.brcg.coolcatgames.feature.tictactoe.model;
 
+
+import com.brcg.coolcatgames.feature.leaderboard.model.Scores;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,15 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-// TODO: Make implement IScore or extend abstract Score from Bergen's Leaderboard feature branch
-public class TictactoeStats {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    // Game for Interface
+public class TictactoeStats extends Scores {
     private String gameName = "TicTacToe";
-    // User Id for Interface
-    private String userId;
     private int gamesWon;
     private int gamesLost;
     private int gamesDrawn;

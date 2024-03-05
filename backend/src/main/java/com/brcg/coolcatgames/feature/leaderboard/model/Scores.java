@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-abstract class Scores {
+public abstract class Scores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
