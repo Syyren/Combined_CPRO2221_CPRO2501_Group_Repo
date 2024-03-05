@@ -64,14 +64,14 @@ public class GameInProgressService {
                     if (boardState[position] == null) {
                         boardState[position] = playerId;
                         game.setBoardState(boardState);
+                        game.setLastMoveTime(new Date());
+                        game.setLastPlayerMoved(playerId);
                     } else {
                         throw new IllegalArgumentException("Position on board must be empty! This position is already occupied by "+boardState[position]);
                     }
                 } else {
                     throw new IllegalArgumentException("Position must be a value between 0 and 8, you gave "+position);
                 }
-                game.setLastMoveTime(new Date());
-                game.setLastPlayerMoved(playerId);
             } else {
                 throw new IllegalArgumentException("playerId must not be the same as the last player to move");
             }
