@@ -45,6 +45,11 @@ public class GameInProgressController {
         return service.updateBoardState(gameId,playerId,position);
     }
 
+    @GetMapping("/checkWinner/{gameId}")
+    public String checkForWinner(@PathVariable String gameId) {
+        return service.checkForWinner(gameId);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleException(Exception E) {
         return E.getMessage();
