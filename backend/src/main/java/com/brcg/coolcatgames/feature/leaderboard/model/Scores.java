@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public abstract class Scores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String gameName;
     private String userId;
     private int score;

@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Document(collection = "Scores")
-public interface ScoresRepository extends MongoRepository<ScoreEntry, Long> {
+public interface ScoresRepository extends MongoRepository<ScoreEntry, String> {
 }
