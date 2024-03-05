@@ -11,12 +11,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "com.brcg.coolcatgames")
 public class Config extends AbstractMongoClientConfiguration {
 
-    @Value("${spring.data.mongodb.host}")
-    private String host;
-
-    @Value("${spring.data.mongodb.port}")
-    private int port;
-
     @Value("${spring.data.mongodb.database}")
     private String database;
 

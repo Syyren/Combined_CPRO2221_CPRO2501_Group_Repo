@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 //using lombok to easily and cleanly construct my class
 @Entity
 @Data
@@ -14,9 +16,10 @@ import lombok.NoArgsConstructor;
 public class Achievement
 {
     @Id
-    private int AchievementID;
-    private String AchievementTitle;
-    private String AchievementDescription;
+    private int achievementID;
+    private String achievementTitle;
+    private String achievementDescription;
+    private Date achievementEarnedDate;
     //foreign key for the game the achievement is from using the ID of the game
-    private int GameID;
+    private String gameName;
 }
