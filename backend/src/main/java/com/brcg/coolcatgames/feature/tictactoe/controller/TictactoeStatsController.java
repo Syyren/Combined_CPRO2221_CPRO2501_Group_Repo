@@ -20,7 +20,7 @@ public class TictactoeStatsController {
 
     // Gets a list of scores right now, but since none are saved, it's an empty list
     @GetMapping("/allscores")
-    public List<TictactoeStats> getAllGamesInProgress() {
+    public List<TictactoeStats> getAllTictactoeStats() {
         return service.getAllScores();
     }
 
@@ -28,5 +28,10 @@ public class TictactoeStatsController {
     @PostMapping("/save")
     public Scores saveScore(@RequestBody TictactoeStats tictactoeStats) {
         return service.saveTictactoeStats(tictactoeStats);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteScore(@PathVariable String id) {
+        return service.deleteTictactoeStats(id);
     }
 }

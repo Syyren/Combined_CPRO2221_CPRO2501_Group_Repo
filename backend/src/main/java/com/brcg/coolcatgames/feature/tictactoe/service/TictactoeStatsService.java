@@ -13,12 +13,18 @@ public class TictactoeStatsService {
     ITictactoeStatsRepository repository;
 
     public List<TictactoeStats> getAllScores() {
-        return repository.findAll();
+        return repository.findAllTictactoeStats();
     }
 
     public Scores saveTictactoeStats(TictactoeStats tictactoeStats) {
         tictactoeStats.setGameName("tictactoe");
+        tictactoeStats.setLeaderboard("elo");
         return repository.save(tictactoeStats);
+    }
+
+    public String deleteTictactoeStats(String id) {
+        repository.deleteById(id);
+        return "entry with id "+id+" deleted";
     }
 
 }
