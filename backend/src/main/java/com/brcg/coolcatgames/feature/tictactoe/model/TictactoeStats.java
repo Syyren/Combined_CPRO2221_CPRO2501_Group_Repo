@@ -15,12 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TictactoeStats extends Scores {
-    private String gameName = "TicTacToe";
     private int gamesWon;
     private int gamesLost;
     private int gamesDrawn;
-    // Score for Interface, implementing an Elo score
-    private int score;
-    // Interface variable
-    private String leaderboard = "Elo";
 }

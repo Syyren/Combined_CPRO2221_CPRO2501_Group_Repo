@@ -1,18 +1,23 @@
 package com.brcg.coolcatgames.feature.tictactoe.service;
 
+import com.brcg.coolcatgames.feature.leaderboard.model.Scores;
 import com.brcg.coolcatgames.feature.tictactoe.model.TictactoeStats;
-import com.brcg.coolcatgames.feature.tictactoe.repository.ITictactoeStats;
+import com.brcg.coolcatgames.feature.tictactoe.repository.ITictactoeStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TictactoeService {
+public class TictactoeStatsService {
     @Autowired
-    ITictactoeStats repository;
+    ITictactoeStatsRepository repository;
 
     public List<TictactoeStats> getAllScores() {
         return repository.findAll();
+    }
+
+    public Scores saveTictactoeStats(TictactoeStats tictactoeStats) {
+        return repository.save(tictactoeStats);
     }
 
 }
