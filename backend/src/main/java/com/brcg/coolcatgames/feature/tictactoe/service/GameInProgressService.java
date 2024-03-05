@@ -55,19 +55,27 @@ public class GameInProgressService {
 
     public GameInProgress updateBoardState(String gameId, String playerId,int position) throws IllegalArgumentException {
         GameInProgress game = getGameById(gameId);
-        if (position >=0 && position <=8) {
-            String[] boardState = game.getBoardState();
-            if (boardState[position] == null) {
-                boardState[position] = playerId;
-                game.setBoardState(boardState);
-            }
-            else {
-                throw new IllegalArgumentException("Position on board must be empty!");
+        if (game.getPlayer1() == playerId || game.getPlayer2() == playerId) {
+            if (game.getLastPlayerMoved() != playerId) {
+                if (position >= 0 && position <= 8) {
+                    String[] boardState = game.getBoardState();
+                    if (boardState[position] == null) {
+                        boardState[position] = playerId;
+                        game.setBoardState(boardState);
+                    } else {
+                        throw new IllegalArgumentException("Position on board must be empty!");
+                    }
+                } else {
+                    throw new IllegalArgumentException("Position must be a value between 0 and 8");
+                }
+                game.setLastMoveTime(new Date());
+                game.setLastPlayerMoved(playerId);
+            } else {
+                throw new IllegalArgumentException("playerId must not be the same as the last player to move");
             }
         } else {
-            throw new IllegalArgumentException("Position must be a value between 0 and 8");
+            throw new IllegalArgumentException("PlayerId must be one of the two players in the game");
         }
-        game.setLastMoveTime(new Date());
         return repository.save(game);
     }
 

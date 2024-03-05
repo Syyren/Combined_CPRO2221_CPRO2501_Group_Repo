@@ -20,4 +20,5 @@ public class GameInProgress {
     private String id = player1 + "_" + player2;
     private String[] boardState ={null,null,null,null,null,null,null,null,null};
     private Date lastMoveTime;
+    private String lastPlayerMoved;
 }
