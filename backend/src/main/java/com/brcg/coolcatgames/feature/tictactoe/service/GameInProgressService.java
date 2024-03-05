@@ -58,7 +58,7 @@ public class GameInProgressService {
         GameInProgress game = getGameById(gameId);
         //System.out.println("Player 1:" +game.getPlayer1() +"\nPlayer 2:" + game.getPlayer2() +"\nActive player:"+ playerId);
         if (Objects.equals(game.getPlayer1(), playerId) || Objects.equals(game.getPlayer2(), playerId)) {
-            if (game.getLastPlayerMoved() != playerId) {
+            if (!Objects.equals(game.getLastPlayerMoved(), playerId)) {
                 if (position >= 0 && position <= 8) {
                     String[] boardState = game.getBoardState();
                     if (boardState[position] == null) {
