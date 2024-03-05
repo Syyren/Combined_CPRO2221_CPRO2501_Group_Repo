@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-// TODO: Make impliment IScore from Bergen's Leaderboard feature branch
+// TODO: Make implement IScore or extend abstract Score from Bergen's Leaderboard feature branch
 public class TictactoeStats {
     // Game for Interface
     private String game = "TicTacToe";
