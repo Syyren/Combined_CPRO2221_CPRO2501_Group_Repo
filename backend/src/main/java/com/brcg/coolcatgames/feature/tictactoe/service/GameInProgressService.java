@@ -53,7 +53,7 @@ public class GameInProgressService {
         }
     }
 
-    public GameInProgress updateBoardState(String gameId, String playerId,int position) {
+    public GameInProgress updateBoardState(String gameId, String playerId,int position) throws IllegalArgumentException {
         GameInProgress game = getGameById(gameId);
         if (position >=0 && position <=8) {
             String[] boardState = game.getBoardState();
@@ -62,11 +62,51 @@ public class GameInProgressService {
                 game.setBoardState(boardState);
             }
             else {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Position on board must be empty!");
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Position must be a value between 0 and 8");
         }
+        game.setLastMoveTime(new Date());
         return repository.save(game);
+    }
+
+    public String CheckForWinner(String gameId) {
+        GameInProgress game = getGameById(gameId);
+        String[] boardState = game.getBoardState();
+        Boolean gameIsOver = false;
+        if (boardState[0] == boardState[3] && boardState[3] == boardState[6]) {
+            return boardState[0];
+        }
+        if (boardState[1] == boardState[4] && boardState[4] == boardState[7]) {
+            return boardState[1];
+        }
+        if (boardState[2] == boardState[5] && boardState[5] == boardState[8]) {
+            return boardState[2];
+        }
+        if (boardState[0] == boardState[1] && boardState[1] == boardState[2]) {
+            return boardState[0];
+        }
+        if (boardState[3] == boardState[4] && boardState[4] == boardState[5]) {
+            return boardState[3];
+        }
+        if (boardState[6] == boardState[7] && boardState[7] == boardState[8]) {
+            return boardState[6];
+        }
+        if (boardState[0] == boardState[5] && boardState[5] == boardState[8]) {
+            return boardState[0];
+        }
+        if (boardState[2] == boardState[5] && boardState[5] == boardState[6]) {
+            return boardState[2];
+        }
+        for (int i = 0; i<9;i++) {
+            if(boardState[i] == null) {
+                break;
+            }
+            if (i == 8) {
+                return "draw";
+            }
+        }
+        return null;
     }
 }

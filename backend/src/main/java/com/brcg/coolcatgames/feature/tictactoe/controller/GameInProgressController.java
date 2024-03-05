@@ -41,7 +41,8 @@ public class GameInProgressController {
     }
 
     @PutMapping("/update/{gameId}")
-    public GameInProgress updateBoardState(@PathVariable String gameId,@RequestBody String playerId,@RequestBody int position) {
+    public GameInProgress updateBoardState(@PathVariable String gameId,@RequestParam String playerId,@RequestParam int position) {
         return service.updateBoardState(gameId,playerId,position);
     }
+
 }
