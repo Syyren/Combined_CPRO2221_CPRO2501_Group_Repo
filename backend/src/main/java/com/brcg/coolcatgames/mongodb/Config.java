@@ -20,6 +20,12 @@ public class Config extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.database}")
     private String database;
 
+    @Value("${spring.data.mongodb.password}")
+    private String password;
+
+    @Value("${spring.data.mongodb.username}")
+    private String username;
+
     @Override
     protected String getDatabaseName() {
         return database;
@@ -27,6 +33,6 @@ public class Config extends AbstractMongoClientConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://" + host + ":" + port);
+        return MongoClients.create("mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games");
     }
 }
