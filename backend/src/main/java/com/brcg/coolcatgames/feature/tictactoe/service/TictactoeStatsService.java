@@ -19,6 +19,10 @@ public class TictactoeStatsService {
         return repository.findAllTictactoeStats();
     }
 
+    public List<TictactoeStats> getScoresByUserId(String userId) {
+        return getAllScores().stream().filter(score -> score.getUserId().equals(userId)).toList();
+    }
+
     public Scores saveTictactoeStats(TictactoeStats tictactoeStats) {
         tictactoeStats.setGameName("tictactoe");
         tictactoeStats.setLeaderboard("elo");
