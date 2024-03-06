@@ -13,12 +13,6 @@ public class AchievementValidation
         { throw new AchievementCustomException(stringName + " cannot be null or empty!"); }
     }
 
-    public void List(List<Achievement> list)
-    {
-        if (list.isEmpty())
-        { throw new AchievementCustomException("No achievements in the database!"); }
-    }
-
     public void Achievement(Achievement achievement, int id)
     {
         if(achievement == null)
