@@ -14,7 +14,6 @@ public class Noun {
         Path path = Paths.get("data/unique-noun-list.txt");
         try (Stream<String> lines = Files.lines(path);
              BufferedReader reader = new BufferedReader(Files.newBufferedReader(path))) {
-
             long totalLines = lines.count();
             Random random = new Random();
             int lineNumber = random.nextInt((int) totalLines) + 1;
