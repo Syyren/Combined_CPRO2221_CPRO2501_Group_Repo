@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+//test
 @Configuration
 @EnableMongoRepositories(basePackages = "com.brcg.coolcatgames")
 public class DatabaseConnection extends AbstractMongoClientConfiguration {
