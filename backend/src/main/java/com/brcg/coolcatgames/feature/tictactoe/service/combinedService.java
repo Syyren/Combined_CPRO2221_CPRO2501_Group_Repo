@@ -55,8 +55,9 @@ public class combinedService {
             } else if (gameIsOver.equals(userId1)) {
                 int user1Elo = user1Score.getScore();
                 int user2Elo = user2Score.getScore();
-                int user1DeltaScore = (user2Elo+400)/400;
-                int user2DeltaScore = -((user1Elo-400)/400);
+                int averageElo = (user2Elo+user1Elo)/2;
+                int user1DeltaScore = (averageElo+user2Elo+400)/200;
+                int user2DeltaScore = -((averageElo+ user1Elo-400)/200);
                 statsToReturn.add( scoreService.updateScore(userId1,user1DeltaScore, TictactoeStatsService.gameConclusion.WINNER));
                 statsToReturn.add(  scoreService.updateScore(userId2,user2DeltaScore, TictactoeStatsService.gameConclusion.LOSER));
                 gameService.deleteGameById(game.getId());
@@ -65,8 +66,9 @@ public class combinedService {
 
                 int user1Elo = user1Score.getScore();
                 int user2Elo = user2Score.getScore();
-                int user1DeltaScore = -((user2Elo-400)/400);
-                int user2DeltaScore = (user1Elo+400)/400;
+                int averageElo = (user2Elo+user1Elo)/2;
+                int user1DeltaScore = -((averageElo+ user2Elo-400)/200);
+                int user2DeltaScore = (averageElo+ user1Elo+400)/200;
                 statsToReturn.add( scoreService.updateScore(userId1,user1DeltaScore, TictactoeStatsService.gameConclusion.LOSER));
                 statsToReturn.add(  scoreService.updateScore(userId2,user2DeltaScore, TictactoeStatsService.gameConclusion.WINNER));
                 gameService.deleteGameById(game.getId());
