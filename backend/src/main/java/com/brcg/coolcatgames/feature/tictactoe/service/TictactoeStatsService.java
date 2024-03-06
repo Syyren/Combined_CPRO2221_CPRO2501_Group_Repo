@@ -9,6 +9,9 @@ import java.util.List;
 
 @Service
 public class TictactoeStatsService {
+    public enum gameConclusion {
+        WINNER, LOSER, DRAW
+    }
     @Autowired
     ITictactoeStatsRepository repository;
 
@@ -27,4 +30,26 @@ public class TictactoeStatsService {
         return "entry with id "+id+" deleted";
     }
 
+    public TictactoeStats updateScore(String userId, int deltaScore, gameConclusion conclusion) {
+        // Because userId comes from the parent class and isn't native to TictactoeStats,
+        // I can't easily search by userId in the ITictactoeStatsRepository
+        // without more research into how @Query works
+        List<TictactoeStats> allUserScores = getAllScores();
+        for (TictactoeStats userScore: allUserScores) {
+            if(userId.equals( userScore.getUserId())) {
+
+                int oldScore = userScore.getScore();
+                userScore.setScore(oldScore+deltaScore);
+                if (conclusion == gameConclusion.DRAW) {
+                    userScore.setGamesDrawn(userScore.getGamesDrawn()+1);
+                } else if (conclusion == gameConclusion.WINNER) {
+                    userScore.setGamesWon(userScore.getGamesWon()+1);
+                } else if (conclusion == gameConclusion.LOSER) {
+                    userScore.setGamesLost(userScore.getGamesLost()+1);
+                }
+                return repository.save(userScore);
+            }
+        }
+        return null;
+    }
 }

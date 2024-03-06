@@ -34,4 +34,9 @@ public class TictactoeStatsController {
     public String deleteScore(@PathVariable String id) {
         return service.deleteTictactoeStats(id);
     }
+
+    @PutMapping("/update/{userId}")
+    public TictactoeStats updateScore(@PathVariable String userId, @RequestParam int deltaScore, @RequestParam String conclusion) {
+        return service.updateScore(userId,deltaScore, TictactoeStatsService.gameConclusion.valueOf(conclusion));
+    }
 }
