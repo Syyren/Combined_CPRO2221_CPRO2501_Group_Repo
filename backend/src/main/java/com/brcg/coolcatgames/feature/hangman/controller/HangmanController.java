@@ -43,7 +43,7 @@ public class HangmanController {
     public ResponseEntity<String> saveScore() {
         hangmanScore.setGameName("hangman");
         hangmanScore.setUserId("Kaden"); //logic later
-        hangmanScore.setScore(hangmanScore.getScore());
+        hangmanScore.setScore(getTotalScore());
         hangmanScoreService.saveScore(hangmanScore);
         return ResponseEntity.ok("Score saved successfully");
     }
