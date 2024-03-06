@@ -21,9 +21,9 @@ public class ScoreEntryController {
     }
 
     // Gets all Scores for a specific Game
-    @GetMapping("/game/{gameId}")
-    public List<ScoreEntry> getScoresByGame(@PathVariable String gameId) {
-        return service.getScoresByGame(gameId);
+    @GetMapping("/game/{gameName}")
+    public List<ScoreEntry> getScoresByGame(@PathVariable String gameName) {
+        return service.getScoresByGame(gameName);
     }
 
     // Gets all Scores for a specific User
@@ -33,9 +33,9 @@ public class ScoreEntryController {
     }
 
     // Gets all Scores for a specific User AND Game
-    @GetMapping("/user/{userId}/game/{gameId}")
-    public List<ScoreEntry> getScoresByUserAndGame(@PathVariable String userId, @PathVariable String gameId) {
-        return service.getScoresByUserAndGame(userId, gameId);
+    @GetMapping("/user/{userId}/game/{gameName}")
+    public List<ScoreEntry> getScoresByUserAndGame(@PathVariable String userId, @PathVariable String gameName) {
+        return service.getScoresByUserAndGame(userId, gameName);
     }
 
     // Posts a Score

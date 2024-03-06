@@ -16,6 +16,9 @@ public interface ScoreEntryRepository extends MongoRepository<ScoreEntry, String
     // Find scores by userId
     List<ScoreEntry> findByUserId(String userId);
 
-    // Find scores by userId and gameId
+    // Find scores by userId and gameName
     List<ScoreEntry> findByUserIdAndGameName(String userId, String gameName);
+
+    // Delete Scores by ID
+    void deleteByIdIn(List<String> ids);
 }
