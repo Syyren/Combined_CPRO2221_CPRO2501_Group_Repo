@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Scores")
+// *Important Note* This only has data validation if you use the save endpoint in ScoreEntityController
 public abstract class Scores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

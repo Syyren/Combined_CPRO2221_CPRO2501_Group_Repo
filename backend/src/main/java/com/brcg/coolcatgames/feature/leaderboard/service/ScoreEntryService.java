@@ -3,8 +3,8 @@ package com.brcg.coolcatgames.feature.leaderboard.service;
 import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
 import com.brcg.coolcatgames.feature.leaderboard.repository.ScoreEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,19 +16,24 @@ public class ScoreEntryService {
     private ScoreEntryRepository repository;
 
     public List<ScoreEntry> getAllScores() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "score"));
     }
 
     public List<ScoreEntry> getScoresByGame(String gameName) {
-        return repository.findByGameName(gameName);
+        return repository.findByGameName(gameName, Sort.by(Sort.Direction.DESC, "score"));
     }
 
     public List<ScoreEntry> getScoresByUser(String userId) {
-        return repository.findByUserId(userId);
+        return repository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "score"));
     }
 
     public List<ScoreEntry> getScoresByUserAndGame(String userId, String gameName) {
-        return repository.findByUserIdAndGameName(userId, gameName);
+        List<ScoreEntry> scores = repository.findByUserIdAndGameName(userId, gameName);
+
+        // Scores sorted in descending order
+        return scores.stream()
+                .sorted(Comparator.comparing(ScoreEntry::getScore).reversed())
+                .collect(Collectors.toList());
     }
 
     public ScoreEntry submitScore(ScoreEntry newScore) {
