@@ -25,8 +25,7 @@ public class AchievementRepository
     private final String title = "Title";
     private final String description = "Description";
 
-    public AchievementRepository() {
-    }
+    public AchievementRepository() { }
 
     //method that returns all achievement objects in the list
     public List<Achievement> getAllAchievements()
@@ -71,15 +70,7 @@ public class AchievementRepository
     //function that gets the highest id in the db and pulls it
     private int getHighestAchievementID()
     {
-        List<Achievement> achievementList = new ArrayList<>();
-        try
-        {
-            achievementList = getAllAchievements();
-        }
-        catch (Error err)
-        {
-            System.out.println(err);
-        }
+        List<Achievement> achievementList = getAllAchievements();
         int highestAchievementId = 0;
         Achievement maxAchievement = achievementList.stream()
                 .max(Comparator.comparingInt(Achievement::getAchievementId))
