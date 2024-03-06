@@ -5,14 +5,13 @@ import com.brcg.coolcatgames.feature.achievements.utils.AchievementValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Repository
 public class AchievementRepository
 {
-    //declaring the mongoRepository object for use within the repository class
+    //declaring the mongoRepository object for use within the achievement repository
     private AchievementMongoRepository mongoRepository;
 
     //autowiring the repository to work with the mongo repository interface
@@ -67,7 +66,7 @@ public class AchievementRepository
         return "Achievement with id: " + id + " removed successfully.";
     }
 
-    //function that gets the highest id in the db and pulls it
+    //function that gets the highest id in the db and returns it
     private int getHighestAchievementID()
     {
         List<Achievement> achievementList = getAllAchievements();
