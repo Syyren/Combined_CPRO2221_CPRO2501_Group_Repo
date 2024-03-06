@@ -7,12 +7,14 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "Scores")
 public abstract class Scores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
