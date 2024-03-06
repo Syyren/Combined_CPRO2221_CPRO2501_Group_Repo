@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.mongodb;
+package com.brcg.coolcatgames.config;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -9,13 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.brcg.coolcatgames")
-public class Config extends AbstractMongoClientConfiguration {
-
-    @Value("${spring.data.mongodb.host}")
-    private String host;
-
-    @Value("${spring.data.mongodb.port}")
-    private int port;
+public class DatabaseConnection extends AbstractMongoClientConfiguration {
 
     @Value("${spring.data.mongodb.database}")
     private String database;
@@ -30,9 +24,10 @@ public class Config extends AbstractMongoClientConfiguration {
     protected String getDatabaseName() {
         return database;
     }
-
     @Override
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games");
+        return MongoClients.create(
+                "mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games"
+        );
     }
 }
