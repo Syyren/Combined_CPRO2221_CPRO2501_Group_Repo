@@ -1,6 +1,5 @@
 package com.brcg.coolcatgames.feature.leaderboard.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +21,6 @@ public abstract class Scores {
     private String gameName;
     private String userId;
     private int score;
+    // Use either the values "Score" or "Elo"
     private String leaderboard;
 }
