@@ -20,11 +20,7 @@ public class HangmanScoreService {
     public int getCurrentScore() {
         return hangmanScore.getScore();
     }
-
-    public int getHighScore() {
-        return hangmanScore.getHighScore();
-    }
-
+    
     public void updateScore(int points) {
         hangmanScore.updateScore(points);
     }
