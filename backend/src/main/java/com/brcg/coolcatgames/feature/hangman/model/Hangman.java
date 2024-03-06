@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.feature.model;
+package com.brcg.coolcatgames.feature.hangman.model;
 
 import lombok.Data;
 
@@ -10,8 +10,6 @@ public class Hangman {
     //private final Alphabet[] ALPHABET = Alphabet.values();
     private char letterGuessed;
 
-    //methods -> getSecretWord, getDisplayedWord,
-    //           revealLetter, guessLetter, wrongLetter
 
     //using Noun class to generate secret word
     private char[] getSecretWord(){

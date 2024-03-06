@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.feature.model;
+package com.brcg.coolcatgames.feature.hangman.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
