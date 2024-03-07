@@ -80,7 +80,6 @@ export default function TictactoeMenu() {
               <TictactoeGame
                 gameId={currentGame.id}
                 currentPlayer={currentUserId}
-                moveMade="false"
               />
             );
           }}
@@ -123,7 +122,6 @@ export default function TictactoeMenu() {
                   <TictactoeGame
                     gameId={tempId}
                     currentPlayer={currentUserId}
-                    moveMade="false"
                   />
                 );
               });

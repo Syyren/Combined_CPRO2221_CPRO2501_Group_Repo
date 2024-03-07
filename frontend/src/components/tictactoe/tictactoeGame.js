@@ -220,7 +220,6 @@ export default function TictactoeGame(props) {
                             // Store the game data for use later
                             setCurrentGame(data);
                           });
-                        props.moveMade = true;
                       }}
                     >
                       <img
