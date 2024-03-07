@@ -58,10 +58,10 @@ export default function AchievementTest()
                 ))}
             </ul>
 
-            <div className="container">
+            <div className="container mb-2">
                 <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary me-1"
                 onClick={() => buttonClick(achievement1)}>
                     Achievement 1
                 </button>
@@ -73,10 +73,10 @@ export default function AchievementTest()
                 </button>
             </div>
 
-            <div className="container">
+            <div className="container mb-2">
                 <button 
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary me-1"
                 onClick={() => buttonClick(achievement2)}>
                     Achievement 2
                 </button>
@@ -88,10 +88,10 @@ export default function AchievementTest()
                 </button>
             </div>
 
-            <div className="container">
+            <div className="container mb-2">
                 <button 
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary me-1"
                 onClick={() => buttonClick(achievement3)}>
                     Achievement 3
                 </button>

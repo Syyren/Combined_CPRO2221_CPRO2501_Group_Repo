@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'; //importing link so that the navbar can
 //this function creates the navbar for the layout and returns it
 export default function NavBar() {
   return (
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
       <div className="container-fluid">
         <a className="navbar-brand">CoolCatGames.com</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
