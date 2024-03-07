@@ -7,6 +7,7 @@ import hyperBobaHeadImg from "../../images/tictactoe/hyperBoba_head.png";
 import tenleyHeadImg from "../../images/tictactoe/tenley_head.png";
 import monaHeadImg from "../../images/tictactoe/mona_head.png";
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
+import martinPawImg from "../../images/tictactoe/martin_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
@@ -124,7 +125,16 @@ export default function TictactoeGame(props) {
             "O",
             "O",
             "O",
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={martinPawImg}
+                alt="(O) an anonymous cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Image source: Martin Ruegner/Getty Images
+              </p>
+            </div>,
             "O",
           ];
           // set up the boardDisplay variable with a list of images or buttons to display given the current board state
