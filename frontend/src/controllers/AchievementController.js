@@ -8,16 +8,12 @@ export const getAchievements = async () =>
 {
     try 
     {
-      const contacts = await axios.get(`${API_URL}/get/all`);
-      console.log("Achievements from API:", contacts);
-      return contacts.map(achievement => //returns a list of categories with their attributes tied to values
-      ({ 
-        achievementId: achievement.achievementId, 
-        achievementName: achievement.achievementName,
-        achievementDescription: achievement.achievementDescription
-      }));
+      const res = await axios.get(`${API_URL}/get/all`);
+      const achievements = res.data;
+      console.log("Achievements from API:", achievements);
+      return achievements
     } 
-    catch (err) 
+    catch (err)
     {
       console.error('Error fetching achievements:', err); //outputs in the event of an error fetching the categories
       return [];
