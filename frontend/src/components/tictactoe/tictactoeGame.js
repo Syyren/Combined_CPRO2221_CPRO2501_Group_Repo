@@ -232,11 +232,15 @@ export default function TictactoeGame(props) {
                             setCurrentGame(data);
                             // Check if the game is over
                             fetch(
-                              "http://localhost:8090/tictactoe/testandconclude/" +
-                                props.gameId
+                              "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
+                                currentGame.player1 +
+                                "&player2Id=" +
+                                currentGame.player2
                             )
                               .then((res) => res.json())
-                              .then((data) => {});
+                              .then((data) => {
+                                gameTitle = "Game Over!";
+                              });
                             // Let the parent element know a move has been made
                             if (props.callback) {
                               props.callback(currentGame);
@@ -266,7 +270,7 @@ export default function TictactoeGame(props) {
       );
     }
     // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
-  }, [currentGame, props, boardState]);
+  }, [currentGame, props]);
   // Make sure to display the correct title
   if (currentGame) {
     gameTitle = (
