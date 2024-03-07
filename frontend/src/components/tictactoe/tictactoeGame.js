@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import maxwellHeadImg from "../../images/tictactoe/maxwell_head.png";
+import kiwiHeadImg from "../../images/tictactoe/kiwi_head.png";
+import bobaHeadImg from "../../images/tictactoe/boba_head.png";
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
 
 export default function TictactoeGame(props) {
@@ -39,8 +41,28 @@ export default function TictactoeGame(props) {
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
-            "X",
-            "X",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={bobaHeadImg}
+                alt="(X) Boba the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Boba
+                <br /> Image source: Ryan
+              </p>
+            </div>,
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={kiwiHeadImg}
+                alt="(X) Kiwi the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Kiwi
+                <br /> Image source: Samantha Lysons
+              </p>
+            </div>,
             "X",
             "X",
             "X",
