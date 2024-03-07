@@ -235,10 +235,6 @@ export default function TictactoeGame(props) {
                           .then((data) => {
                             // Store the game data for use later
                             setCurrentGame(data);
-                            isGameOver(
-                              currentGame.player1,
-                              currentGame.player2
-                            );
                             // Let the parent element know a move has been made
                             if (props.callback) {
                               props.callback(currentGame);
@@ -269,6 +265,24 @@ export default function TictactoeGame(props) {
     }
     // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
   }, [currentGame, props]);
+
+//   useEffect(() => {
+//     if (currentGame) {
+//       // Check if the game is over
+//       fetch(
+//         "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
+//           currentGame.player1 +
+//           "&player2Id=" +
+//           currentGame.player2
+//       )
+//         .then((res) => res.json())
+//         .then((data) => {
+//           setCurrentGame(null);
+//           console.log(data);
+//           //return "Game Over!";
+//         });
+//     }
+//   }, [boardDisplay]);
 
   // Avoid magic numbers, this controls how tall the tictactoe board is by making the height a percentage of the width
   var divHeight = "25%";
@@ -384,18 +398,4 @@ export default function TictactoeGame(props) {
       </div>
     </div>
   );
-}
-
-function isGameOver(player1Id, player2Id) {
-  // Check if the game is over
-  fetch(
-    "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
-      player1Id +
-      "&player2Id=" +
-      player2Id
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      //return "Game Over!";
-    });
 }

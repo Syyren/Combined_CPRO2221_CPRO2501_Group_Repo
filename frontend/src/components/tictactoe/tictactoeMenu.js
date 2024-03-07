@@ -27,7 +27,7 @@ let fakeUsersList = [
   "420forL1fe",
 ];
 
-let fakeCurrentUser = "Joel";
+let fakeCurrentUser = "Watson";
 
 export default function TictactoeMenu() {
   //console.log("Loading tictactoe");
