@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class combinedService {
+public class CombinedService {
 
     @Autowired
     IGameInProgressRepository gameRepository;
