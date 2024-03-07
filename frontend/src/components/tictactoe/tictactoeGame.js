@@ -3,12 +3,18 @@ import maxwellHeadImg from "../../images/tictactoe/maxwell_head.png";
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
 
 export default function TictactoeGame(props) {
+  // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
+  // boardState is the list of 9 segments that a Tic Tac Toe board is made of, and which players have played in there.
+  // boardDisplay is the JSX that will be displayed in those 9 segments
   var gameTitle = <h1>Awaiting Game Selection</h1>;
   const [currentGame, setCurrentGame] = useState();
   const [boardDisplay, setBoardDisplay] = useState([]);
   const [boardState, setBoardState] = useState([]);
+  // This runs and refreshes whenever the variables declared AFTER the function changes.
   useEffect(() => {
+    // This checks if a game was selected, and passed as a prop ie <TictactoeGame gameId = "Joel_Kaden" />
     if (props.gameId) {
+      // Get the actual data about the game
       fetch("http://localhost:8090/tictactoe/game/" + props.gameId, {
         method: "GET",
         mode: "cors",
@@ -17,8 +23,10 @@ export default function TictactoeGame(props) {
       })
         .then((res) => res.json())
         .then((data) => {
+          // Store the game data for use later
           setCurrentGame(data);
           setBoardState(data.boardState);
+          // A list/array of images to display if player1 selected that segment
           var X = [
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
@@ -40,6 +48,7 @@ export default function TictactoeGame(props) {
             "X",
             "X",
           ];
+          // A list/array of images to display if player2 selected that segment
           var O = [
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
@@ -61,15 +70,19 @@ export default function TictactoeGame(props) {
             "O",
             "O",
           ];
+          // set up the boardDisplay variable with a list of images or buttons to display given the current board state
           setBoardDisplay(
             boardState.map((division, i) => {
               return (
                 <div style={{ position: "absolute" }}>
-                  {division == data.player1 ? (
+                  {division === data.player1 ? (
+                    // Player 1 played here, so get the JSX from the X list
                     X[i]
-                  ) : division == data.player2 ? (
+                  ) : division === data.player2 ? (
+                    // Player 2 played here, so get the JSX from the Y list
                     O[i]
                   ) : (
+                    // No player has played here, so display a button
                     <button></button>
                   )}
                 </div>
@@ -78,18 +91,17 @@ export default function TictactoeGame(props) {
           );
         });
     } else {
+      // No game has been selected, so display an empty board
       setBoardState([null, null, null, null, null, null, null, null, null]);
       setBoardDisplay(
         boardState.map((data, i) => {
-          return (
-            <div>
-              {data} {i}
-            </div>
-          );
+          return <div style={{ position: "absolute" }}></div>;
         })
       );
     }
-  }, [currentGame, props]);
+    // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
+  }, [currentGame, props, boardState]);
+  // Make sure to display the correct title
   if (currentGame) {
     gameTitle = (
       <h1>
@@ -98,6 +110,7 @@ export default function TictactoeGame(props) {
     );
   } else {
   }
+  // Avoid magic numbers, this controls how tall the tictactoe board is by making the height a percentage of the width
   var divHeight = "25%";
   return (
     <div>
