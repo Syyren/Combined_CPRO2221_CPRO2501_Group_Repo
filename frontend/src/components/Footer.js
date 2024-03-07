@@ -2,7 +2,7 @@
 export default function Footer()
 {
     return(
-        <footer class="border-top footer text-muted">
+        <footer class="footer text-muted">
             <div class="container">
                 &copy; 2024 - Cool Cat Games
             </div>
