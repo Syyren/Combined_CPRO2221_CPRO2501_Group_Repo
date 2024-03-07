@@ -19,7 +19,7 @@ export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
   // boardState is the list of 9 segments that a Tic Tac Toe board is made of, and which players have played in there.
   // boardDisplay is the JSX that will be displayed in those 9 segments
-  var gameTitle = <h1>Awaiting Game Selection</h1>;
+  const [gameTitle, setGameTitle] = useState(<h1>Awaiting Game Selection</h1>);
   const [currentGame, setCurrentGame] = useState();
   const [boardDisplay, setBoardDisplay] = useState([]);
   const [boardState, setBoardState] = useState([]);
@@ -39,6 +39,11 @@ export default function TictactoeGame(props) {
           // Store the game data for use later
           setCurrentGame(data);
           setBoardState(data.boardState);
+          setGameTitle(
+            <h1>
+              Game between {data.player1} and {data.player2}
+            </h1>
+          );
           // A list/array of images to display if player1 selected that segment
           var X = [
             <div style={{ textAlign: "center", width: "70%" }}>
@@ -230,17 +235,10 @@ export default function TictactoeGame(props) {
                           .then((data) => {
                             // Store the game data for use later
                             setCurrentGame(data);
-                            // Check if the game is over
-                            fetch(
-                              "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
-                                currentGame.player1 +
-                                "&player2Id=" +
-                                currentGame.player2
-                            )
-                              .then((res) => res.json())
-                              .then((data) => {
-                                gameTitle = "Game Over!";
-                              });
+                            isGameOver(
+                              currentGame.player1,
+                              currentGame.player2
+                            );
                             // Let the parent element know a move has been made
                             if (props.callback) {
                               props.callback(currentGame);
@@ -271,15 +269,7 @@ export default function TictactoeGame(props) {
     }
     // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
   }, [currentGame, props]);
-  // Make sure to display the correct title
-  if (currentGame) {
-    gameTitle = (
-      <h1>
-        Game between {currentGame.player1} and {currentGame.player2}
-      </h1>
-    );
-  } else {
-  }
+
   // Avoid magic numbers, this controls how tall the tictactoe board is by making the height a percentage of the width
   var divHeight = "25%";
   return (
@@ -394,4 +384,18 @@ export default function TictactoeGame(props) {
       </div>
     </div>
   );
+}
+
+function isGameOver(player1Id, player2Id) {
+  // Check if the game is over
+  fetch(
+    "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
+      player1Id +
+      "&player2Id=" +
+      player2Id
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      //return "Game Over!";
+    });
 }
