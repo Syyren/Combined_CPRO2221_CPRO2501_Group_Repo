@@ -11,8 +11,6 @@ public class PlayerServices {
     private PlayerRepository playerRepository;
 
 
-
-
     public void saveorUpdate(Player players) {
         playerRepository.save(players);
     }
@@ -22,13 +20,20 @@ public class PlayerServices {
     }
 
 
-
-
     public void deletePlayer(String playerid) {
-        playerRepository.deleteById( playerid);
+        playerRepository.deleteById(playerid);
     }
 
     public Player getPlayerByID(String playerid) {
-     return    playerRepository.findById(playerid).get();
+        return playerRepository.findById(playerid).get();
+    }
+
+
+    public Player updatePlayer(int playerId, Player updatedPlayer) {
+
+
+        return updatedPlayer;
     }
 }
+
+

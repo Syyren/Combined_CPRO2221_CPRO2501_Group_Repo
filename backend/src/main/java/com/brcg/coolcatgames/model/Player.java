@@ -30,14 +30,20 @@ public class Player {
     private String userName;
 
 
-    @Email
 
+
+
+
+
+    @Column(nullable = false, unique = true, length = 45)
+    @Email
+    @NaturalId(mutable = true)
     private String email;
 
 
+
+    @Column(nullable = false, length = 10)
     private String password;
-
-
 
 
 
