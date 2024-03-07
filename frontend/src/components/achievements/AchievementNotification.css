@@ -29,3 +29,14 @@ img
 {
     opacity: 1;
 }
+
+@media (max-width: 700px)
+{
+    .notification 
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+}
