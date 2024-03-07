@@ -32,19 +32,27 @@ public class CombinedService {
         GameInProgress game = gamesListFinal.getFirst();
         String gameIsOver = gameService.checkForWinner(game.getId());
         if (gameIsOver != null) {
-            TictactoeStats user1Score = scoreService.getScoresByUserId(userId1).getFirst();
-            if (user1Score == null) {
-                TictactoeStats newScore = new TictactoeStats();
-                newScore.setUserId(userId1);
-                newScore.setScore(1000);
-                scoreService.saveTictactoeStats(newScore);
+            List<TictactoeStats> user1Scores= scoreService.getScoresByUserId(userId1);
+            TictactoeStats user1Score = null;
+            if (user1Scores.size() >0) {
+                user1Score = user1Scores.getFirst();
             }
-            TictactoeStats user2Score = scoreService.getScoresByUserId(userId2).getFirst();
-            if (user2Score == null) {
-                TictactoeStats newScore = new TictactoeStats();
-                newScore.setUserId(userId2);
-                newScore.setScore(1000);
-                scoreService.saveTictactoeStats(newScore);
+            else {
+                TictactoeStats newStats = new TictactoeStats();
+                newStats.setUserId(userId1);
+                newStats.setScore(1000);
+                scoreService.saveTictactoeStats(newStats);
+            }
+            List<TictactoeStats> user2Scores= scoreService.getScoresByUserId(userId2);
+            TictactoeStats user2Score = null;
+            if (user2Scores.size() >0) {
+                user2Score = user2Scores.getFirst();
+            }
+            else {
+                TictactoeStats newStats = new TictactoeStats();
+                newStats.setUserId(userId2);
+                newStats.setScore(1000);
+                scoreService.saveTictactoeStats(newStats);
             }
             List<TictactoeStats> statsToReturn = new ArrayList<TictactoeStats>();
             if (gameIsOver.equals("draw")) {

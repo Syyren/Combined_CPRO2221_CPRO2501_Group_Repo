@@ -24,6 +24,11 @@ public class TictactoeStatsController {
         return service.getAllScores();
     }
 
+    @GetMapping("/score/{id}")
+    public List<TictactoeStats> getScoresByUserId(@PathVariable String userId) {
+        return getScoresByUserId(userId);
+    }
+
     // Save a score
     @PostMapping("/save")
     public Scores saveScore(@RequestBody TictactoeStats tictactoeStats) {
