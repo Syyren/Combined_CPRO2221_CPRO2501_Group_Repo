@@ -12,6 +12,7 @@ import martinPawImg from "../../images/tictactoe/martin_paw.png";
 import michellePawImg from "../../images/tictactoe/michelle_paw.png";
 import azazPawImg from "../../images/tictactoe/azazMerchant_paw.png";
 import alvanPawImg from "../../images/tictactoe/alvanNee_paw.png";
+import bobaPawImg from "../../images/tictactoe/boba_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
@@ -59,7 +60,7 @@ export default function TictactoeGame(props) {
               ></img>
               <p style={{ fontSize: "0.6em" }}>
                 Boba (X)
-                <br /> Image source: Ryan
+                <br /> Image source: Ryan McGrandle
               </p>
             </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
@@ -116,7 +117,7 @@ export default function TictactoeGame(props) {
               ></img>
               <p style={{ fontSize: "0.6em" }}>
                 Boba (X)
-                <br /> Image source: Ryan
+                <br /> Image source: Ryan McGrandle
               </p>
             </div>,
           ];
@@ -170,7 +171,17 @@ export default function TictactoeGame(props) {
                 Image source: Michelle Calderon/Unsplash
               </p>
             </div>,
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={bobaPawImg}
+                alt="(X) Boba the cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Boba (X)
+                <br /> Image source: Ryan McGrandle
+              </p>
+            </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
                 src={martinPawImg}
