@@ -230,7 +230,17 @@ export default function TictactoeGame(props) {
                           .then((data) => {
                             // Store the game data for use later
                             setCurrentGame(data);
-                            props.callback(currentGame);
+                            // Check if the game is over
+                            fetch(
+                              "http://localhost:8090/tictactoe/testandconclude/" +
+                                props.gameId
+                            )
+                              .then((res) => res.json())
+                              .then((data) => {});
+                            // Let the parent element know a move has been made
+                            if (props.callback) {
+                              props.callback(currentGame);
+                            }
                           });
                       }}
                     >
