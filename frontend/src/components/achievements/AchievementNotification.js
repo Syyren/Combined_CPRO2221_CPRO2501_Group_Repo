@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AchievementNotification.css';
-import frog from './images/frog-spin-frog.gif';
+import icon from './images/achievementIcon.gif';
 //audio is a free to use sound effect called 'Game Start' by Pixabay
 import beep from './audio/ping.mp3'
 
@@ -25,17 +25,17 @@ const AchievementNotification = ({ achievementTitle }) =>
 
   return (
     <div className={`text-center notification ${showNotification ? 'show' : ''}`}>
-      <div className='d-flex'>
+      <div className='d-flex justify-content-center align-items-center'>
         <div 
-        className='justify-content-center me-2 iconBox'
+        className='me-2 iconBox'
         >
           <img 
-          src={frog} 
-          alt='frog spinning gif'
+          src={icon} 
+          alt='floating cat head pixel art gif'
           ></img>
         </div>
         <div>
-          Achievement Unlocked! <br /> {achievementTitle}
+          Achievement Unlocked: <br /> {achievementTitle}
         </div>
       </div>
     </div>
