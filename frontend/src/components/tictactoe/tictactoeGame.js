@@ -6,8 +6,12 @@ import bobaHeadImg from "../../images/tictactoe/boba_head.png";
 import hyperBobaHeadImg from "../../images/tictactoe/hyperBoba_head.png";
 import tenleyHeadImg from "../../images/tictactoe/tenley_head.png";
 import monaHeadImg from "../../images/tictactoe/mona_head.png";
+import alvanHeadImg from "../../images/tictactoe/alvanNee_head.png";
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
 import martinPawImg from "../../images/tictactoe/martin_paw.png";
+import michellePawImg from "../../images/tictactoe/michelle_paw.png";
+import azazPawImg from "../../images/tictactoe/azazMerchant_paw.png";
+import alvanPawImg from "../../images/tictactoe/alvanNee_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
@@ -43,7 +47,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Maxwell
+                Maxwell (X)
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
@@ -54,7 +58,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Boba
+                Boba (X)
                 <br /> Image source: Ryan
               </p>
             </div>,
@@ -65,7 +69,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Kiwi
+                Kiwi (X)
                 <br /> Image source: Samantha Lysons
               </p>
             </div>,
@@ -76,11 +80,21 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Mona
+                Mona (X)
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
-            "X",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={alvanHeadImg}
+                alt="(X) Anonymous cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Anonymous (X)
+                <br /> Image source: Alvan Nee/Unsplash
+              </p>
+            </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
                 src={tenleyHeadImg}
@@ -88,7 +102,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Tenley
+                Tenley (X)
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
@@ -101,7 +115,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Boba
+                Boba (X)
                 <br /> Image source: Ryan
               </p>
             </div>,
@@ -115,15 +129,47 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Maxwell,
+                Maxwell (O)
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
             "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={azazPawImg}
+                alt="(O) an anonymous cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Anonymous (O)
+                <br />
+                Image source: Azaz Merchant/Unsplash
+              </p>
+            </div>,
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={alvanPawImg}
+                alt="(X) Anonymous cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Anonymous (O)
+                <br /> Image source: Alvan Nee/Unsplash
+              </p>
+            </div>,
             "O",
-            "O",
-            "O",
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={michellePawImg}
+                alt="(O) an anonymous cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Anonymous (O)
+                <br />
+                Image source: Michelle Calderon/Unsplash
+              </p>
+            </div>,
             "O",
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
@@ -132,6 +178,8 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
+                Anonymous (O)
+                <br />
                 Image source: Martin Ruegner/Getty Images
               </p>
             </div>,
@@ -172,6 +220,7 @@ export default function TictactoeGame(props) {
                             // Store the game data for use later
                             setCurrentGame(data);
                           });
+                        props.moveMade = true;
                       }}
                     >
                       <img

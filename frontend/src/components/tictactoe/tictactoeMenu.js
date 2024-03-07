@@ -80,6 +80,7 @@ export default function TictactoeMenu() {
               <TictactoeGame
                 gameId={currentGame.id}
                 currentPlayer={currentUserId}
+                moveMade="false"
               />
             );
           }}
@@ -104,7 +105,7 @@ export default function TictactoeMenu() {
           class="btn btn-primary"
           // When this button is clicked, create a new game in the database, then load it
           onClick={async function () {
-            var tempId = await fetch("http://localhost:8090/tictactoe/save", {
+            await fetch("http://localhost:8090/tictactoe/save", {
               method: "POST",
               mode: "cors",
               cache: "no-cache",
@@ -113,10 +114,19 @@ export default function TictactoeMenu() {
                 player1: currentUserId,
                 player2: userId,
               }),
-            }).id;
-            setDisplayTictactoeGame(
-              <TictactoeGame gameId={tempId} currentPlayer={currentUserId} />
-            );
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                var tempId = data.id;
+
+                setDisplayTictactoeGame(
+                  <TictactoeGame
+                    gameId={tempId}
+                    currentPlayer={currentUserId}
+                    moveMade="false"
+                  />
+                );
+              });
           }}
         >
           Start game against {userId}
