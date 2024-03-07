@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AchievementNotification from "../components/achievements/AchievementNotification";
 import "./AchievementTest.css";
 import { getAchievements } from "../controllers/AchievementController";
@@ -7,43 +7,48 @@ import { getAchievements } from "../controllers/AchievementController";
 
 export default function AchievementTest()
 {
-    //msetting the useStates for achievementName and achievements
-    const [achievementName, setAchievementName] = useState('');
-    const [achievements, setAchievements] = useState([]);
+    //msetting the useStates for achievementTitle and achievements
+    const [achievementTitle, setAchievementTitle] = useState('');
+    const [achievementsList, setAchievementsList] = useState([]);
     
-    const dbAchievements = useState(getAchievements());
+    const [dbAchievements, setDbAchievements] = useState([]);
 
-    //temporary class with dummy data for the application
-    class TempAchievement
+    useEffect(() => 
     {
-        constructor(achievementId, achievementName, achievementDescription)
-        {
-            this.achievementId = achievementId;
-            this.achievementName = achievementName;
-            this.achievementDescription = achievementDescription;
-        }
+        fetchAchievements();
+    }, []);
+
+    const fetchAchievements = async () => 
+    {
+        const res = await getAchievements();
+        setDbAchievements(res);
     }
-    //dummy data
-    const achievement1 = new TempAchievement(1, "Sleepy Time", "This is Achievement 1");
-    const achievement2 = new TempAchievement(2, "Cat Whisperer", "This is Achievement 2");
-    const achievement3 = new TempAchievement(3, "Dream Team", "This is Achievement 3");
+
+    useEffect(() => 
+    {
+        if (dbAchievements && dbAchievements.length > 0) {
+            dbAchievements.forEach(achievement => {
+                console.log("In Test Page: ", achievement);
+            });
+        }
+    }, [dbAchievements]);
 
     //on clicking the button, checks if the achievement is in the list and if not adds it and triggers the notification
     const buttonClick = (achievement) => 
     {
-        if (!achievements.some(refAchievement => refAchievement.achievementId === achievement.achievementId))
+        if (!achievementsList.some(refAchievement => refAchievement.achievementId === achievement.achievementId))
         {
-            const updatedAchievements = [...achievements, achievement];
-            setAchievements(updatedAchievements);
-            setAchievementName(achievement.achievementName);
+            const updatedAchievements = [...achievementsList, achievement];
+            setAchievementsList(updatedAchievements);
+            setAchievementTitle(achievement.achievementTitle);
         }
     };
 
     //removal button function for testing
     const removeAchievement = (achievement) => 
     {
-        const updatedAchievements = achievements.filter(refAchievement => refAchievement.achievementId !== achievement.achievementId);
-        setAchievements(updatedAchievements);
+        const updatedAchievements = achievementsList.filter(refAchievement => refAchievement.achievementId !== achievement.achievementId);
+        setAchievementsList(updatedAchievements);
     };
 
     return (
@@ -51,7 +56,7 @@ export default function AchievementTest()
             <h2 className="display-4 mb-4">Achievement Test Page</h2>
 
             {/* notification component that pops up the achievement */}
-            {achievementName && <AchievementNotification achievementName={achievementName} />}
+            {achievementTitle && <AchievementNotification achievementTitle={achievementTitle} />}
 
             <div className="customContainer">
                 <div className="buttons">
@@ -60,78 +65,35 @@ export default function AchievementTest()
                         {[...dbAchievements].map((achievement, index) => (
                             <li
                             key={index}>
-                                <button
-                                type="button"
-                                className="btn btn-primary me-1"
-                                style={{width: "150px"}}
-                                onClick={() => buttonClick(achievement)}>
-                                    {achievement.achievementName}
-                                </button>
-                                <button 
-                                type="button"
-                                className="btn btn-warning"
-                                onClick={() => removeAchievement(achievement)}>
-                                    Remove
-                                </button>
+                                <div className="mb-2">
+                                    <button
+                                    type="button"
+                                    className="btn btn-primary me-1"
+                                    style={{width: "150px"}}
+                                    onClick={() => buttonClick(achievement)}>
+                                        {achievement.achievementTitle}
+                                    </button>
+                                </div>
                             </li>
                         ))}
 
-                        <button
-                        type="button"
-                        className="btn btn-primary me-1"
-                        style={{width: "150px"}}
-                        onClick={() => buttonClick(achievement1)}>
-                            {achievement1.achievementName}
-                        </button>
-                        <button 
-                        type="button"
-                        className="btn btn-warning"
-                        onClick={() => removeAchievement(achievement1)}>
-                            Remove
-                        </button>
-                    </div>
-
-                    <div className="container mb-2">
-                        <button 
-                        type="button"
-                        className="btn btn-primary me-1"
-                        style={{width: "150px"}}
-                        onClick={() => buttonClick(achievement2)}>
-                            {achievement2.achievementName}
-                        </button>
-                        <button 
-                        type="button"
-                        className="btn btn-warning"
-                        onClick={() => removeAchievement(achievement2)}>
-                            Remove
-                        </button>
-                    </div>
-
-                    <div className="container mb-2">
-                        <button 
-                        type="button"
-                        className="btn btn-primary me-1"
-                        style={{width: "150px"}}
-                        onClick={() => buttonClick(achievement3)}>
-                            {achievement3.achievementName}
-                        </button>
-                        <button 
-                        type="button"
-                        className="btn btn-warning"
-                        onClick={() => removeAchievement(achievement3)}>
-                            Remove
-                        </button>
                     </div>
                 </div>
 
                 <div className="achievementsUnlocked">
                     <h3>Achievements Unlocked:</h3>
                     <ul className="list-group">
-                        {[...achievements].map((achievement, index) => (
+                        {[...achievementsList].map((achievement, index) => (
                             <li
                             className="list-group-item d-flex justify-content-between align-items-center"
                             key={index}>
-                                {achievement.achievementName} - {achievement.achievementDescription}
+                                {achievement.achievementTitle} - {achievement.achievementDescription}
+                                <button 
+                                type="button"
+                                className="btn btn-warning"
+                                onClick={() => removeAchievement(achievement)}>
+                                    Remove
+                                </button>
                             </li>
                         ))}
                     </ul>

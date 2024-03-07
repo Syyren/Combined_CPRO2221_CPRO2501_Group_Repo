@@ -11,7 +11,7 @@ export const getAchievements = async () =>
       const res = await axios.get(`${API_URL}/get/all`);
       const achievements = res.data;
       console.log("Achievements from API:", achievements);
-      return achievements
+      return achievements;
     } 
     catch (err)
     {

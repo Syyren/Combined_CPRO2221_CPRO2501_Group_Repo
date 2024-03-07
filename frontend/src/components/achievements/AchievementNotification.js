@@ -3,7 +3,7 @@ import './AchievementNotification.css';
 import frog from './images/frog-spin-frog.gif';
 
 //this component takes in the achievementName in order to render the notification
-const AchievementNotification = ({ achievementName }) => 
+const AchievementNotification = ({ achievementTitle }) => 
 {
   //setting the show useState to false so it stays hidden until called
   const [showNotification, setShowNotification] = useState(false);
@@ -17,7 +17,7 @@ const AchievementNotification = ({ achievementName }) =>
     }, 3500);
 
     return () => clearTimeout(timeout);
-  }, [achievementName]);
+  }, [achievementTitle]);
 
   return (
     <div className={`text-center notification ${showNotification ? 'show' : ''}`}>
@@ -31,7 +31,7 @@ const AchievementNotification = ({ achievementName }) =>
           ></img>
         </div>
         <div>
-          Achievement Unlocked! <br /> {achievementName}
+          Achievement Unlocked! <br /> {achievementTitle}
         </div>
       </div>
     </div>
