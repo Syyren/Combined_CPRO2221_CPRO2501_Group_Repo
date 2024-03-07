@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import maxwellHeadImg from "../../images/tictactoe/maxwell_head.png";
+import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
 
 export default function TictactoeGame(props) {
   var gameTitle = <h1>Awaiting Game Selection</h1>;
@@ -17,8 +19,48 @@ export default function TictactoeGame(props) {
         .then((data) => {
           setCurrentGame(data);
           setBoardState(data.boardState);
-          var X = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
-          var O = ["O", "O", "O", "O", "O", "O", "O", "O", "O"];
+          var X = [
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={maxwellHeadImg}
+                alt="(X) Maxwell the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Maxwell
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
+            "X",
+            "X",
+            "X",
+            "X",
+            "X",
+            "X",
+            "X",
+            "X",
+          ];
+          var O = [
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={maxwellPawImg}
+                alt="(O) Maxwell the cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Maxwell,
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
+            "O",
+            "O",
+            "O",
+            "O",
+            "O",
+            "O",
+            "O",
+            "O",
+          ];
           setBoardDisplay(
             boardState.map((division, i) => {
               return (
