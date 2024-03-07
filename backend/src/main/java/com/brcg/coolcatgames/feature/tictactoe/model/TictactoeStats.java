@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Scores")
+@Document(collection = "scores")
 @TypeAlias("TictactoeStats")
 public class TictactoeStats extends Scores {
     private int gamesWon;
