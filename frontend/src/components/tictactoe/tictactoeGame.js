@@ -219,6 +219,7 @@ export default function TictactoeGame(props) {
                           .then((data) => {
                             // Store the game data for use later
                             setCurrentGame(data);
+                            props.callback(currentGame);
                           });
                       }}
                     >

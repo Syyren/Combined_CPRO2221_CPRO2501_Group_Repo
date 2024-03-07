@@ -55,42 +55,52 @@ export default function TictactoeMenu() {
   }, [displayTictactoeGame, currentUserId]);
   //console.log(currentGames);
   // take the list of current games and make it into clickable buttons
-  var displayGames = currentGames.map((currentGame) => {
-    // determine which player in the currently selected game is the opponent
-    var opponent = [currentGame.player1, currentGame.player2].filter(
-      (e) => e !== currentUserId
-    )[0];
-    // get whether it's the user's turn in the current game:
-    var buttonClass = "btn btn-warning";
-    var buttonAdditionalText = "It's their turn";
-    if (currentGame.lastPlayerMoved !== currentUserId) {
-      buttonClass = "btn btn-success";
-      buttonAdditionalText = "It's your turn";
-    }
-    // add the opponent to the list being compiled
-    allOpponents.push(opponent);
-    // return the button for this game
-    return (
-      <li key={currentGame.id}>
-        <button
-          class={buttonClass}
-          // When this button is clicked, load the game with this id
-          onClick={() => {
-            setDisplayTictactoeGame(
-              <TictactoeGame
-                gameId={currentGame.id}
-                currentPlayer={currentUserId}
-              />
-            );
-          }}
-        >
-          Ongoing game against {opponent}
-          <br />
-          {buttonAdditionalText}
-        </button>
-      </li>
-    );
-  });
+  if (currentGames.constructor === Array) {
+    var displayGames = currentGames.map((currentGame) => {
+      // determine which player in the currently selected game is the opponent
+      var opponent = [currentGame.player1, currentGame.player2].filter(
+        (e) => e !== currentUserId
+      )[0];
+      // get whether it's the user's turn in the current game:
+      var buttonClass = "btn btn-warning";
+      var buttonAdditionalText = "It's their turn";
+      if (currentGame.lastPlayerMoved !== currentUserId) {
+        buttonClass = "btn btn-success";
+        buttonAdditionalText = "It's your turn";
+      }
+      // add the opponent to the list being compiled
+      allOpponents.push(opponent);
+      // return the button for this game
+      return (
+        <li key={currentGame.id}>
+          <button
+            class={buttonClass}
+            // When this button is clicked, load the game with this id
+            onClick={() => {
+              setDisplayTictactoeGame(
+                <TictactoeGame
+                  gameId={currentGame.id}
+                  currentPlayer={currentUserId}
+                  callback={function (updatedGame) {
+                    setDisplayTictactoeGame(
+                      <TictactoeGame
+                        gameId={updatedGame.id}
+                        currentPlayer={currentUserId}
+                      />
+                    );
+                  }}
+                />
+              );
+            }}
+          >
+            Ongoing game against {opponent}
+            <br />
+            {buttonAdditionalText}
+          </button>
+        </li>
+      );
+    });
+  }
 
   // remove current user and current opponents from list and scramble it, then get just the top 10
   usersIdsList = shuffleArray(
@@ -122,6 +132,14 @@ export default function TictactoeMenu() {
                   <TictactoeGame
                     gameId={tempId}
                     currentPlayer={currentUserId}
+                    callback={function (updatedGame) {
+                      setDisplayTictactoeGame(
+                        <TictactoeGame
+                          gameId={updatedGame.id}
+                          currentPlayer={currentUserId}
+                        />
+                      );
+                    }}
                   />
                 );
               });
