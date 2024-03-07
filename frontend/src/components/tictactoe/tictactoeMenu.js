@@ -28,6 +28,7 @@ let fakeUsersList = [
 let fakeCurrentUser = "Joel";
 
 export default function TictactoeMenu() {
+  console.log("Loading tictactoe");
   // the game to display on the right
   let displayTictactoeGame = <TictactoeGame />;
   // Get current userId; replace with API call when login feature done
@@ -39,44 +40,53 @@ export default function TictactoeMenu() {
   var allOpponents = [];
   var getCurrentGames = async function () {
     var response = await fetch(
-      "http://localhost:8090/tictactoe/games/" + currentUserId
+      "http://localhost:8090/tictactoe/games/" + currentUserId,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: { "Content-Type": "application/json" },
+      }
     );
+    //console.log(response);
     return response;
   };
   var currentGames = getCurrentGames();
-  console.log("current games:" + currentGames);
-  currentGames.map((currentGame) => {
-    // determine which player in the currently selected game is the opponent
-    var opponent = [currentGame.player1, currentGame.player2].filter(
-      (e) => e !== currentUserId
-    )[0];
-    // get whether it's the user's turn in the current game:
-    var buttonClass = "btn btn-warning";
-    if (currentGame.lastPlayerMove === currentUserId) {
-      buttonClass = "btn btn-success";
-    }
-    // add the opponent to the list being compiled
-    allOpponents.push(opponent);
-    // return the button for this game
-    return (
-      <li value={currentGame.id}>
-        <button
-          class={buttonClass}
-          // When this button is clicked, load the game with this id
-          onClick={
-            (displayTictactoeGame = <tictactoeGame gameId={currentGame.id} />)
-          }
-        >
-          Ongoing game against {opponent}
-        </button>
-      </li>
-    );
-  });
+  // console.log("current games");
+  //console.log(currentGames);
+  // currentGames.map((currentGame) => {
+  //   // determine which player in the currently selected game is the opponent
+  //   var opponent = [currentGame.player1, currentGame.player2].filter(
+  //     (e) => e !== currentUserId
+  //   )[0];
+  //   // get whether it's the user's turn in the current game:
+  //   var buttonClass = "btn btn-warning";
+  //   if (currentGame.lastPlayerMove === currentUserId) {
+  //     buttonClass = "btn btn-success";
+  //   }
+  //   // add the opponent to the list being compiled
+  //   allOpponents.push(opponent);
+  //   // return the button for this game
+  //   return (
+  //     <li value={currentGame.id}>
+  //       <button
+  //         class={buttonClass}
+  //         // When this button is clicked, load the game with this id
+  //         onClick={
+  //           (displayTictactoeGame = <tictactoeGame gameId={currentGame.id} />)
+  //         }
+  //       >
+  //         Ongoing game against {opponent}
+  //       </button>
+  //     </li>
+  //   );
+  // });
 
   // remove current user and current opponents from list and scramble it, then get just the top 10
   usersIdsList = shuffleArray(
     usersIdsList.filter((e) => e !== currentUserId && !allOpponents.includes(e))
   ).slice(0, Math.min(10, usersIdsList.length - 1));
+  console.log(usersIdsList);
   var recomendedUsers = usersIdsList.map((userId) => {
     return (
       <li value={userId}>
@@ -124,4 +134,5 @@ function shuffleArray(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
 }
