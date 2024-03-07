@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
+// import images to use. I import them so that react knows to include them when we compile and build this project
 import maxwellHeadImg from "../../images/tictactoe/maxwell_head.png";
 import kiwiHeadImg from "../../images/tictactoe/kiwi_head.png";
 import bobaHeadImg from "../../images/tictactoe/boba_head.png";
+import hyperBobaHeadImg from "../../images/tictactoe/hyperBoba_head.png";
+import tenleyHeadImg from "../../images/tictactoe/tenley_head.png";
+import monaHeadImg from "../../images/tictactoe/mona_head.png";
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
+import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
@@ -63,12 +68,42 @@ export default function TictactoeGame(props) {
                 <br /> Image source: Samantha Lysons
               </p>
             </div>,
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={monaHeadImg}
+                alt="(X) Mona the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Mona
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
+            "X",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={tenleyHeadImg}
+                alt="(X) Tenley the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Tenley
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
             "X",
             "X",
-            "X",
-            "X",
-            "X",
-            "X",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={hyperBobaHeadImg}
+                alt="(X) Boba the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Boba
+                <br /> Image source: Ryan
+              </p>
+            </div>,
           ];
           // A list/array of images to display if player2 selected that segment
           var O = [
@@ -105,7 +140,36 @@ export default function TictactoeGame(props) {
                     O[i]
                   ) : (
                     // No player has played here, so display a button
-                    <button></button>
+                    <button
+                      style={{ width: "100%", height: "100%" }}
+                      onClick={async function () {
+                        // When the button is clicked, try to put the player's turn
+                        await fetch(
+                          "http://localhost:8090/tictactoe/update/" +
+                            props.gameId +
+                            "?playerId=" +
+                            props.currentPlayer +
+                            "&position=" +
+                            i,
+                          {
+                            method: "PUT",
+                            mode: "cors",
+                            cache: "no-cache",
+                          }
+                        )
+                          .then((res) => res.json())
+                          .then((data) => {
+                            // Store the game data for use later
+                            setCurrentGame(data);
+                          });
+                      }}
+                    >
+                      <img
+                        src={blank}
+                        alt="blank space for making button larger"
+                        style={{ width: "80%", height: "80%" }}
+                      ></img>
+                    </button>
                   )}
                 </div>
               );

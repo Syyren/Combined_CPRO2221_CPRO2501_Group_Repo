@@ -63,7 +63,7 @@ export default function TictactoeMenu() {
     // get whether it's the user's turn in the current game:
     var buttonClass = "btn btn-warning";
     var buttonAdditionalText = "It's their turn";
-    if (currentGame.lastPlayerMove !== opponent) {
+    if (currentGame.lastPlayerMoved !== currentUserId) {
       buttonClass = "btn btn-success";
       buttonAdditionalText = "It's your turn";
     }
@@ -76,7 +76,12 @@ export default function TictactoeMenu() {
           class={buttonClass}
           // When this button is clicked, load the game with this id
           onClick={() => {
-            setDisplayTictactoeGame(<TictactoeGame gameId={currentGame.id} />);
+            setDisplayTictactoeGame(
+              <TictactoeGame
+                gameId={currentGame.id}
+                currentPlayer={currentUserId}
+              />
+            );
           }}
         >
           Ongoing game against {opponent}
@@ -109,7 +114,9 @@ export default function TictactoeMenu() {
                 player2: userId,
               }),
             }).id;
-            setDisplayTictactoeGame(<TictactoeGame gameId={tempId} />);
+            setDisplayTictactoeGame(
+              <TictactoeGame gameId={tempId} currentPlayer={currentUserId} />
+            );
           }}
         >
           Start game against {userId}
