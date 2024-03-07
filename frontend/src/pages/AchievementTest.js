@@ -48,18 +48,20 @@ export default function AchievementTest()
             {/* notification component that pops up the achievement */}
             {achievementTitle && <AchievementNotification achievementTitle={achievementTitle} />}
 
+            {/* container that holds the content for the Test Page */}
             <div className="customContainer">
-                <div className="buttons border border-2 rounded me-2 p-2">
+                <div className="buttons border border-2 border-primary rounded p-2">
                     <div className="container mb-2">
 
                         <h3 className="text-center mb-3">Achievements In Database:</h3>
 
+                        {/* generates a list of buttons to add achievements to the achievement list*/}
                         <ul className="list-group">
                             {[...dbAchievements].map((achievement, index) => (
                                 <li
                                 className="list-group-flush d-flex justify-content-center align-items-center mb-2"
                                 key={index}>
-                                    <div className="">
+                                    <div>
                                         <button
                                         type="button"
                                         className="btn btn-primary me-1"
@@ -74,7 +76,7 @@ export default function AchievementTest()
                     </div>
                 </div>
 
-                <div className="achievementsUnlocked border border-2 rounded p-2">
+                <div className="achievementsUnlocked border border-primary border-2 rounded p-2">
 
                     <h3 className="text-center mb-3">Achievements Unlocked:</h3>
 

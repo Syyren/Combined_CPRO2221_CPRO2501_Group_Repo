@@ -12,6 +12,7 @@
   
 .buttons
 {
+    margin-right: 5px;
     width: 40%;
 }
 
@@ -26,6 +27,7 @@
     .achievementsUnlocked,
     .buttons 
     {
+        margin-right: 0px;
         width: 100%;
     }
 }
