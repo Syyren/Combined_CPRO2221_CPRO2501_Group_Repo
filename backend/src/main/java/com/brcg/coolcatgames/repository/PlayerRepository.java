@@ -5,8 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface PlayerRepository extends MongoRepository <Player, String>{
-    Player findByUserName(String userName);
+public interface PlayerRepository extends MongoRepository <Player, String>{}
 
-   public List<Player> getAllPlayers();
-}
