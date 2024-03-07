@@ -266,23 +266,20 @@ export default function TictactoeGame(props) {
     // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
   }, [currentGame, props]);
 
-//   useEffect(() => {
-//     if (currentGame) {
-//       // Check if the game is over
-//       fetch(
-//         "http://localhost:8090/tictactoe/testandconclude?player1Id=" +
-//           currentGame.player1 +
-//           "&player2Id=" +
-//           currentGame.player2
-//       )
-//         .then((res) => res.json())
-//         .then((data) => {
-//           setCurrentGame(null);
-//           console.log(data);
-//           //return "Game Over!";
-//         });
-//     }
-//   }, [boardDisplay]);
+  //   useEffect(async () => {
+  //     if (currentGame) {
+  //       // Check if the game is over
+  //       await fetch(
+  //         "http://localhost:8090/tictactoe/checkWinner/" +
+  //           props.gameId
+  //       )
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           setCurrentGame(null);
+  //           console.log(data);
+  //         });
+  //     }
+  //   }, [boardDisplay]);
 
   // Avoid magic numbers, this controls how tall the tictactoe board is by making the height a percentage of the width
   var divHeight = "25%";
