@@ -1,7 +1,8 @@
 import Layout from "../components/Layout";
 import React, { useState } from 'react';
-import AchievementNotification from "../components/achievements/AchievementNotification"
-import "../components/achievements/AchievementTest.css"
+import AchievementNotification from "../components/achievements/AchievementNotification";
+import "./AchievementTest.css";
+import { getAchievements } from "../controllers/AchievementController";
 
 
 export default function AchievementTest()
@@ -9,6 +10,8 @@ export default function AchievementTest()
     //msetting the useStates for achievementName and achievements
     const [achievementName, setAchievementName] = useState('');
     const [achievements, setAchievements] = useState([]);
+    
+    const dbAchievements = useState(getAchievements());
 
     //temporary class with dummy data for the application
     class TempAchievement
@@ -53,6 +56,26 @@ export default function AchievementTest()
             <div className="customContainer">
                 <div className="buttons">
                     <div className="container mb-2">
+
+                        {[...dbAchievements].map((achievement, index) => (
+                            <li
+                            key={index}>
+                                <button
+                                type="button"
+                                className="btn btn-primary me-1"
+                                style={{width: "150px"}}
+                                onClick={() => buttonClick(achievement)}>
+                                    {achievement.achievementName}
+                                </button>
+                                <button 
+                                type="button"
+                                className="btn btn-warning"
+                                onClick={() => removeAchievement(achievement)}>
+                                    Remove
+                                </button>
+                            </li>
+                        ))}
+
                         <button
                         type="button"
                         className="btn btn-primary me-1"
