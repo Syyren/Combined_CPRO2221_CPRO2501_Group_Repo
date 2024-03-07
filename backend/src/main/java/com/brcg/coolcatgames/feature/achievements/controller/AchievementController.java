@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+//allowing cross-origin connection
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 //routing all the maps to be under this parent map
-@RequestMapping("/achievement")
+@RequestMapping("/api/achievement")
 public class AchievementController
 {
     //injecting achievementService bean to interface with the controller and repository
