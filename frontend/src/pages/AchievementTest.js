@@ -103,10 +103,12 @@ export default function AchievementTest()
 
                 <div className="achievementsUnlocked">
                     <h3>Achievements Unlocked:</h3>
-                    <ul>
+                    <ul className="list-group">
                         {[...achievements].map((achievement, index) => (
-                            <li key={index}>
-                                {achievement.achievementName}
+                            <li
+                            className="list-group-item d-flex justify-content-between align-items-center"
+                            key={index}>
+                                {achievement.achievementName} - {achievement.achievementDescription}
                             </li>
                         ))}
                     </ul>

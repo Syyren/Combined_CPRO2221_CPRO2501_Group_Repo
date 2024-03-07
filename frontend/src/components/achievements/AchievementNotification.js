@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AchievementNotification.css';
+import frog from './images/frog-spin-frog.gif';
 
 //this component takes in the achievementName in order to render the notification
 const AchievementNotification = ({ achievementName }) => 
@@ -19,8 +20,20 @@ const AchievementNotification = ({ achievementName }) =>
   }, [achievementName]);
 
   return (
-    <div className={`notification ${showNotification ? 'show' : ''}`}>
-      Achievement: {achievementName} unlocked!
+    <div className={`text-center notification ${showNotification ? 'show' : ''}`}>
+      <div className='d-flex'>
+        <div 
+        className='justify-content-center me-2 iconBox'
+        >
+          <img 
+          src={frog} 
+          alt='frog spinning gif'
+          ></img>
+        </div>
+        <div>
+          Achievement Unlocked! <br /> {achievementName}
+        </div>
+      </div>
     </div>
   );
 };

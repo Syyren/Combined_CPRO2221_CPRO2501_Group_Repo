@@ -7,11 +7,24 @@
     background-color: #222222;
     color: #ffffff;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 40px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
-  
+
+.iconBox
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img
+{
+    width: 30px;
+    height: 30px;
+}
+
 .notification.show 
 {
     opacity: 1;
