@@ -20,7 +20,7 @@ const AchievementNotification = ({ achievementName }) =>
 
   return (
     <div className={`notification ${showNotification ? 'show' : ''}`}>
-      {achievementName} unlocked!
+      Achievement: {achievementName} unlocked!
     </div>
   );
 };

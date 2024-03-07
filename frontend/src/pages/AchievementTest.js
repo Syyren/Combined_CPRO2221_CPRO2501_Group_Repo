@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import React, { useState } from 'react';
 import AchievementNotification from "../components/achievements/AchievementNotification"
+import "../components/achievements/AchievementTest.css"
 
 
 export default function AchievementTest()
@@ -20,9 +21,9 @@ export default function AchievementTest()
         }
     }
     //dummy data
-    const achievement1 = new TempAchievement(1, "Achievement 1", "This is Achievement 1");
-    const achievement2 = new TempAchievement(2, "Achievement 2", "This is Achievement 2");
-    const achievement3 = new TempAchievement(3, "Achievement 3", "This is Achievement 3");
+    const achievement1 = new TempAchievement(1, "Sleepy Time", "This is Achievement 1");
+    const achievement2 = new TempAchievement(2, "Cat Whisperer", "This is Achievement 2");
+    const achievement3 = new TempAchievement(3, "Dream Team", "This is Achievement 3");
 
     //on clicking the button, checks if the achievement is in the list and if not adds it and triggers the notification
     const buttonClick = (achievement) => 
@@ -49,60 +50,68 @@ export default function AchievementTest()
             {/* notification component that pops up the achievement */}
             {achievementName && <AchievementNotification achievementName={achievementName} />}
 
-            <h3>Achievements Unlocked:</h3>
-            <ul>
-                {[...achievements].map((achievement, index) => (
-                    <li key={index}>
-                        {achievement.achievementName}
-                    </li>
-                ))}
-            </ul>
+            <div className="customContainer">
+                <div className="buttons">
+                    <div className="container mb-2">
+                        <button
+                        type="button"
+                        className="btn btn-primary me-1"
+                        style={{width: "150px"}}
+                        onClick={() => buttonClick(achievement1)}>
+                            {achievement1.achievementName}
+                        </button>
+                        <button 
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => removeAchievement(achievement1)}>
+                            Remove
+                        </button>
+                    </div>
 
-            <div className="container mb-2">
-                <button
-                type="button"
-                className="btn btn-primary me-1"
-                onClick={() => buttonClick(achievement1)}>
-                    Achievement 1
-                </button>
-                <button 
-                type="button"
-                className="btn btn-warning"
-                onClick={() => removeAchievement(achievement1)}>
-                    Remove
-                </button>
+                    <div className="container mb-2">
+                        <button 
+                        type="button"
+                        className="btn btn-primary me-1"
+                        style={{width: "150px"}}
+                        onClick={() => buttonClick(achievement2)}>
+                            {achievement2.achievementName}
+                        </button>
+                        <button 
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => removeAchievement(achievement2)}>
+                            Remove
+                        </button>
+                    </div>
+
+                    <div className="container mb-2">
+                        <button 
+                        type="button"
+                        className="btn btn-primary me-1"
+                        style={{width: "150px"}}
+                        onClick={() => buttonClick(achievement3)}>
+                            {achievement3.achievementName}
+                        </button>
+                        <button 
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => removeAchievement(achievement3)}>
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+                <div className="achievementsUnlocked">
+                    <h3>Achievements Unlocked:</h3>
+                    <ul>
+                        {[...achievements].map((achievement, index) => (
+                            <li key={index}>
+                                {achievement.achievementName}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-
-            <div className="container mb-2">
-                <button 
-                type="button"
-                className="btn btn-primary me-1"
-                onClick={() => buttonClick(achievement2)}>
-                    Achievement 2
-                </button>
-                <button 
-                type="button"
-                className="btn btn-warning"
-                onClick={() => removeAchievement(achievement2)}>
-                    Remove
-                </button>
-            </div>
-
-            <div className="container mb-2">
-                <button 
-                type="button"
-                className="btn btn-primary me-1"
-                onClick={() => buttonClick(achievement3)}>
-                    Achievement 3
-                </button>
-                <button 
-                type="button"
-                className="btn btn-warning"
-                onClick={() => removeAchievement(achievement3)}>
-                    Remove
-                </button>
-            </div>
-
         </Layout> 
     )
 }

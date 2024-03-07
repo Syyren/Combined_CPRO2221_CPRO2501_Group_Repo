@@ -1,0 +1,31 @@
+.customContainer 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+  
+.achievementsUnlocked
+{
+    width: 70%;
+}
+  
+.buttons
+{
+    width: 30%;
+}
+
+@media (max-width: 700px)
+{
+    .customContainer 
+    {
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .achievementsUnlocked,
+    .buttons 
+    {
+        width: 100%;
+    }
+}
