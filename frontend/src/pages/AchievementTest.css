@@ -7,12 +7,12 @@
   
 .achievementsUnlocked
 {
-    width: 70%;
+    width: 60%;
 }
   
 .buttons
 {
-    width: 30%;
+    width: 40%;
 }
 
 @media (max-width: 700px)

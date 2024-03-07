@@ -10,7 +10,6 @@ export default function AchievementTest()
     //msetting the useStates for achievementTitle and achievements
     const [achievementTitle, setAchievementTitle] = useState('');
     const [achievementsList, setAchievementsList] = useState([]);
-    
     const [dbAchievements, setDbAchievements] = useState([]);
 
     useEffect(() => 
@@ -23,15 +22,6 @@ export default function AchievementTest()
         const res = await getAchievements();
         setDbAchievements(res);
     }
-
-    useEffect(() => 
-    {
-        if (dbAchievements && dbAchievements.length > 0) {
-            dbAchievements.forEach(achievement => {
-                console.log("In Test Page: ", achievement);
-            });
-        }
-    }, [dbAchievements]);
 
     //on clicking the button, checks if the achievement is in the list and if not adds it and triggers the notification
     const buttonClick = (achievement) => 
@@ -53,35 +43,41 @@ export default function AchievementTest()
 
     return (
         <Layout>
-            <h2 className="display-4 mb-4">Achievement Test Page</h2>
+            <h2 className="text-center display-4 mb-4">Achievement Test Page</h2>
 
             {/* notification component that pops up the achievement */}
             {achievementTitle && <AchievementNotification achievementTitle={achievementTitle} />}
 
             <div className="customContainer">
-                <div className="buttons">
+                <div className="buttons border border-2 rounded me-2 p-2">
                     <div className="container mb-2">
 
-                        {[...dbAchievements].map((achievement, index) => (
-                            <li
-                            key={index}>
-                                <div className="mb-2">
-                                    <button
-                                    type="button"
-                                    className="btn btn-primary me-1"
-                                    style={{width: "150px"}}
-                                    onClick={() => buttonClick(achievement)}>
-                                        {achievement.achievementTitle}
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
+                        <h3 className="text-center mb-3">Achievements In Database:</h3>
 
+                        <ul className="list-group">
+                            {[...dbAchievements].map((achievement, index) => (
+                                <li
+                                className="list-group-flush d-flex justify-content-center align-items-center mb-2"
+                                key={index}>
+                                    <div className="">
+                                        <button
+                                        type="button"
+                                        className="btn btn-primary me-1"
+                                        style={{width: "150px"}}
+                                        onClick={() => buttonClick(achievement)}>
+                                            {achievement.achievementTitle}
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 
-                <div className="achievementsUnlocked">
-                    <h3>Achievements Unlocked:</h3>
+                <div className="achievementsUnlocked border border-2 rounded p-2">
+
+                    <h3 className="text-center mb-3">Achievements Unlocked:</h3>
+
                     <ul className="list-group">
                         {[...achievementsList].map((achievement, index) => (
                             <li
