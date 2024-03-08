@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/hangman")
 public class HangmanController {
     private final Hangman hangman = new Hangman();
@@ -24,28 +25,57 @@ public class HangmanController {
         return new HangmanGameState(
                 hangman.getDisplayedWord(),
                 hangman.getGuesses(),
-                hangman.getTotalScore()
+                hangman.getTotalScore(),
+                hangman.getGameStatus()
         );
     }
 
-    @PostMapping("/guess")
-    public ResponseEntity<String> guessLetter(@RequestParam char letterGuessed) {
-        hangman.guessLetter(letterGuessed);
-        return ResponseEntity.ok("Guess successful");
+    @GetMapping("/new-game")
+    public ResponseEntity<HangmanGameState> newGame() {
+        //reset game
+        hangman.newGame();
+        //return new game state
+        HangmanGameState gameState = new HangmanGameState(
+                hangman.getDisplayedWord(),
+                hangman.getGuesses(),
+                hangman.getTotalScore(),
+                hangman.getGameStatus()
+        );
+        return ResponseEntity.ok(gameState);
     }
 
-    @GetMapping("/score")
-    public int getTotalScore() {
-        return hangman.getTotalScore();
+    @GetMapping("/continue-game")
+    public ResponseEntity<HangmanGameState> continueGame() {
+        //reset game, score persists
+        hangman.continueGame();
+        //return updated game state
+        HangmanGameState gameState = new HangmanGameState(
+                hangman.getDisplayedWord(),
+                hangman.getGuesses(),
+                hangman.getTotalScore(),
+                hangman.getGameStatus()
+        );
+        return ResponseEntity.ok(gameState);
+    }
+
+
+    @PostMapping("/guess")
+    public ResponseEntity<Hangman> guessLetter(@RequestParam char letterGuessed) {
+        hangman.guessLetter(letterGuessed);
+        // Return the updated game state in the response body
+        return ResponseEntity.ok(hangman);
     }
 
     @PostMapping("/save-score")
     public ResponseEntity<String> saveScore() {
         hangmanScore.setGameName("hangman");
         hangmanScore.setUserId("Kaden"); //logic later
-        hangmanScore.setScore(getTotalScore());
+        hangmanScore.setScore(hangman.getTotalScore());
         hangmanScoreService.saveScore(hangmanScore);
         return ResponseEntity.ok("Score saved successfully");
     }
+
+
+
 
 }
