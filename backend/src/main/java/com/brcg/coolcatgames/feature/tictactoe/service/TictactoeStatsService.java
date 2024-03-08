@@ -54,6 +54,10 @@ public class TictactoeStatsService {
                 return repository.save(userScore);
             }
         }
-        return null;
+        TictactoeStats newScore = new TictactoeStats();
+        newScore.setScore(1000);
+        newScore.setUserId(userId);
+        saveTictactoeStats(newScore);
+        return updateScore(userId,deltaScore,conclusion);
     }
 }
