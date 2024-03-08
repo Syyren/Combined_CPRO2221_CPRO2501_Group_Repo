@@ -1,0 +1,43 @@
+.notification 
+{
+    position: fixed;
+    z-index: 1;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #222222;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 40px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.iconBox
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img
+{
+    width: 64px;
+    height: 64px;
+}
+
+.notification.show 
+{
+    opacity: 1;
+}
+
+@media (max-width: 700px)
+{
+    .notification 
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+}
