@@ -30,6 +30,11 @@ export default function NavBar() {
                 About
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark" to="/leaderboard">
+                Leaderboard
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

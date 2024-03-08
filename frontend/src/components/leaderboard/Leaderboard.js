@@ -6,97 +6,114 @@ class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scores: [],
-      filteredScores: [], // Filtered scores based on user selection
+      scores: [], // Your scores array
       activeGame: "hangman",
       activeScoreType: "personal",
       currentUser: "Player1", // Assuming the current user is 'Player1'
-      // Example scores
-      exampleScores: [
-        { username: "Player1", score: 100, game: "hangman" },
-        { username: "Player2", score: 90, game: "hangman" },
-        { username: "Player3", score: 80, game: "hangman" },
-        { username: "Player4", score: 70, game: "hangman" },
-        { username: "Player5", score: 60, game: "hangman" },
-        { username: "Player1", score: 200, game: "tictactoe" },
-        { username: "Player2", score: 190, game: "tictactoe" },
-        { username: "Player3", score: 180, game: "tictactoe" },
-        { username: "Player4", score: 170, game: "tictactoe" },
-        { username: "Player5", score: 160, game: "tictactoe" },
-        { username: "Player1", score: 300, game: "idlerunner" },
-        { username: "Player2", score: 290, game: "idlerunner" },
-        { username: "Player3", score: 280, game: "idlerunner" },
-        { username: "Player4", score: 270, game: "idlerunner" },
-        { username: "Player5", score: 260, game: "idlerunner" },
-        { username: "Player1", score: 400, game: "galaga" },
-        { username: "Player2", score: 390, game: "galaga" },
-        { username: "Player3", score: 380, game: "galaga" },
-        { username: "Player4", score: 370, game: "galaga" },
-        { username: "Player5", score: 360, game: "galaga" },
-      ],
     };
   }
 
   componentDidMount() {
-    // Filter scores based on active game and score type
-    this.filterScores();
+    // Simulating fetching scores from an API or database
+    this.fetchScores();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Re-filter scores if game or score type changes
-    if (
-      prevState.activeGame !== this.state.activeGame ||
-      prevState.activeScoreType !== this.state.activeScoreType
-    ) {
-      this.filterScores();
+  fetchScores = () => {
+    // Example scores
+    const exampleScores = [];
+
+    // Function to generate a random score
+    const generateRandomScore = () => Math.floor(Math.random() * 100) + 1;
+
+    // Generate 5 example scores for each game
+    const games = ["hangman", "tictactoe", "idlerunner", "galaga"];
+    for (let i = 0; i < games.length; i++) {
+      for (let j = 1; j <= 5; j++) {
+        exampleScores.push({
+          username: `Player${j}`,
+          score: generateRandomScore(),
+          game: games[i],
+        });
+      }
     }
-  }
 
-  // Method to filter scores based on active game and score type
-  filterScores = () => {
-    const { exampleScores, activeGame, activeScoreType, currentUser } =
-      this.state;
-    let filteredScores = exampleScores.filter(
-      (score) =>
-        score.game === activeGame &&
-        (activeScoreType === "personal" ? score.username === currentUser : true)
-    );
-    this.setState({ filteredScores });
+    // Sort the scores array in descending order based on the score
+    const sortedScores = exampleScores.sort((a, b) => b.score - a.score);
+
+    // Assign ranks to the sorted scores
+    const rankedScores = sortedScores.map((score, index) => ({
+      ...score,
+      rank: index + 1, // Rank starts from 1
+    }));
+
+    // Update state with ranked scores
+    this.setState({ scores: rankedScores });
   };
 
-  // Method to handle game change
+  filterScores = () => {
+    const { scores, activeGame, activeScoreType, currentUser } = this.state;
+
+    // Filter scores based on the active game and score type
+    let filteredScores = scores.filter(
+      (score) =>
+        (activeScoreType === "personal"
+          ? score.username === currentUser
+          : true) && (activeGame === "all" ? true : score.game === activeGame)
+    );
+
+    // If active game is not 'all', assign ranks within the group of scores for that game
+    if (activeGame !== "all" && filteredScores.length > 0) {
+      // Sort the filtered scores array in descending order based on the score
+      filteredScores.sort((a, b) => b.score - a.score);
+
+      // Assign ranks within the group of scores for the active game
+      let rank = 1;
+      let prevScore = filteredScores[0].score;
+      filteredScores.forEach((score, index) => {
+        if (score.score !== prevScore) {
+          rank = index + 1;
+        }
+        score.rank = rank;
+        prevScore = score.score;
+      });
+    }
+
+    return filteredScores;
+  };
+
   handleGameChange = (game) => {
     this.setState({ activeGame: game });
   };
 
-  // Method to handle score type change
   handleScoreTypeChange = (scoreType) => {
     this.setState({ activeScoreType: scoreType });
   };
 
   render() {
-    const { filteredScores, activeGame, activeScoreType } = this.state;
+    const { activeGame, activeScoreType } = this.state;
+    const filteredScores = this.filterScores();
+    // Capitalize the first letter of activeGame
+    const capitalizedActiveGame =
+      activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
     return (
-      <div className="container">
-        <h3 className="display-5 mb-5">Leaderboard</h3>
+      <div className="container mt-5">
+        <h3 className="display-4 mb-5">Leaderboard</h3>
         <LeaderboardNav
           onGameChange={this.handleGameChange}
           onScoreTypeChange={this.handleScoreTypeChange}
         />
-        <div className="leaderboard-scores">
+        <h4 className="display-6 mb-2">{capitalizedActiveGame}</h4>
+        <div className="list-group">
           {filteredScores.map((score, index) => (
             <LeaderboardScore
               key={index}
+              rank={score.rank}
               name={score.username}
               score={score.score}
               game={score.game}
             />
           ))}
         </div>
-        <p className="mt-3">
-          Showing {activeScoreType === "personal" ? "personal" : "worldwide"}{" "}
-          scores for {activeGame}
-        </p>
       </div>
     );
   }

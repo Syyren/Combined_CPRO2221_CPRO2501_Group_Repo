@@ -1,17 +1,16 @@
 import React from "react";
 
-const LeaderboardScore = ({ name, score, game }) => {
-  // Function to capitalize the first letter of a string
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-
+const LeaderboardScore = ({ rank, name, score }) => {
   return (
-    <div className="row leaderboard-score">
-      <div className="col">{name}</div>
-      <div className="col">{score}</div>
-      <div className="col">{capitalizeFirstLetter(game)}</div>
-    </div>
+    <a href="#" className="list-group-item list-group-item-action">
+      <div className="d-flex w-100 justify-content-between align-items-center">
+        <div className="d-flex align-items-center">
+          <span className="badge bg-primary me-2">{rank}</span>
+          <h5 className="mb-0">{name}</h5>
+        </div>
+        <small>{score}</small>
+      </div>
+    </a>
   );
 };
 
