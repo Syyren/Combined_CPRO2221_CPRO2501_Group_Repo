@@ -85,35 +85,35 @@ public class GameInProgressService {
         GameInProgress game = getGameById(gameId);
         String[] boardState = game.getBoardState();
         if (Objects.equals(boardState[0], boardState[3]) && Objects.equals(boardState[3], boardState[6]) && boardState[0] != null) {
-            //System.out.println("Game won on column 1\nPlayer: "+boardState[0]);
+            System.out.println("Game won on column 1\nPlayer: "+boardState[0]);
             return boardState[0];
         }
         if (Objects.equals(boardState[1], boardState[4]) && Objects.equals(boardState[4], boardState[7]) && boardState[1] != null) {
-            //System.out.println("Game won on column 2\nPlayer: "+boardState[1]);
+            System.out.println("Game won on column 2\nPlayer: "+boardState[1]);
             return boardState[1];
         }
         if (Objects.equals(boardState[2], boardState[5]) && Objects.equals(boardState[5], boardState[8]) && boardState[2] != null) {
-            //System.out.println("Game won on column 3\nPlayer: "+boardState[2]);
+            System.out.println("Game won on column 3\nPlayer: "+boardState[2]);
             return boardState[2];
         }
         if (Objects.equals(boardState[0], boardState[1]) && Objects.equals(boardState[1], boardState[2]) && boardState[0] != null) {
-            //System.out.println("Game won on row 1\nPlayer: "+boardState[0]);
+            System.out.println("Game won on row 1\nPlayer: "+boardState[0]);
             return boardState[0];
         }
         if (Objects.equals(boardState[3], boardState[4]) && Objects.equals(boardState[4], boardState[5]) && boardState[3] != null) {
-            //System.out.println("Game won on row 2\nPlayer: "+boardState[3]);
+            System.out.println("Game won on row 2\nPlayer: "+boardState[3]);
             return boardState[3];
         }
         if (Objects.equals(boardState[6], boardState[7]) && Objects.equals(boardState[7], boardState[8]) && boardState[6] != null) {
-            //System.out.println("Game won on row 3\nPlayer: "+boardState[6]);
+            System.out.println("Game won on row 3\nPlayer: "+boardState[6]);
             return boardState[6];
         }
-        if (Objects.equals(boardState[0], boardState[5]) && Objects.equals(boardState[5], boardState[8]) && boardState[0] != null) {
-            //System.out.println("Game won on negative diagonal\nPlayer: "+boardState[0]);
+        if (Objects.equals(boardState[0], boardState[4]) && Objects.equals(boardState[4], boardState[8]) && boardState[0] != null) {
+            System.out.println("Game won on negative diagonal\nPlayer: "+boardState[0]);
             return boardState[0];
         }
-        if (Objects.equals(boardState[2], boardState[5]) && Objects.equals(boardState[5], boardState[6]) && boardState[2] != null) {
-            //System.out.println("Game won on positive diagonal\nPlayer: "+boardState[2]);
+        if (Objects.equals(boardState[2], boardState[4]) && Objects.equals(boardState[4], boardState[6]) && boardState[2] != null) {
+            System.out.println("Game won on positive diagonal\nPlayer: "+boardState[2]);
             return boardState[2];
         }
         for (int i = 0; i<boardState.length;i++) {

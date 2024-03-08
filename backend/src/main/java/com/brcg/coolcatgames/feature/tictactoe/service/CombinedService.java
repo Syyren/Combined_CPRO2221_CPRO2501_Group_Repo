@@ -41,6 +41,7 @@ public class CombinedService {
                 TictactoeStats newStats = new TictactoeStats();
                 newStats.setUserId(userId1);
                 newStats.setScore(1000);
+                user1Score=newStats;
                 scoreService.saveTictactoeStats(newStats);
             }
             List<TictactoeStats> user2Scores= scoreService.getScoresByUserId(userId2);
@@ -52,6 +53,7 @@ public class CombinedService {
                 TictactoeStats newStats = new TictactoeStats();
                 newStats.setUserId(userId2);
                 newStats.setScore(1000);
+                user2Score=newStats;
                 scoreService.saveTictactoeStats(newStats);
             }
             List<TictactoeStats> statsToReturn = new ArrayList<TictactoeStats>();
