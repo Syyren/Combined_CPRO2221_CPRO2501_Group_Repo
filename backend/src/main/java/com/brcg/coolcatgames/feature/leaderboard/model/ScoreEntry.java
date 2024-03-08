@@ -5,7 +5,7 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "Scores")
+@Document(collection = "scores")
 @TypeAlias("Scores")
 public class ScoreEntry extends Scores{
 

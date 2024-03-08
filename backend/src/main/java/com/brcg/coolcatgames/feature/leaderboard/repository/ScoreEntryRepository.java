@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Document(collection = "Scores")
+@Document(collection = "scores")
 public interface ScoreEntryRepository extends MongoRepository<ScoreEntry, String> {
     // Find scores by gameId
     List<ScoreEntry> findByGameName(String gameName, Sort score);

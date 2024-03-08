@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Scores")
+@Document(collection = "scores")
 // *Important Note* This only has data validation if you use the save endpoint in ScoreEntityController
 public abstract class Scores {
     @Id
