@@ -29,6 +29,14 @@ export default function App() {
           <Route path="/achievements" element={<AchievementTest />} />
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />{" "}
+          {/* Setting a second home path for clean routing */}
+          <Route path="/about" element={<About />} />
+          <Route path="/achievements" element={<AchievementTest />} />
+          <Route path="/games/hangman" element={<Hangman />} />
+          <Route path="*" element={<NoPage />} />{" "}
+          {/* All undefined routes will raise the 404 page here */}
         </Routes>
       </BrowserRouter>
     </div>
