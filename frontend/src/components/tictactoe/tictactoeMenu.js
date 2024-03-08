@@ -107,7 +107,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player1 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               10 +
                               "&conclusion=WINNER",
                             { method: "PUT" }
@@ -115,7 +115,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player2 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               -10 +
                               "&conclusion=LOSER",
                             { method: "PUT" }
@@ -130,7 +130,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player1 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               -10 +
                               "&conclusion=LOSER",
                             { method: "PUT" }
@@ -138,7 +138,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player2 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               10 +
                               "&conclusion=WINNER",
                             { method: "PUT" }
@@ -153,7 +153,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player1 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               0 +
                               "&conclusion=DRAW",
                             { method: "PUT" }
@@ -161,7 +161,7 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
                               updatedGame.player2 +
-                              "?deltascore=" +
+                              "?deltaScore=" +
                               0 +
                               "&conclusion=DRAW",
                             { method: "PUT" }
