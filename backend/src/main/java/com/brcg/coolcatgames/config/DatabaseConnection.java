@@ -24,7 +24,6 @@ public class DatabaseConnection extends AbstractMongoClientConfiguration {
     protected String getDatabaseName() {
         return database;
     }
-
     @Override
     public MongoClient mongoClient() {
         return MongoClients.create("mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games");
