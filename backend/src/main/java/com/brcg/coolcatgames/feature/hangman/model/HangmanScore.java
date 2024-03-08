@@ -1,18 +1,19 @@
 package com.brcg.coolcatgames.feature.hangman.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
 //@EqualsAndHashCode(callSuper = true)
-@Document(collection = "Scores")
+@Document(collection = "scores")
 public class HangmanScore {//extends Scores {
+    private String userId;
     private int score;
     private String gameName;
-    private String userId;
+
     private String leaderboard;
 
     // Constructor
