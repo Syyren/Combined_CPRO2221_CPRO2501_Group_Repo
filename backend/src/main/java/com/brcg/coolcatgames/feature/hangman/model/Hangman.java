@@ -1,7 +1,6 @@
 package com.brcg.coolcatgames.feature.hangman.model;
 
 import lombok.Data;
-
 import java.util.Arrays;
 
 @Data
@@ -11,10 +10,14 @@ public class Hangman {
     private char letterGuessed;
     private HangmanScore score = new HangmanScore();
 
+    private boolean again;
+    private String gameStatus;
+
     //game values
-    private int guesses = 7;
+    private int guesses = 8;
     private int scoreOnGuess = 5;
     private int scoreOnWin = 50;
+    private final int flawless = guesses;
 
     //constructor
     public Hangman(){
@@ -48,7 +51,6 @@ public class Hangman {
     //handles logic upon picking letter
     public void guessLetter(char letterGuessed){
         if (letterInSecretWord(letterGuessed)) {
-            score.updateScore(scoreOnGuess);
             revealLetter(letterGuessed);
         } else {
             wrongLetter();
@@ -69,54 +71,55 @@ public class Hangman {
     private void revealLetter(char letterGuessed) {
         for (int i = 0; i < secretWord.length; i++) {
             if (secretWord[i] == letterGuessed) {
+                score.updateScore(scoreOnGuess);
                 this.displayedWord[i] = letterGuessed;
             }
         }
-
-        System.out.println("Updated displayedWord: " + String.valueOf(displayedWord));
-
         if (String.valueOf(displayedWord).equals(String.valueOf(secretWord))) {
             win();
         }
+        System.out.println("Updated displayedWord: " + String.valueOf(displayedWord));
+
     }
 
     //decrements guesses remaining
     private void wrongLetter(){
         this.guesses--;
-        if (this.guesses == 0){
-            gameOver();
-        }
+        if (guesses == 0)
+            lose();
     }
 
-    //when game is lost or refuse to continue
-    public void gameOver(){
-        score.resetScore();
-        newGame();
-    }
 
     //when game is won
     public void win(){
+        //double points on flawless win
+        if (flawless == guesses)
+            score.updateScore(scoreOnWin);
         score.updateScore(scoreOnWin);
-        if(playAgain()){
-            newGame();
-        } else {
-            gameOver();
-        }
+        this.gameStatus = "won";
     }
 
-    //prompt for replay
-    private boolean playAgain(){
-        //prompt here
-        return true;
+    public void lose(){
+        this.displayedWord = this.secretWord;
+        this.gameStatus = "lost";
     }
 
-    //New Game +
+    //New game, score resets
     public void newGame(){
+        this.guesses = 7;
+        score.resetScore();
+        getSecretWord();
+        setDisplayedWord();
+        this.gameStatus = "in progress";
+    }
+
+    //Continue Game, score persists
+    public void continueGame(){
         this.guesses = 7;
         getSecretWord();
         setDisplayedWord();
+        this.gameStatus = "in progress";
     }
-
     //get total score
     public int getTotalScore(){
         return score.getScore();

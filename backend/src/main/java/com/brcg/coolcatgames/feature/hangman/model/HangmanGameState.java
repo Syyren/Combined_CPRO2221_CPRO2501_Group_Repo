@@ -9,5 +9,5 @@ public class HangmanGameState {
     private char[] displayedWord;
     private int guessesLeft;
     private int totalScore;
-
+    private String gameStatus;
 }
