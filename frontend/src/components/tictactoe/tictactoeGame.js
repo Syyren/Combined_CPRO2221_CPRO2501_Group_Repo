@@ -13,6 +13,8 @@ import michellePawImg from "../../images/tictactoe/michelle_paw.png";
 import azazPawImg from "../../images/tictactoe/azazMerchant_paw.png";
 import alvanPawImg from "../../images/tictactoe/alvanNee_paw.png";
 import bobaPawImg from "../../images/tictactoe/boba_paw.png";
+import tenleyPawImg from "../../images/tictactoe/tenley_paw.png";
+import monaPawImg from "../../images/tictactoe/mona_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
@@ -163,7 +165,17 @@ export default function TictactoeGame(props) {
                 <br /> Image source: Alvan Nee/Unsplash
               </p>
             </div>,
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={tenleyPawImg}
+                alt="(O) Tenley the cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Tenley (O)
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
                 src={michellePawImg}
@@ -183,7 +195,7 @@ export default function TictactoeGame(props) {
                 style={{ width: "100%" }}
               ></img>
               <p style={{ fontSize: "0.6em" }}>
-                Boba (X)
+                Boba (O)
                 <br /> Image source: Ryan McGrandle
               </p>
             </div>,
@@ -199,7 +211,17 @@ export default function TictactoeGame(props) {
                 Image source: Martin Ruegner/Getty Images
               </p>
             </div>,
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={monaPawImg}
+                alt="(O) Mona the cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Mona (O)
+                <br /> Image source: Travis Boblin
+              </p>
+            </div>,
           ];
           // set up the boardDisplay variable with a list of images or buttons to display given the current board state
           setBoardDisplay(
