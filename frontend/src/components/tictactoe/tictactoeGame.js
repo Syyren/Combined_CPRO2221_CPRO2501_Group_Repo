@@ -224,66 +224,74 @@ export default function TictactoeGame(props) {
             </div>,
           ];
           // set up the boardDisplay variable with a list of images or buttons to display given the current board state
-          setBoardDisplay(
-            boardState.map((division, i) => {
-              return (
-                <div style={{ position: "absolute" }}>
-                  {division === data.player1 ? (
-                    // Player 1 played here, so get the JSX from the X list
-                    X[i]
-                  ) : division === data.player2 ? (
-                    // Player 2 played here, so get the JSX from the Y list
-                    O[i]
-                  ) : (
-                    // No player has played here, so display a button
-                    <button
-                      style={{ width: "100%", height: "100%" }}
-                      onClick={async function () {
-                        // When the button is clicked, try to put the player's turn
-                        await fetch(
-                          "http://localhost:8090/tictactoe/update/" +
-                            props.gameId +
-                            "?playerId=" +
-                            props.currentPlayer +
-                            "&position=" +
-                            i,
-                          {
-                            method: "PUT",
-                            mode: "cors",
-                            cache: "no-cache",
-                          }
-                        )
-                          .then((res) => res.json())
-                          .then((data) => {
-                            // Store the game data for use later
-                            setCurrentGame(data);
-                            // Let the parent element know a move has been made
-                            if (props.callback) {
-                              props.callback(currentGame);
-                            }
-                          });
-                      }}
-                    >
-                      <img
-                        src={blank}
-                        alt="blank space for making button larger"
-                        style={{ width: "80%", height: "80%" }}
-                      ></img>
-                    </button>
-                  )}
-                </div>
+          if (boardState) {
+            if (boardState.constructor === Array) {
+              setBoardDisplay(
+                boardState.map((division, i) => {
+                  return (
+                    <div style={{ position: "absolute" }}>
+                      {division === data.player1 ? (
+                        // Player 1 played here, so get the JSX from the X list
+                        X[i]
+                      ) : division === data.player2 ? (
+                        // Player 2 played here, so get the JSX from the Y list
+                        O[i]
+                      ) : (
+                        // No player has played here, so display a button
+                        <button
+                          style={{ width: "100%", height: "100%" }}
+                          onClick={async function () {
+                            // When the button is clicked, try to put the player's turn
+                            await fetch(
+                              "http://localhost:8090/tictactoe/update/" +
+                                props.gameId +
+                                "?playerId=" +
+                                props.currentPlayer +
+                                "&position=" +
+                                i,
+                              {
+                                method: "PUT",
+                                mode: "cors",
+                                cache: "no-cache",
+                              }
+                            )
+                              .then((res) => res.json())
+                              .then((data) => {
+                                // Store the game data for use later
+                                setCurrentGame(data);
+                                // Let the parent element know a move has been made
+                                if (props.callback) {
+                                  props.callback(currentGame);
+                                }
+                              });
+                          }}
+                        >
+                          <img
+                            src={blank}
+                            alt="blank space for making button larger"
+                            style={{ width: "80%", height: "80%" }}
+                          ></img>
+                        </button>
+                      )}
+                    </div>
+                  );
+                })
               );
-            })
-          );
+            }
+          }
         });
     } else {
       // No game has been selected, so display an empty board
       setBoardState([null, null, null, null, null, null, null, null, null]);
-      setBoardDisplay(
-        boardState.map((data, i) => {
-          return <div style={{ position: "absolute" }}></div>;
-        })
-      );
+      if (boardState) {
+        if (boardState.constructor === Array) {
+          setBoardDisplay(
+            boardState.map((data, i) => {
+              return <div style={{ position: "absolute" }}></div>;
+            })
+          );
+        }
+      }
     }
     // The following list is of the deps for this react useEffect(); it will only run this subfunction when one of these variables changes
   }, [currentGame, props]);

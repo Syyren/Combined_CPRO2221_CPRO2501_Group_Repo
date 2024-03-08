@@ -27,7 +27,7 @@ let fakeUsersList = [
   "420forL1fe",
 ];
 
-let fakeCurrentUser = "Watson";
+let fakeCurrentUser = "Kaden";
 
 export default function TictactoeMenu() {
   //console.log("Loading tictactoe");
@@ -82,12 +82,93 @@ export default function TictactoeMenu() {
                   gameId={currentGame.id}
                   currentPlayer={currentUserId}
                   callback={function (updatedGame) {
-                    setDisplayTictactoeGame(
-                      <TictactoeGame
-                        gameId={updatedGame.id}
-                        currentPlayer={currentUserId}
-                      />
-                    );
+                    console.log(updatedGame);
+                    console.log(updatedGame.id);
+                    fetch(
+                      "http://localhost:8090/tictactoe/checkWinner/" +
+                        updatedGame.id
+                    )
+                      .then((res) => res.text())
+                      .then((data) => {
+                        console.log(data);
+                        if (data == null) {
+                          setDisplayTictactoeGame(
+                            <TictactoeGame
+                              gameId={updatedGame.id}
+                              currentPlayer={currentUserId}
+                            />
+                          );
+                        } else if (data === updatedGame.player1) {
+                          fetch(
+                            "http://localhost:8090/tictactoe/delete/" +
+                              updatedGame.id,
+                            { method: "DELETE" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player1 +
+                              "?deltascore=" +
+                              10 +
+                              "&conclusion=WINNER",
+                            { method: "PUT" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player2 +
+                              "?deltascore=" +
+                              -10 +
+                              "&conclusion=LOSER",
+                            { method: "PUT" }
+                          );
+                          setDisplayTictactoeGame(<TictactoeGame />);
+                        } else if (data === updatedGame.player2) {
+                          fetch(
+                            "http://localhost:8090/tictactoe/delete/" +
+                              updatedGame.id,
+                            { method: "DELETE" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player1 +
+                              "?deltascore=" +
+                              -10 +
+                              "&conclusion=LOSER",
+                            { method: "PUT" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player2 +
+                              "?deltascore=" +
+                              10 +
+                              "&conclusion=WINNER",
+                            { method: "PUT" }
+                          );
+                          setDisplayTictactoeGame(<TictactoeGame />);
+                        } else if (data === "draw") {
+                          fetch(
+                            "http://localhost:8090/tictactoe/delete/" +
+                              updatedGame.id,
+                            { method: "DELETE" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player1 +
+                              "?deltascore=" +
+                              0 +
+                              "&conclusion=DRAW",
+                            { method: "PUT" }
+                          );
+                          fetch(
+                            "http://localhost:8090/scores/tictactoe/update/" +
+                              updatedGame.player2 +
+                              "?deltascore=" +
+                              0 +
+                              "&conclusion=DRAW",
+                            { method: "PUT" }
+                          );
+                          setDisplayTictactoeGame(<TictactoeGame />);
+                        }
+                      });
                   }}
                 />
               );
@@ -107,49 +188,51 @@ export default function TictactoeMenu() {
     usersIdsList.filter((e) => e !== currentUserId && !allOpponents.includes(e))
   ).slice(0, Math.min(10, usersIdsList.length - 1));
   //console.log(usersIdsList);
-  var recomendedUsers = usersIdsList.map((userId) => {
-    return (
-      <li key={userId}>
-        <button
-          class="btn btn-primary"
-          // When this button is clicked, create a new game in the database, then load it
-          onClick={async function () {
-            await fetch("http://localhost:8090/tictactoe/save", {
-              method: "POST",
-              mode: "cors",
-              cache: "no-cache",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                player1: currentUserId,
-                player2: userId,
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                var tempId = data.id;
+  if (usersIdsList.constructor === Array) {
+    var recomendedUsers = usersIdsList.map((userId) => {
+      return (
+        <li key={userId}>
+          <button
+            class="btn btn-primary"
+            // When this button is clicked, create a new game in the database, then load it
+            onClick={async function () {
+              await fetch("http://localhost:8090/tictactoe/save", {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  player1: currentUserId,
+                  player2: userId,
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  var tempId = data.id;
 
-                setDisplayTictactoeGame(
-                  <TictactoeGame
-                    gameId={tempId}
-                    currentPlayer={currentUserId}
-                    callback={function (updatedGame) {
-                      setDisplayTictactoeGame(
-                        <TictactoeGame
-                          gameId={updatedGame.id}
-                          currentPlayer={currentUserId}
-                        />
-                      );
-                    }}
-                  />
-                );
-              });
-          }}
-        >
-          Start game against {userId}
-        </button>
-      </li>
-    );
-  });
+                  setDisplayTictactoeGame(
+                    <TictactoeGame
+                      gameId={tempId}
+                      currentPlayer={currentUserId}
+                      callback={function (updatedGame) {
+                        setDisplayTictactoeGame(
+                          <TictactoeGame
+                            gameId={updatedGame.id}
+                            currentPlayer={currentUserId}
+                          />
+                        );
+                      }}
+                    />
+                  );
+                });
+            }}
+          >
+            Start game against {userId}
+          </button>
+        </li>
+      );
+    });
+  }
   // Finalize display
   return (
     <div class="row row-cols-2">
