@@ -7,6 +7,9 @@ import hyperBobaHeadImg from "../../images/tictactoe/hyperBoba_head.png";
 import tenleyHeadImg from "../../images/tictactoe/tenley_head.png";
 import monaHeadImg from "../../images/tictactoe/mona_head.png";
 import alvanHeadImg from "../../images/tictactoe/alvanNee_head.png";
+import happyBobaHeadImg from "../../images/tictactoe/happyBoba_head.png";
+import odinHeadImg from "../../images/tictactoe/odin_head.png";
+
 import maxwellPawImg from "../../images/tictactoe/maxwell_paw.png";
 import martinPawImg from "../../images/tictactoe/martin_paw.png";
 import michellePawImg from "../../images/tictactoe/michelle_paw.png";
@@ -15,6 +18,7 @@ import alvanPawImg from "../../images/tictactoe/alvanNee_paw.png";
 import bobaPawImg from "../../images/tictactoe/boba_paw.png";
 import tenleyPawImg from "../../images/tictactoe/tenley_paw.png";
 import monaPawImg from "../../images/tictactoe/mona_paw.png";
+import odinPawImg from "../../images/tictactoe/odin_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
 export default function TictactoeGame(props) {
@@ -114,8 +118,28 @@ export default function TictactoeGame(props) {
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
-            "X",
-            "X",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={happyBobaHeadImg}
+                alt="(X) Boba the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Boba (X)
+                <br /> Image source: Ryan McGrandle
+              </p>
+            </div>,
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={odinHeadImg}
+                alt="(X) Odin the cat's face"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Odin (X)
+                <br /> Image source: Samantha Lysons
+              </p>
+            </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
                 src={hyperBobaHeadImg}
@@ -141,7 +165,17 @@ export default function TictactoeGame(props) {
                 <br /> Image source: Travis Boblin
               </p>
             </div>,
-            "O",
+            <div style={{ textAlign: "center", width: "70%" }}>
+              <img
+                src={odinPawImg}
+                alt="(O) Odin the cat's paw"
+                style={{ width: "100%" }}
+              ></img>
+              <p style={{ fontSize: "0.6em" }}>
+                Odin (O)
+                <br /> Image source: Samantha Lysons
+              </p>
+            </div>,
             <div style={{ textAlign: "center", width: "70%" }}>
               <img
                 src={azazPawImg}
