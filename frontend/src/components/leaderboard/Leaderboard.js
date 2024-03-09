@@ -1,53 +1,38 @@
 import React from "react";
 import LeaderboardNav from "./LeaderboardNav";
 import LeaderboardScore from "./LeaderboardScore";
+import {
+  getAllScores,
+  getScoresByGame,
+  getScoresByUser,
+  getScoresByUserAndGame,
+  submitScore,
+} from "../../controllers/LeaderboardController";
 
 class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       scores: [], // Your scores array
-      activeGame: "hangman",
+      activeGame: "tictactoe",
       activeScoreType: "personal",
-      currentUser: "Player1", // Assuming the current user is 'Player1'
+      currentUser: "Mario", // Assuming the current user is 'Player1'
     };
   }
 
   componentDidMount() {
-    // Simulating fetching scores from an API or database
+    // Fetch scores from the backend when the component mounts
     this.fetchScores();
   }
 
-  fetchScores = () => {
-    // Example scores
-    const exampleScores = [];
-
-    // Function to generate a random score
-    const generateRandomScore = () => Math.floor(Math.random() * 100) + 1;
-
-    // Generate 5 example scores for each game
-    const games = ["hangman", "tictactoe", "idlerunner", "galaga"];
-    for (let i = 0; i < games.length; i++) {
-      for (let j = 1; j <= 5; j++) {
-        exampleScores.push({
-          username: `Player${j}`,
-          score: generateRandomScore(),
-          game: games[i],
-        });
-      }
+  fetchScores = async () => {
+    try {
+      // Retrieve all scores from the backend
+      const scores = await getAllScores();
+      this.setState({ scores });
+    } catch (error) {
+      console.error("Error fetching scores:", error);
     }
-
-    // Sort the scores array in descending order based on the score
-    const sortedScores = exampleScores.sort((a, b) => b.score - a.score);
-
-    // Assign ranks to the sorted scores
-    const rankedScores = sortedScores.map((score, index) => ({
-      ...score,
-      rank: index + 1, // Rank starts from 1
-    }));
-
-    // Update state with ranked scores
-    this.setState({ scores: rankedScores });
   };
 
   filterScores = () => {
@@ -57,8 +42,9 @@ class Leaderboard extends React.Component {
     let filteredScores = scores.filter(
       (score) =>
         (activeScoreType === "personal"
-          ? score.username === currentUser
-          : true) && (activeGame === "all" ? true : score.game === activeGame)
+          ? score.userId === currentUser // Adjusted to use userId
+          : true) &&
+        (activeGame === "all" ? true : score.gameName === activeGame) // Adjusted to use gameName
     );
 
     // If active game is not 'all', assign ranks within the group of scores for that game
@@ -90,7 +76,7 @@ class Leaderboard extends React.Component {
   };
 
   render() {
-    const { activeGame, activeScoreType } = this.state;
+    const { activeGame, activeScoreType, currentUser } = this.state;
     const filteredScores = this.filterScores();
     // Capitalize the first letter of activeGame
     const capitalizedActiveGame =
@@ -106,11 +92,12 @@ class Leaderboard extends React.Component {
         <div className="list-group">
           {filteredScores.map((score, index) => (
             <LeaderboardScore
-              key={index}
-              rank={score.rank}
-              name={score.username}
-              score={score.score}
-              game={score.game}
+              key={score.id} // Use a unique identifier as the key
+              rank={index + 1} // Assuming the rank is based on the index
+              name={score.userId} // Use userId as the name
+              score={score.score} // Assuming there is a 'score' property
+              game={score.gameName} // Use gameName as the game
+              currentUser={currentUser}
             />
           ))}
         </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"; // Importing Link so that the navbar ca
 // This function creates the navbar for the layout and returns it
 export default function NavBar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav className="navbar navbar-expand-lg bg-secondary" data-bs-theme="dark">
       <div className="container-fluid">
         <a className="navbar-brand">CoolCatGames.com</a>
         <button

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const LeaderboardNav = ({ onGameChange, onScoreTypeChange }) => {
-  const [selectedGame, setSelectedGame] = useState("hangman");
+  const [selectedGame, setSelectedGame] = useState("tictactoe");
   const [selectedScoreType, setSelectedScoreType] = useState("personal");
 
   const handleGameChange = (e) => {
