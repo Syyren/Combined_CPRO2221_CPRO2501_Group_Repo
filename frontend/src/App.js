@@ -5,6 +5,7 @@ import NoPage from "./pages/NoPage";
 import LeaderboardTest from "./pages/LeaderboardTest"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
 import Hangman from "./pages/games/Hangman";
+import TictactoeMenu from "./components/tictactoe/tictactoeMenu";
 
 export default function App() {
   //setting the app routes
@@ -21,6 +22,7 @@ export default function App() {
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
           <Route path="/games/hangman" element={<Hangman />} />
+          <Route path="/games/tictactoe" element={<TictactoeMenu />} />
         </Routes>
       </BrowserRouter>
     </div>
