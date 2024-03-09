@@ -2,11 +2,8 @@ import React from "react";
 import LeaderboardNav from "./LeaderboardNav";
 import LeaderboardScore from "./LeaderboardScore";
 import {
-  getAllScores,
   getScoresByGame,
-  getScoresByUser,
   getScoresByUserAndGame,
-  submitScore,
 } from "../../controllers/LeaderboardController";
 
 class Leaderboard extends React.Component {
@@ -16,7 +13,7 @@ class Leaderboard extends React.Component {
       scores: [], // Your scores array
       activeGame: "tictactoe",
       activeScoreType: "personal",
-      currentUser: "Mario", // Assuming the current user is 'Player1'
+      currentUser: "Mario", // Assuming the current user is 'Mario'
     };
   }
 
@@ -27,8 +24,17 @@ class Leaderboard extends React.Component {
 
   fetchScores = async () => {
     try {
-      // Retrieve all scores from the backend
-      const scores = await getAllScores();
+      const { activeScoreType, activeGame, currentUser } = this.state;
+      let scores = [];
+
+      if (activeScoreType === "global") {
+        // Fetch scores based on the game name for global searches
+        scores = await getScoresByGame(activeGame);
+      } else if (activeScoreType === "personal") {
+        // Fetch scores based on both user ID and game name for personal searches
+        scores = await getScoresByUserAndGame(currentUser, activeGame);
+      }
+
       this.setState({ scores });
     } catch (error) {
       console.error("Error fetching scores:", error);
@@ -36,47 +42,25 @@ class Leaderboard extends React.Component {
   };
 
   filterScores = () => {
-    const { scores, activeGame, activeScoreType, currentUser } = this.state;
+    const { scores } = this.state;
 
-    // Filter scores based on the active game and score type
-    let filteredScores = scores.filter(
-      (score) =>
-        (activeScoreType === "personal"
-          ? score.userId === currentUser // Adjusted to use userId
-          : true) &&
-        (activeGame === "all" ? true : score.gameName === activeGame) // Adjusted to use gameName
-    );
+    // Sorting scores based on score value in descending order
+    const sortedScores = scores.sort((a, b) => b.score - a.score);
 
-    // If active game is not 'all', assign ranks within the group of scores for that game
-    if (activeGame !== "all" && filteredScores.length > 0) {
-      // Sort the filtered scores array in descending order based on the score
-      filteredScores.sort((a, b) => b.score - a.score);
-
-      // Assign ranks within the group of scores for the active game
-      let rank = 1;
-      let prevScore = filteredScores[0].score;
-      filteredScores.forEach((score, index) => {
-        if (score.score !== prevScore) {
-          rank = index + 1;
-        }
-        score.rank = rank;
-        prevScore = score.score;
-      });
-    }
-
-    return filteredScores;
+    // Return the top 10 scores
+    return sortedScores.slice(0, 10);
   };
 
   handleGameChange = (game) => {
-    this.setState({ activeGame: game });
+    this.setState({ activeGame: game }, this.fetchScores);
   };
 
   handleScoreTypeChange = (scoreType) => {
-    this.setState({ activeScoreType: scoreType });
+    this.setState({ activeScoreType: scoreType }, this.fetchScores);
   };
 
   render() {
-    const { activeGame, activeScoreType, currentUser } = this.state;
+    const { activeGame, currentUser } = this.state;
     const filteredScores = this.filterScores();
     // Capitalize the first letter of activeGame
     const capitalizedActiveGame =
