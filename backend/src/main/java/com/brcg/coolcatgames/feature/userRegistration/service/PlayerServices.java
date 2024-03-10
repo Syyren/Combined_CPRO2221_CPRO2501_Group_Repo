@@ -16,6 +16,7 @@ public class PlayerServices {
     }
 
     public Iterable<Player> listAll() {
+
         return this.playerRepository.findAll();
     }
 
