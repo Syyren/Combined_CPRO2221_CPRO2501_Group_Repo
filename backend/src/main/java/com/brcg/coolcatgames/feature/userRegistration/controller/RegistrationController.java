@@ -1,10 +1,11 @@
 package com.brcg.coolcatgames.feature.userRegistration.controller;
 
 import com.brcg.coolcatgames.feature.userRegistration.model.Player;
-import com.brcg.coolcatgames.service.PlayerServices;
+import com.brcg.coolcatgames.feature.userRegistration.service.PlayerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -60,4 +61,16 @@ public class RegistrationController {
     }
 
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @PostMapping("/login")
+    public String  loginPlayer(@RequestBody Player player) {
+        Player existingPlayer = playerServices.getPlayerByID(player.getId());
+        if (existingPlayer != null && passwordEncoder.matches(player.getPassword(), existingPlayer.getPassword())) {
+            return "Login successful";
+        } else {
+            return "Invalid username or password";
+        }
+    }
 }
