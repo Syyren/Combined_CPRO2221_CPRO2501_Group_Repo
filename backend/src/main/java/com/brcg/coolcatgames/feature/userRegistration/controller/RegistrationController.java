@@ -1,12 +1,16 @@
 package com.brcg.coolcatgames.feature.userRegistration.controller;
 
+
 import com.brcg.coolcatgames.feature.userRegistration.model.Player;
 import com.brcg.coolcatgames.feature.userRegistration.service.PlayerServices;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -65,12 +69,22 @@ public class RegistrationController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public String  loginPlayer(@RequestBody Player player) {
+    public ResponseEntity<?> loginPlayer(@RequestBody Player player, HttpServletRequest request) {
         Player existingPlayer = playerServices.getPlayerByID(player.getId());
+        logger.info("Received login request: Method = {}, URI = {}", request.getMethod(), request.getRequestURI());
         if (existingPlayer != null && passwordEncoder.matches(player.getPassword(), existingPlayer.getPassword())) {
-            return "Login successful";
+            return ResponseEntity.ok("Login successful");
         } else {
-            return "Invalid username or password";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
+    }
+    private static final Logger logger = LoggerFactory.getLogger(Player.class);
+    @GetMapping("/login")
+    public ResponseEntity<String> handleIncorrectGetMethod(HttpServletRequest request) {
+        String ip = request.getRemoteAddr();
+        String userAgent = request.getHeader("User-Agent");
+        logger.info("Incorrect GET request to /login from IP: {} with User-Agent: {}", ip, userAgent);
+
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Please use POST to log in.");
     }
 }
