@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+//test
 @Configuration
 @EnableMongoRepositories(basePackages = "com.brcg.coolcatgames")
 public class DatabaseConnection extends AbstractMongoClientConfiguration {
@@ -26,6 +27,8 @@ public class DatabaseConnection extends AbstractMongoClientConfiguration {
     }
     @Override
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games");
+        return MongoClients.create(
+                "mongodb+srv://" + username + ":"+password+"@" + database +".ryd0b60.mongodb.net/?retryWrites=true&w=majority&appName=cool-cat-games"
+        );
     }
 }
