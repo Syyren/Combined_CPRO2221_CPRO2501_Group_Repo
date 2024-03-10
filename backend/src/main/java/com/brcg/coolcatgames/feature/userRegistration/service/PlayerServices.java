@@ -1,7 +1,7 @@
-package com.brcg.coolcatgames.service;
+package com.brcg.coolcatgames.feature.userRegistration.service.;
 
-import com.brcg.coolcatgames.model.Player;
-import com.brcg.coolcatgames.repository.PlayerRepository;
+import com.brcg.coolcatgames.feature.userRegistration.model.Player;
+import com.brcg.coolcatgames.feature.userRegistration.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

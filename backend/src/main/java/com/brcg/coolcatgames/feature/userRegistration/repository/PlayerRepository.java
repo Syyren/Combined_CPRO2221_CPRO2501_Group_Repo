@@ -1,9 +1,7 @@
-package com.brcg.coolcatgames.repository;
+package com.brcg.coolcatgames.feature.userRegistration.repository;
 
-import com.brcg.coolcatgames.model.Player;
+import com.brcg.coolcatgames.feature.userRegistration.model.Player;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.List;
 
 public interface PlayerRepository extends MongoRepository <Player, String>{}
 

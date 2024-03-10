@@ -1,14 +1,11 @@
-package com.brcg.coolcatgames.controller;
+package com.brcg.coolcatgames.feature.userRegistration.controller;
 
-import com.brcg.coolcatgames.model.Player;
-import com.brcg.coolcatgames.repository.PlayerRepository;
+import com.brcg.coolcatgames.feature.userRegistration.model.Player;
 import com.brcg.coolcatgames.service.PlayerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")

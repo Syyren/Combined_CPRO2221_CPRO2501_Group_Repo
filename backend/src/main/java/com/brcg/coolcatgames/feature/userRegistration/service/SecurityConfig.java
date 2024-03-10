@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.service;
+package com.brcg.coolcatgames.feature.userRegistration.service.;
 
 
 import org.springframework.context.annotation.Bean;

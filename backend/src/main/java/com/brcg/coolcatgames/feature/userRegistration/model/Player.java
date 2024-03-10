@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.model;
+package com.brcg.coolcatgames.feature.userRegistration.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
