@@ -12,6 +12,8 @@ export default function App() { //setting the app routes
           <Route path="/home" element={ <Home /> } /> {/* Setting a second home path for clean routing */}
           <Route path="/about" element={ <About /> } />
           <Route path="*" element={ <NoPage /> } /> {/* All undefined routes will raise the 404 page here */}
+          <Route path="/playerRegistration" element= { <PlayerRegistration/>} />
+          <Route path="/login" element= { <Login/>} />
         </Routes>
       </BrowserRouter>
     </div>
