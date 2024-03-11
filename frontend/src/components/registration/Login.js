@@ -40,7 +40,7 @@ function Login() {
     }
   }
   return (
-    <div>
+    <div class="auth">
       <h2> Player Login</h2>
       <div class="container">
         <div class="row">
