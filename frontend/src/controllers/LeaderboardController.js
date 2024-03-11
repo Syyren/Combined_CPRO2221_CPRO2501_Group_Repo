@@ -5,7 +5,9 @@ const API_URL = "http://localhost:8090";
 // Function to retrieve all scores from the backend
 export const getAllScores = async () => {
   try {
-    const res = await axios.get(`${API_URL}/scores/allscores`);
+    const res = await axios.get(`${API_URL}/scores/allscores`, {
+      headers: { Authorization: authToken },
+    });
     const scores = res.data;
     console.log("Scores from API:", scores);
     return scores;
@@ -18,7 +20,9 @@ export const getAllScores = async () => {
 // Function to retrieve scores by game name
 export const getScoresByGame = async (gameName) => {
   try {
-    const res = await axios.get(`${API_URL}/scores/game/${gameName}`);
+    const res = await axios.get(`${API_URL}/scores/game/${gameName}`, {
+      headers: { Authorization: authToken },
+    });
     const scores = res.data;
     console.log(`Scores for game ${gameName} from API:`, scores);
     return scores;
@@ -31,7 +35,9 @@ export const getScoresByGame = async (gameName) => {
 // Function to retrieve scores by user ID
 export const getScoresByUser = async (userId) => {
   try {
-    const res = await axios.get(`${API_URL}/scores/user/${userId}`);
+    const res = await axios.get(`${API_URL}/scores/user/${userId}`, {
+      headers: { Authorization: authToken },
+    });
     const scores = res.data;
     console.log(`Scores for user ${userId} from API:`, scores);
     return scores;
@@ -45,7 +51,10 @@ export const getScoresByUser = async (userId) => {
 export const getScoresByUserAndGame = async (userId, gameName) => {
   try {
     const res = await axios.get(
-      `${API_URL}/scores/user/${userId}/game/${gameName}`
+      `${API_URL}/scores/user/${userId}/game/${gameName}`,
+      {
+        headers: { Authorization: authToken },
+      }
     );
     const scores = res.data;
     console.log(
@@ -65,7 +74,9 @@ export const getScoresByUserAndGame = async (userId, gameName) => {
 // Function to submit a new score
 export const submitScore = async (scoreEntry) => {
   try {
-    const res = await axios.post(`${API_URL}/scores/save`, scoreEntry);
+    const res = await axios.post(`${API_URL}/scores/save`, scoreEntry, {
+      headers: { Authorization: authToken },
+    });
     const savedScore = res.data;
     console.log("Saved score:", savedScore);
     return savedScore;
@@ -74,3 +85,16 @@ export const submitScore = async (scoreEntry) => {
     throw new Error("Failed to submit score");
   }
 };
+
+// Temporary Function to satisfy httpbasic auth Spring Security
+const username = "john_doe";
+const password = "password123";
+const authToken = generateAuthToken(username, password);
+
+function generateAuthToken(username, password) {
+  // Encode the username and password with Base64
+  const authToken = btoa(`${username}:${password}`);
+
+  // Return the complete Authorization header value
+  return `Basic ${authToken}`;
+}
