@@ -24,7 +24,8 @@ import blank from "../../images/tictactoe/blank.png";
 // Authorization, for integration with other features
 const authUserName = "john_doe";
 const authPassword = "password123";
-const authToken = btoa(`${authUserName}:${authPassword}`);
+const preAuthToken = btoa(`${authUserName}:${authPassword}`);
+const authToken = `Basic ${preAuthToken}`;
 
 export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
