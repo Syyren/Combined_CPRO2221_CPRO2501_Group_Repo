@@ -32,7 +32,8 @@ let fakeCurrentUser = "Joel";
 // Authorization, for integration with other features
 const authUserName = "john_doe";
 const authPassword = "password123";
-const authToken = btoa(`${authUserName}:${authPassword}`);
+const preAuthToken = btoa(`${authUserName}:${authPassword}`);
+const authToken = `Basic ${preAuthToken}`;
 
 export default function TictactoeMenu() {
   //console.log("Loading tictactoe");
