@@ -21,6 +21,11 @@ import monaPawImg from "../../images/tictactoe/mona_paw.png";
 import odinPawImg from "../../images/tictactoe/odin_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
+// Authorization, for integration with other features
+const authUserName = "john_doe";
+const authPassword = "password123";
+const authToken = btoa(`${authUserName}:${authPassword}`);
+
 export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
   // boardState is the list of 9 segments that a Tic Tac Toe board is made of, and which players have played in there.
@@ -38,7 +43,10 @@ export default function TictactoeGame(props) {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authToken,
+        },
       })
         .then((res) => res.json())
         .then((data) => {

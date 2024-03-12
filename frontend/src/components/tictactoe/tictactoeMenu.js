@@ -29,6 +29,11 @@ let fakeUsersList = [
 
 let fakeCurrentUser = "Joel";
 
+// Authorization, for integration with other features
+const authUserName = "john_doe";
+const authPassword = "password123";
+const authToken = btoa(`${authUserName}:${authPassword}`);
+
 export default function TictactoeMenu() {
   //console.log("Loading tictactoe");
   // the game to display on the right
@@ -48,7 +53,7 @@ export default function TictactoeMenu() {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: authToken },
     })
       .then((res) => res.json())
       .then((data) => setCurrentGames(data));
@@ -86,7 +91,8 @@ export default function TictactoeMenu() {
                     console.log(updatedGame.id);
                     fetch(
                       "http://localhost:8090/tictactoe/checkWinner/" +
-                        updatedGame.id
+                        updatedGame.id,
+                      { headers: { Authorization: authToken } }
                     )
                       .then((res) => res.text())
                       .then((data) => {
@@ -102,7 +108,10 @@ export default function TictactoeMenu() {
                           fetch(
                             "http://localhost:8090/tictactoe/delete/" +
                               updatedGame.id,
-                            { method: "DELETE" }
+                            {
+                              method: "DELETE",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -110,7 +119,10 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               10 +
                               "&conclusion=WINNER",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -118,14 +130,20 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               -10 +
                               "&conclusion=LOSER",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === updatedGame.player2) {
                           fetch(
                             "http://localhost:8090/tictactoe/delete/" +
                               updatedGame.id,
-                            { method: "DELETE" }
+                            {
+                              method: "DELETE",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -133,7 +151,10 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               -10 +
                               "&conclusion=LOSER",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -141,14 +162,20 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               10 +
                               "&conclusion=WINNER",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === "draw") {
                           fetch(
                             "http://localhost:8090/tictactoe/delete/" +
                               updatedGame.id,
-                            { method: "DELETE" }
+                            {
+                              method: "DELETE",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -156,7 +183,10 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               0 +
                               "&conclusion=DRAW",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           fetch(
                             "http://localhost:8090/scores/tictactoe/update/" +
@@ -164,7 +194,10 @@ export default function TictactoeMenu() {
                               "?deltaScore=" +
                               0 +
                               "&conclusion=DRAW",
-                            { method: "PUT" }
+                            {
+                              method: "PUT",
+                              headers: { Authorization: authToken },
+                            }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         }
@@ -200,7 +233,10 @@ export default function TictactoeMenu() {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: authToken,
+                },
                 body: JSON.stringify({
                   player1: currentUserId,
                   player2: userId,
