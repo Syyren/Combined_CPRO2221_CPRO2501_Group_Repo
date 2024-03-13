@@ -82,7 +82,7 @@ public class ScoreEntryService {
         }
 
         // Default return, should ideally never be reached
-        return null;
+        return newScore;
     }
 }
 
