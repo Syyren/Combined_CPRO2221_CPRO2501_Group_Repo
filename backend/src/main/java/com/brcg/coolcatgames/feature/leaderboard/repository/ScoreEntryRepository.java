@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Document(collection = "Scores")
+@Document(collection = "scores")
 public interface ScoreEntryRepository extends MongoRepository<ScoreEntry, String> {
     // Find scores by gameId
     List<ScoreEntry> findByGameName(String gameName, Sort score);
@@ -21,6 +21,6 @@ public interface ScoreEntryRepository extends MongoRepository<ScoreEntry, String
     // Find scores by userId and gameName with optional sorting
     List<ScoreEntry> findByUserIdAndGameName(String userId, String gameName);
 
-    // Delete Scores by ID
-    void deleteByIdIn(List<String> ids);
+    // Delete scores by Id
+    void deleteByIdIn(List<String> idsToDelete);
 }
