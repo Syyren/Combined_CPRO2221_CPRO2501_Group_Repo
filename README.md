@@ -11,49 +11,49 @@ This is a full stack web application that uses Java EE (via Spring Framework) fo
 
 ################################################
 
-## Features:
+# Features:
 
-### Games
+## Games
 
 In this project we are delivering four games for our users to play.
 
-#### Autorunner
+### Autorunner
 
 A video game in the same vein as the google chrome dinosaur game when there is no internet.
 
-#### Arcade Style Shooter
+### Arcade Style Shooter
 
 A galaga styled videogame.
 
-#### Tic-Tac-Toe
+### Tic-Tac-Toe
 
 A traditional game wwith online multiplayer.
 
-#### Hangman
+### Hangman
 
 The classic word guessing game.
 
-### Achievements
+## Achievements
 
 Earn these by doing different difficult challenges in your games!
 
-### Leaderboards
+## Leaderboards
 
 Get the high score and your name will be up for all to see.
 
-### Notifications
+## Notifications
 
 Got a challenge? A friend request? Or is the site updating our policies? Get notified.
 
-### Online Multiplayer
+## Online Multiplayer
 
 Challenge a friend or a stranger to a game.
 
-### User Registration
+## User Registration
 
 Sign up to access our games and features!
 
-### Friend's List
+## Friend's List
 
 Add your buddies and compete for the high score, or earn more achievements than them!
 
