@@ -10,15 +10,14 @@ class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scores: [], // Your scores array
+      scores: [],
       activeGame: "tictactoe",
       activeScoreType: "personal",
-      currentUser: "Mario", // Assuming the current user is 'Mario'
+      currentUser: "Mario",
     };
   }
 
   componentDidMount() {
-    // Fetch scores from the backend when the component mounts
     this.fetchScores();
   }
 
@@ -28,10 +27,8 @@ class Leaderboard extends React.Component {
       let scores = [];
 
       if (activeScoreType === "global") {
-        // Fetch scores based on the game name for global searches
         scores = await getScoresByGame(activeGame);
       } else if (activeScoreType === "personal") {
-        // Fetch scores based on both user ID and game name for personal searches
         scores = await getScoresByUserAndGame(currentUser, activeGame);
       }
 
@@ -62,7 +59,6 @@ class Leaderboard extends React.Component {
   render() {
     const { activeGame, currentUser } = this.state;
     const filteredScores = this.filterScores();
-    // Capitalize the first letter of activeGame
     const capitalizedActiveGame =
       activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
     return (
@@ -76,11 +72,11 @@ class Leaderboard extends React.Component {
         <div className="list-group">
           {filteredScores.map((score, index) => (
             <LeaderboardScore
-              key={score.id} // Use a unique identifier as the key
-              rank={index + 1} // Assuming the rank is based on the index
-              name={score.userId} // Use userId as the name
-              score={score.score} // Assuming there is a 'score' property
-              game={score.gameName} // Use gameName as the game
+              key={score.id}
+              rank={index + 1}
+              name={score.userId}
+              score={score.score}
+              game={score.gameName}
               currentUser={currentUser}
             />
           ))}

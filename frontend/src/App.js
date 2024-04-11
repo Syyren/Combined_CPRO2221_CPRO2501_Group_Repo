@@ -2,12 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"; //importing the
 import About from "./pages/About";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
-import LeaderboardTest from "./pages/LeaderboardTest"; //importing each of my pages
+import LeaderboardTest from "./pages/LeaderboardPage"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
 import Hangman from "./pages/games/Hangman";
 import TictactoeMenu from "./components/tictactoe/tictactoeMenu";
 import Login from "./components/registration/Login";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
+import ArcadeShooter from "./pages/games/ArcadeShooter";
 
 export default function App() {
   //setting the app routes
@@ -24,6 +25,7 @@ export default function App() {
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
           <Route path="/games/hangman" element={<Hangman />} />
+          <Route path="/games/canineinvaders" element={<ArcadeShooter />} />
           <Route path="/games/tictactoe" element={<TictactoeMenu />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<PlayerRegistration />} />

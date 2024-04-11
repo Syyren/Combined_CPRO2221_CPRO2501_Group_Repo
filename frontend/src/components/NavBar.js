@@ -35,6 +35,11 @@ export default function NavBar() {
                 Leaderboard
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark" to="/games/canineinvaders">
+                Canine Invaders
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
