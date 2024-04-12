@@ -25,7 +25,7 @@ export default function App() {
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
-          <Route path="/run-cat" element={<RunCat />} />
+          <Route path="/games/run-cat" element={<RunCat />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
           <Route path="/games/tictactoe" element={<TictactoeMenu />} />

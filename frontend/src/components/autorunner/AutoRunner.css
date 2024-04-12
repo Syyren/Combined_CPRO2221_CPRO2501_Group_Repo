@@ -1,18 +1,29 @@
-.container {
+.container 
+{
     text-align: center;
 }
   
-h1 {
+h1 
+{
     font-size: 24px;
     margin-bottom: 10px;
 }
   
-.game-area {
+.game-area 
+{
     position: relative;
     width: 60vw;
     height: 300px;
     overflow: hidden;
     border: 1px solid #ccc;
+}
+
+@media screen and (max-width: 500px) 
+{
+    .game-area 
+    {
+        width: 90vw;
+    }
 }
   
 .cat 
@@ -27,27 +38,28 @@ h1 {
 {
     position: absolute;
     bottom: 0;
-    left: 100vw;
-    transition: left .001s linear;
 }
   
 .jump 
 {
     animation-name: jumpAnimation;
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
 }
   
 @keyframes jumpAnimation 
 {
-    0% {
+    0% 
+    {
       bottom: 0;
     }
-    50% {
+    50% 
+    {
       bottom: 150px;
     }
-    100% {
+    100% 
+    {
       bottom: 0;
     }
 }

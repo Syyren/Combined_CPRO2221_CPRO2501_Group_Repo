@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
         <div className="container">
             <ul>
                 <li>
-                    <Link className="nav-link" to="/run-cat">
+                    <Link className="nav-link" to="/games/run-cat">
                         Run Cat!
                     </Link>
                 </li>
