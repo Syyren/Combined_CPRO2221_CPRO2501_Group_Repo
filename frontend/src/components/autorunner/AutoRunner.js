@@ -13,6 +13,8 @@ const AutoRunner = () => {
     const catRef = useRef(null);
     const obstacleRef = useRef(null);
     const gameAreaRef = useRef(null);
+
+    
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.code === 'Space')
@@ -47,10 +49,11 @@ const AutoRunner = () => {
         else 
         {
             clearInterval(gameTimer);
+            console.log("Game over, score:", score)
         }
 
         return () => clearInterval(gameTimer);
-    }, [isPlaying, speed]);
+    }, [isPlaying, speed, score]);
 
     useEffect(() => {
         if (score > highScore) 
@@ -63,7 +66,7 @@ const AutoRunner = () => {
         console.log("score:", score);
         console.log("benchmark:", benchmark);
         console.log("speed:", speed);
-        if (score >= benchmark)
+        if (score >= benchmark && speed <= 20)
         {
             setBenchmark((prevBenchmark) => prevBenchmark + 500);
             setSpeed((prevSpeed) => prevSpeed + 1);
@@ -112,7 +115,6 @@ const AutoRunner = () => {
 
   return (
     <div className="gameBody">
-      <h1>Run Cat!</h1>
       <div className="d-flex align-items-center justify-content-center">
         <div className="game-area" ref={ gameAreaRef }>
             <div className="scores">
