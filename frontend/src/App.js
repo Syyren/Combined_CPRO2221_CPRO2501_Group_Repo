@@ -4,7 +4,9 @@ import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import LeaderboardTest from "./pages/LeaderboardTest"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
+import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
+import RunCat from "./pages/games/RunCat"
 import TictactoeMenu from "./components/tictactoe/tictactoeMenu";
 import Login from "./components/registration/Login";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
+          <Route path="/run-cat" element={<RunCat />} />
+          <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
           <Route path="/games/tictactoe" element={<TictactoeMenu />} />
           <Route path="/login" element={<Login />} />
