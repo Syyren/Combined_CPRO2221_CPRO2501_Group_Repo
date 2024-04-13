@@ -35,12 +35,7 @@ public class HangmanController {
         //reset game
         hangman.newGame();
         //return new game state
-        HangmanGameState gameState = new HangmanGameState(
-                hangman.getDisplayedWord(),
-                hangman.getGuesses(),
-                hangman.getTotalScore(),
-                hangman.getGameStatus()
-        );
+        HangmanGameState gameState = getGameState();
         return ResponseEntity.ok(gameState);
     }
 
@@ -49,12 +44,7 @@ public class HangmanController {
         //reset game, score persists
         hangman.continueGame();
         //return updated game state
-        HangmanGameState gameState = new HangmanGameState(
-                hangman.getDisplayedWord(),
-                hangman.getGuesses(),
-                hangman.getTotalScore(),
-                hangman.getGameStatus()
-        );
+        HangmanGameState gameState = getGameState();
         return ResponseEntity.ok(gameState);
     }
 
