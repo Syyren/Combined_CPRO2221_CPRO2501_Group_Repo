@@ -45,8 +45,10 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         final String jwt = jwtUtil.generateToken(userDetails);
+        String userId = String.valueOf(playerService.getUserIdByUsername(String.valueOf(userDetails.getUsername())));
 
         Map<String, String> response = new HashMap<>();
+        response.put("userId", userId);
         response.put("username", userDetails.getUsername());
         response.put("jwt", jwt);
         return ResponseEntity.ok(response);

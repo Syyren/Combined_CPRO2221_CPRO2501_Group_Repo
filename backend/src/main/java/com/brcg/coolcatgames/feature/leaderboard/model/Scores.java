@@ -1,7 +1,5 @@
 package com.brcg.coolcatgames.feature.leaderboard.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // *Important Note* This only has data validation if you use the save endpoint in ScoreEntityController
 public abstract class Scores {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     // If manually entering test data please set the gameName to "test" for easier data cleaning
     private String gameName;

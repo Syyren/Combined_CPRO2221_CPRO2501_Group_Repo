@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         "http://localhost:8090/api/players/login",
         { username, password }
       );
-      const user = { username: data.username, ...data };
+      const user = { userId: data.userId, username: data.username, ...data };
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("jwt", data.jwt);
       setCurrentUser(user);

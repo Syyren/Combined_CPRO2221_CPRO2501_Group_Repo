@@ -5,6 +5,7 @@ import {
   getScoresByGame,
   getScoresByUserAndGame,
 } from "../../controllers/LeaderboardController";
+import { getPlayerById } from "../../controllers/PlayerController"; // Import getPlayerById
 import { useAuth } from "../../context/AuthContext";
 
 const Leaderboard = () => {
@@ -49,6 +50,16 @@ const Leaderboard = () => {
     setActiveScoreType(scoreType);
   };
 
+  const getUserNameById = async (userId) => {
+    try {
+      const player = await getPlayerById(userId);
+      return player.username;
+    } catch (error) {
+      console.error("Error fetching username:", error);
+      return "Unknown";
+    }
+  };
+
   const filteredScores = filterScores();
   const capitalizedActiveGame =
     activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
@@ -57,18 +68,18 @@ const Leaderboard = () => {
       <h3 className="display-4 mb-5">Leaderboard</h3>
       <h4>{currentUser.username}</h4>
       <LeaderboardNav
-        onGameChange={handleGameChange} // Corrected here
-        onScoreTypeChange={handleScoreTypeChange} // Corrected here
+        onGameChange={handleGameChange}
+        onScoreTypeChange={handleScoreTypeChange}
       />
       <h4 className="display-6 mb-2">{capitalizedActiveGame}</h4>
       <div className="list-group">
         {filteredScores.map((score, index) => (
           <LeaderboardScore
-            key={score.id} // Use a unique identifier as the key
-            rank={index + 1} // Assuming the rank is based on the index
-            name={score.userId} // Use userId as the name
-            score={score.score} // Assuming there is a 'score' property
-            game={score.gameName} // Use gameName as the game
+            key={score.id}
+            rank={index + 1}
+            name={score.userId}
+            score={score.score}
+            game={getUserNameById(score.userId)}
             currentUser={currentUser.username}
           />
         ))}
