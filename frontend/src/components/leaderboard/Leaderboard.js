@@ -1,89 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LeaderboardNav from "./LeaderboardNav";
 import LeaderboardScore from "./LeaderboardScore";
 import {
   getScoresByGame,
   getScoresByUserAndGame,
 } from "../../controllers/LeaderboardController";
+import { getPlayerById } from "../../controllers/PlayerController"; // Import getPlayerById
+import { useAuth } from "../../context/AuthContext";
 
-class Leaderboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scores: [],
-      activeGame: "tictactoe",
-      activeScoreType: "personal",
-      currentUser: "Mario",
-    };
-  }
+const Leaderboard = () => {
+  const { currentUser } = useAuth();
+  const [scores, setScores] = useState([]);
+  const [activeGame, setActiveGame] = useState("tictactoe");
+  const [activeScoreType, setActiveScoreType] = useState("personal");
 
-  componentDidMount() {
-    this.fetchScores();
-  }
+  useEffect(() => {
+    fetchScores();
+  }, [activeGame, activeScoreType, currentUser]);
 
-  fetchScores = async () => {
+  const fetchScores = async () => {
     try {
-      const { activeScoreType, activeGame, currentUser } = this.state;
-      let scores = [];
+      let fetchedScores = [];
 
       if (activeScoreType === "global") {
-        scores = await getScoresByGame(activeGame);
+        fetchedScores = await getScoresByGame(activeGame);
       } else if (activeScoreType === "personal") {
-        scores = await getScoresByUserAndGame(currentUser, activeGame);
+        fetchedScores = await getScoresByUserAndGame(
+          currentUser.id,
+          activeGame
+        );
       }
 
-      this.setState({ scores });
+      setScores(fetchedScores);
     } catch (error) {
       console.error("Error fetching scores:", error);
     }
   };
 
-  filterScores = () => {
-    const { scores } = this.state;
-
-    // Sorting scores based on score value in descending order
-    const sortedScores = scores.sort((a, b) => b.score - a.score);
-
-    // Return the top 10 scores
+  const filterScores = () => {
+    const sortedScores = [...scores].sort((a, b) => b.score - a.score);
     return sortedScores.slice(0, 10);
   };
 
-  handleGameChange = (game) => {
-    this.setState({ activeGame: game }, this.fetchScores);
+  const handleGameChange = (game) => {
+    setActiveGame(game);
   };
 
-  handleScoreTypeChange = (scoreType) => {
-    this.setState({ activeScoreType: scoreType }, this.fetchScores);
+  const handleScoreTypeChange = (scoreType) => {
+    setActiveScoreType(scoreType);
   };
 
-  render() {
-    const { activeGame, currentUser } = this.state;
-    const filteredScores = this.filterScores();
-    const capitalizedActiveGame =
-      activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
-    return (
-      <div className="container mt-5">
-        <h3 className="display-4 mb-5">Leaderboard</h3>
-        <LeaderboardNav
-          onGameChange={this.handleGameChange}
-          onScoreTypeChange={this.handleScoreTypeChange}
-        />
-        <h4 className="display-6 mb-2">{capitalizedActiveGame}</h4>
-        <div className="list-group">
-          {filteredScores.map((score, index) => (
-            <LeaderboardScore
-              key={score.id}
-              rank={index + 1}
-              name={score.userId}
-              score={score.score}
-              game={score.gameName}
-              currentUser={currentUser}
-            />
-          ))}
-        </div>
+  const getUserNameById = async (userId) => {
+    try {
+      const player = await getPlayerById(userId);
+      return player.username;
+    } catch (error) {
+      console.error("Error fetching username:", error);
+      return "Unknown";
+    }
+  };
+
+  const filteredScores = filterScores();
+  const capitalizedActiveGame =
+    activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
+  return (
+    <div className="container mt-5">
+      <h3 className="display-4 mb-5">Leaderboard</h3>
+      <h4>{currentUser.username}</h4>
+      <LeaderboardNav
+        onGameChange={handleGameChange}
+        onScoreTypeChange={handleScoreTypeChange}
+      />
+      <h4 className="display-6 mb-2">{capitalizedActiveGame}</h4>
+      <div className="list-group">
+        {filteredScores.map((score, index) => (
+          <LeaderboardScore
+            key={score.id}
+            rank={index + 1}
+            name={score.userId}
+            score={score.score}
+            game={getUserNameById(score.userId)}
+            currentUser={currentUser.username}
+          />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Leaderboard;

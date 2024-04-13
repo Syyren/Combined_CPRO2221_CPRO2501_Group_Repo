@@ -26,6 +26,11 @@ export default function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link text-dark" to="/games">
+                Games
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link text-dark" to="/about">
                 About
               </Link>
