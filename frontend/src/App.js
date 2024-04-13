@@ -7,7 +7,7 @@ import AchievementTest from "./pages/AchievementTest";
 import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
 import RunCat from "./pages/games/RunCat"
-import TictactoeMenu from "./components/tictactoe/tictactoeMenu";
+import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
 
@@ -28,7 +28,7 @@ export default function App() {
           <Route path="/games/run-cat" element={<RunCat />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
-          <Route path="/games/tictactoe" element={<TictactoeMenu />} />
+          <Route path="/games/tictactoe" element={<Tictactoe />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<PlayerRegistration />} />
         </Routes>

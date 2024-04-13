@@ -1,14 +1,14 @@
 import Layout from "../../components/Layout";
 import GameLayout from "../../components/GameLayout";
-import AutoRunner from "../../components/autorunner/AutoRunner";
+import TicTacToe from "../../components/tictactoe/tictactoeMenu"
 
-export default function RunCatView()
+export default function TicTacToeView()
 {
     return (
         <Layout>
             <GameLayout>
-                <h2 className="display-4 mb-4">Run Cat!</h2>
-                <AutoRunner/>
+                <h2 className="display-4 mb-4">Tic-Tac-Toe</h2>
+                <TicTacToe />
             </GameLayout>
         </Layout> 
     )

@@ -19,6 +19,11 @@ const Layout = ({ children }) => {
                         Hangman
                     </Link>
                 </div>
+                <div className="me-2">
+                    <Link className="nav-link" to="/games/tictactoe">
+                        Tic-Tac-Toe
+                    </Link>
+                </div>
             </div>
             <main role="main" className="pb-3">
                 { children }

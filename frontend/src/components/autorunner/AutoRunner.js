@@ -106,7 +106,7 @@ const AutoRunner = () => {
         setIsPlaying(true);
         setScore(0);
         catRef.current.style.bottom = '0px';
-        obstacleRef.current.style.left = '61vw';
+        obstacleRef.current.style.left = '101%';
     };
 
     const jump = () => {
@@ -136,7 +136,7 @@ const AutoRunner = () => {
         //increments the score
         if (obstacleLeft < -10) 
         {
-            obstacleRef.current.style.left = '61vw';
+            obstacleRef.current.style.left = '101%';
         }
     };
 
