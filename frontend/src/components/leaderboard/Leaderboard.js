@@ -5,7 +5,7 @@ import {
   getScoresByGame,
   getScoresByUserAndGame,
 } from "../../controllers/LeaderboardController";
-import { getPlayerById } from "../../controllers/PlayerController"; // Import getPlayerById
+import { getPlayerById } from "../../controllers/PlayerController";
 import { useAuth } from "../../context/AuthContext";
 
 const Leaderboard = () => {
