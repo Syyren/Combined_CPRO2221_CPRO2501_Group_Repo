@@ -12,10 +12,19 @@ h1
 .game-area 
 {
     position: relative;
-    width: 60vw;
+    width: 40vw;
     height: 300px;
     overflow: hidden;
     border: 1px solid #ccc;
+    background-color: darkgreen;
+}
+
+@media screen and (max-width: 900px) 
+{
+    .game-area 
+    {
+        width: 70vw;
+    }
 }
 
 @media screen and (max-width: 500px) 
@@ -34,10 +43,11 @@ h1
     transition: bottom 0.3s ease;
 }
   
-.obstacle 
+.obstacle
 {
     position: absolute;
     bottom: 0;
+    left: 101%;
 }
   
 .jump 

@@ -5,13 +5,21 @@ const Layout = ({ children }) => {
   return ( //within the 'main' section, the page is rendered
     <>
         <div className="container">
-            <ul>
-                <li>
+            <div className="d-flex align-items-center justify-content-center text-center mb-3">
+                <p className="me-2 mb-0">
+                    Our Games:
+                </p>
+                <div className="me-2">
                     <Link className="nav-link" to="/games/run-cat">
                         Run Cat!
                     </Link>
-                </li>
-            </ul>
+                </div>
+                <div className="me-2">
+                    <Link className="nav-link" to="/games/hangman">
+                        Hangman
+                    </Link>
+                </div>
+            </div>
             <main role="main" className="pb-3">
                 { children }
             </main>

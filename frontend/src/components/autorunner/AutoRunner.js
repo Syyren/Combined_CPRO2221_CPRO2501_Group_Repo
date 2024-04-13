@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import catImage from './images/cat.png';
-import obstacleImage from './images/obstacle.png';
+import catWalkImage from './images/catwalk.gif'
+import obstacleImage from './images/obstacle.gif';
 import './AutoRunner.css';
 
 const AutoRunner = () => {
@@ -10,11 +11,13 @@ const AutoRunner = () => {
     const [speed, setSpeed] = useState(0);
     const [benchmark, setBenchmark] = useState(0);
     const [gameText, setGameText] = useState("Press Space to Start!");
+    const [catSrc, setCatSrc] = useState(catImage);
     const catRef = useRef(null);
     const obstacleRef = useRef(null);
     const gameAreaRef = useRef(null);
+    const MAX_SPEED = 25
 
-    
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.code === 'Space')
@@ -48,6 +51,7 @@ const AutoRunner = () => {
         } 
         else 
         {
+            setCatSrc(catImage);
             clearInterval(gameTimer);
             console.log("Game over, score:", score)
         }
@@ -63,10 +67,7 @@ const AutoRunner = () => {
     }, [score, highScore]);
 
     useEffect(() => {
-        console.log("score:", score);
-        console.log("benchmark:", benchmark);
-        console.log("speed:", speed);
-        if (score >= benchmark && speed <= 20)
+        if (score >= benchmark && speed <= MAX_SPEED)
         {
             setBenchmark((prevBenchmark) => prevBenchmark + 500);
             setSpeed((prevSpeed) => prevSpeed + 1);
@@ -74,6 +75,7 @@ const AutoRunner = () => {
     }, [score, speed, benchmark]);
 
     const startGame = () => {
+        setCatSrc(catWalkImage);
         setSpeed(7);
         setBenchmark(500);
         setIsPlaying(true);
@@ -125,7 +127,7 @@ const AutoRunner = () => {
             <img
                 className={ `cat ${isPlaying ? 'running' : ''}` }
                 ref={ catRef }
-                src={ catImage }
+                src={ catSrc }
                 onClick={ jump }
                 alt="Cat"
             />
