@@ -15,7 +15,7 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Login />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* Setting a second home path for clean routing */}
           <Route path="/about" element={<About />} />
