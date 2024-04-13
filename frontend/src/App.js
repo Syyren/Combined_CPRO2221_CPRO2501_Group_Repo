@@ -4,8 +4,10 @@ import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import LeaderboardTest from "./pages/LeaderboardTest"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
+import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
-import TictactoeMenu from "./components/tictactoe/tictactoeMenu";
+import RunCat from "./pages/games/RunCat"
+import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
 
@@ -15,7 +17,7 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Login />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* Setting a second home path for clean routing */}
           <Route path="/about" element={<About />} />
@@ -23,8 +25,10 @@ export default function App() {
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
+          <Route path="/games/run-cat" element={<RunCat />} />
+          <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
-          <Route path="/games/tictactoe" element={<TictactoeMenu />} />
+          <Route path="/games/tictactoe" element={<Tictactoe />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<PlayerRegistration />} />
         </Routes>

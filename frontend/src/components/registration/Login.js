@@ -1,97 +1,84 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Importing axios for making HTTP requests
-function Login() {
-  // Define Login functional component
+import { useAuth } from "../../context/AuthContext";
+import Layout from "../Layout";
 
-  // Declare state variables
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Function for handling login
-  async function login(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
     try {
-      // Send POST request to login endpoint
-      await axios
-        .post("http://localhost:8090/api/v1/player/login", {
-          username: username,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
-            // Check response message
-            if (res.data.message === "Username not exits") {
-              alert("Username not exits");
-            } else if (res.data.message === "Login Success") {
-              navigate("/home");
-            } else {
-              alert("Incorrect User and Password not match");
-            }
-          },
-          (fail) => {
-            console.error(fail); // Error!
-          }
+      await login({ username, password });
+      navigate("/home");
+    } catch (error) {
+      if (error.response) {
+        console.error("Login error details:", error.response);
+        setError(
+          `Login failed: ${
+            error.response.data.message ||
+            error.response.statusText ||
+            "Unknown error"
+          }`
         );
-    } catch (err) {
-      alert(err); // Show alert message with error
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+        setError("No response from server. Check network connection.");
+      } else {
+        console.error("Error setting up login request:", error.message);
+        setError("Error setting up login request.");
+      }
     }
-  }
+  };
+
   return (
-    <div class="auth">
-      <h2> Player Login</h2>
-      <div class="container">
-        <div class="row">
-          <hr />
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <form>
-              <div class="form-group">
-                <label>UserNAME</label>
+    <Layout>
+      <div className="container mt-5">
+        <h1 className="text-center">Login</h1>
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="username">Username:</label>
                 <input
-                  type="name"
-                  class="form-control"
+                  type="text"
+                  className="form-control"
                   id="username"
-                  placeholder="Enter Name"
                   value={username}
-                  onChange={(event) => {
-                    setUsername(event.target.value);
-                  }}
-                />
-              </div>{" "}
-              <div class="form-group">
-                <label>password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                  }}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
               </div>
-              <button type="submit" class="btn btn-primary" onClick={login}>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary btn-block">
                 Login
               </button>
+              {error && (
+                <div className="alert alert-danger mt-2" role="alert">
+                  {error}
+                </div>
+              )}
             </form>
-            <div
-              style={{
-                width: "100%",
-                height: "300px",
-                backgroundSize: "100%",
-                backgroundImage: 'url("/images/download.jpg")',
-              }}
-            ></div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
-}
+};
 
-export default Login; // Export Login component
+export default Login;
