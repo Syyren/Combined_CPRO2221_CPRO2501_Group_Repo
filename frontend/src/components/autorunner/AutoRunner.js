@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { getAchievements } from "../../controllers/AchievementController";
+import AchievementNotification from "../../components/achievements/AchievementNotification";
 import catImage from './images/cat.png';
 import catWalkImage from './images/catwalk.gif'
 import obstacleImage from './images/obstacle.gif';
@@ -12,11 +14,18 @@ const AutoRunner = () => {
     const [benchmark, setBenchmark] = useState(0);
     const [gameText, setGameText] = useState("Press Space to Start!");
     const [catSrc, setCatSrc] = useState(catImage);
+    const [achievementTitle, setAchievementTitle] = useState('');
+    const [dbAchievements, setDbAchievements] = useState([]);
+    const [achievement1Flag, setAchievement1Flag] = useState(false);
     const catRef = useRef(null);
     const obstacleRef = useRef(null);
     const gameAreaRef = useRef(null);
     const MAX_SPEED = 25
 
+    useEffect(() => 
+    {
+        fetchAchievements();
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -66,6 +75,16 @@ const AutoRunner = () => {
         }
     }, [score, highScore]);
 
+    // Check for achievements when score reaches multiples of 1000
+    useEffect(() => { 
+        const milestone = Math.floor(score / 1000) * 1000;
+        if (!achievement1Flag && milestone === 1000)
+        {
+            setAchievementTitle("It's Over Nine-Meowsand!");
+            setAchievement1Flag(true);
+        }
+    }, [score, highScore, dbAchievements]);
+
     useEffect(() => {
         if (score >= benchmark && speed <= MAX_SPEED)
         {
@@ -73,6 +92,12 @@ const AutoRunner = () => {
             setSpeed((prevSpeed) => prevSpeed + 1);
         }
     }, [score, speed, benchmark]);
+
+    const fetchAchievements = async () => 
+    {
+        const res = await getAchievements();
+        setDbAchievements(res);
+    }
 
     const startGame = () => {
         setCatSrc(catWalkImage);
@@ -117,28 +142,32 @@ const AutoRunner = () => {
 
   return (
     <div className="gameBody">
-      <div className="d-flex align-items-center justify-content-center">
-        <div className="game-area" ref={ gameAreaRef }>
-            <div className="scores">
-                <p className="mt-2">High Score: { highScore } </p>
-                <p>Score: { score }</p>
+
+        {/* notification component that pops up the achievement */}
+        {achievementTitle && <AchievementNotification achievementTitle={achievementTitle} />}
+
+        <div className="d-flex align-items-center justify-content-center">
+            <div className="game-area" ref={ gameAreaRef }>
+                <div className="scores">
+                    <p className="mt-2">High Score: { highScore } </p>
+                    <p>Score: { score }</p>
+                </div>
+                <p>{ gameText }</p>
+                <img
+                    className={ `cat ${isPlaying ? 'running' : ''}` }
+                    ref={ catRef }
+                    src={ catSrc }
+                    onClick={ jump }
+                    alt="Cat"
+                />
+                <img
+                    className="obstacle"
+                    ref={ obstacleRef }
+                    src={ obstacleImage }
+                    alt="Obstacle"
+                />
             </div>
-            <p>{ gameText }</p>
-            <img
-                className={ `cat ${isPlaying ? 'running' : ''}` }
-                ref={ catRef }
-                src={ catSrc }
-                onClick={ jump }
-                alt="Cat"
-            />
-            <img
-                className="obstacle"
-                ref={ obstacleRef }
-                src={ obstacleImage }
-                alt="Obstacle"
-            />
         </div>
-      </div>
     </div>
   );
 };
