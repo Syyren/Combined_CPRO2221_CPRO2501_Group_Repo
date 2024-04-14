@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const LeaderboardNav = ({ onGameChange, onScoreTypeChange }) => {
-  const [selectedGame, setSelectedGame] = useState("tictactoe");
-  const [selectedScoreType, setSelectedScoreType] = useState("personal");
+  const [selectedGame, setSelectedGame] = useState("canine_invaders");
+  const [selectedScoreType, setSelectedScoreType] = useState("global");
 
   const handleGameChange = (e) => {
     const game = e.target.value;
@@ -28,7 +28,7 @@ const LeaderboardNav = ({ onGameChange, onScoreTypeChange }) => {
           <option value="hangman">Hangman</option>
           <option value="tictactoe">Tic Tac Toe</option>
           <option value="idlerunner">Idle Runner</option>
-          <option value="galaga">Canine Invaders</option>
+          <option value="canine_invaders">Canine Invaders</option>
         </select>
       </div>
       <div className="col-md-6">

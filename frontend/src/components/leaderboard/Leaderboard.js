@@ -11,8 +11,8 @@ import { useAuth } from "../../context/AuthContext";
 const Leaderboard = () => {
   const { currentUser } = useAuth();
   const [scores, setScores] = useState([]);
-  const [activeGame, setActiveGame] = useState("tictactoe");
-  const [activeScoreType, setActiveScoreType] = useState("personal");
+  const [activeGame, setActiveGame] = useState("canine_invaders");
+  const [activeScoreType, setActiveScoreType] = useState("global");
 
   useEffect(() => {
     fetchScores();
