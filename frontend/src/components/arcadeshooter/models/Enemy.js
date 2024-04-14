@@ -1,10 +1,13 @@
+import React from "react";
+import dogShipImage from "../../../images/arcadeshooter/dogship.png";
+
 export default class Enemy {
   constructor(
     x,
     y,
-    speed = 0.05,
+    speed = 0.06,
     health = 1,
-    patternType = Math.floor(Math.random() * 5)
+    patternType = Math.floor(Math.random() * 4)
   ) {
     this.initialX = x;
     this.initialY = y;
@@ -12,10 +15,12 @@ export default class Enemy {
     this.y = y;
     this.speed = speed;
     this.health = health;
-    this.width = 50;
-    this.height = 50;
+    this.width = 30;
+    this.height = 30;
     this.t = 0;
     this.patternType = patternType;
+    this.image = new Image();
+    this.image.src = dogShipImage;
   }
 
   // Update method to move and update enemy state
@@ -25,8 +30,8 @@ export default class Enemy {
     // Updates positions based on the pattern type
     switch (this.patternType) {
       case 0:
-        this.x = this.initialX + 50 * Math.cos(this.t);
-        this.y = this.initialY + 100 * Math.sin(this.t + 10);
+        this.x = this.initialX + 100 * Math.sin(this.t + 40);
+        this.y += this.speed * 20;
         break;
       case 1:
         this.x = this.initialX + 100 * Math.sin(this.t);
@@ -41,12 +46,8 @@ export default class Enemy {
         this.y = this.initialY + this.t * 10;
         break;
       case 4:
-        this.x = this.initialX + 100 * Math.sin(this.t);
-        this.y += this.speed * 20;
-        break;
-      case 5:
-        this.x = this.initialX + 50 * this.t * Math.cos(this.t);
-        this.y = this.initialY + 50 * this.t * Math.sin(this.t);
+        this.x = this.initialX - this.t * 20;
+        this.y = this.initialY - this.t * 20;
         break;
       default:
         this.y += this.speed * 10;
@@ -65,8 +66,7 @@ export default class Enemy {
   }
 
   draw(context) {
-    context.fillStyle = "#ff0000";
-    context.fillRect(this.x, this.y, this.width, this.height);
+    context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
   hit() {

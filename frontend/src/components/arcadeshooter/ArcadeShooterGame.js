@@ -11,7 +11,7 @@ const ArcadeShooterGame = ({
 }) => {
   const canvasRef = useRef(null);
   const enemiesRef = useRef([]);
-  const playerShipRef = useRef(new Ship(390, 580));
+  const playerShipRef = useRef(new Ship(390, 560));
   const keys = { right: false, left: false, space: false };
 
   useEffect(() => {
@@ -75,6 +75,8 @@ const ArcadeShooterGame = ({
       if (isPaused) return;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#000022"; // Dark blue, like a night sky
+      context.fillRect(0, 0, canvas.width, canvas.height);
       playerShipRef.current.draw(context);
       playerShipRef.current.drawBullets(context);
 
