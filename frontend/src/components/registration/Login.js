@@ -39,7 +39,7 @@ const Login = () => {
   return (
     <Layout>
       <div className="container mt-5">
-        <h1 className="text-center">Login</h1>
+        <h1 className="display-4 text-center mb-3">Login</h1>
         <div className="row justify-content-center">
           <div className="col-md-6">
             <form onSubmit={handleSubmit}>
