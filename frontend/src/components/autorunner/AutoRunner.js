@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAchievements } from "../../controllers/AchievementController";
+import { getAchievements, getUserAchievements } from "../../controllers/AchievementController";
 import AchievementNotification from "../../components/achievements/AchievementNotification";
 import catImage from './images/cat.png';
 import catWalkImage from './images/catwalk.gif'
 import obstacleImage from './images/obstacle.gif';
+import { useAuth } from '../../context/AuthContext';
 import './AutoRunner.css';
 
 const AutoRunner = () => {
@@ -15,16 +16,23 @@ const AutoRunner = () => {
     const [gameText, setGameText] = useState("Press Space to Start!");
     const [catSrc, setCatSrc] = useState(catImage);
     const [achievementTitle, setAchievementTitle] = useState('');
-    const [dbAchievements, setDbAchievements] = useState([]);
     const [achievement1Flag, setAchievement1Flag] = useState(false);
+    const [userAchievements, setUserAchievements] = useState([]);
     const catRef = useRef(null);
     const obstacleRef = useRef(null);
     const gameAreaRef = useRef(null);
+    const { currentUser } = useAuth();
     const MAX_SPEED = 25
 
     useEffect(() => 
     {
-        fetchAchievements();
+        if (currentUser != null)
+        {
+            fetchAchievements();
+            console.log(`User's achievements: ${userAchievements}`);
+            let hasMatchingAchievementId = userAchievements.some(item => item === 1);
+            if (hasMatchingAchievementId) { setAchievement1Flag(true); }
+        }
     }, []);
 
     useEffect(() => {
@@ -83,7 +91,7 @@ const AutoRunner = () => {
             setAchievementTitle("It's Over Nine-Meowsand!");
             setAchievement1Flag(true);
         }
-    }, [score, highScore, dbAchievements]);
+    }, [score, highScore]);
 
     useEffect(() => {
         if (score >= benchmark && speed <= MAX_SPEED)
@@ -95,8 +103,8 @@ const AutoRunner = () => {
 
     const fetchAchievements = async () => 
     {
-        const res = await getAchievements();
-        setDbAchievements(res);
+        const res = await getUserAchievements();;
+        setUserAchievements(res);
     }
 
     const startGame = () => {
@@ -110,11 +118,12 @@ const AutoRunner = () => {
     };
 
     const jump = () => {
-        if (catRef.current.classList !== 'jump') {
-        catRef.current.classList.add('jump');
-        setTimeout(() => {
-            catRef.current.classList.remove('jump');
-        }, 1000);
+        if (catRef.current.classList !== 'jump') 
+        {
+            catRef.current.classList.add('jump');
+            setTimeout(() => {
+                catRef.current.classList.remove('jump');
+            }, 1000);
         }
     };
 

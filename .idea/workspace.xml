@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18da4a3d-f8ac-42c0-ba5a-cdf21ec2a8d5" name="Changes" comment="updated dependencies to include servlets">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/controller/ArcadeShooterSessionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/model/ArcadeShooterSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/repository/ArcadeShooterSessionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/service/ArcadeShooterSessionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Noun.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Noun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -42,7 +47,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2dKR5XSXwkjFNwvAMUM70hmRwuJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -57,14 +64,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.CoolcatgamesApplication.executor": "Run",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "arcadeshooter__backend",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Kaden/Documents/College/CPRO_Y2_S1/2501/Final Project/repo/Combined_CPRO2221_CPRO2501_Group_Repo/Combined_CPRO2221_CPRO2501_Group_Repo",
+    "last_opened_file_path": "C:/Computer Programming/Semester 3/2501 (Software Design and Devel)/Final Project/FinalProjApp/Combined_CPRO2221_CPRO2501_Group_Repo/backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

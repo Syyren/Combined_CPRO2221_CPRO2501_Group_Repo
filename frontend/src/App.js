@@ -2,14 +2,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"; //importing the
 import About from "./pages/About";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
-import LeaderboardTest from "./pages/LeaderboardTest"; //importing each of my pages
+import LeaderboardTest from "./pages/LeaderboardPage"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
 import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
-import RunCat from "./pages/games/RunCat"
+import RunCat from "./pages/games/RunCat";
 import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
+import Logout from "./pages/Logout";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
+import ArcadeShooter from "./pages/games/ArcadeShooter";
 
 export default function App() {
   //setting the app routes
@@ -28,8 +30,10 @@ export default function App() {
           <Route path="/games/run-cat" element={<RunCat />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
+          <Route path="/games/canine-invaders" element={<ArcadeShooter />} />
           <Route path="/games/tictactoe" element={<Tictactoe />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<PlayerRegistration />} />
         </Routes>
       </BrowserRouter>

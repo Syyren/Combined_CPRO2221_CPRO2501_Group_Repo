@@ -27,7 +27,7 @@ public class PlayerController {
         return ResponseEntity.ok("Player registered successfully with username: " + player.getUsername());
     }
 
-    @GetMapping("/all")
+    @GetMapping("/get/all")
     public ResponseEntity<Iterable<Player>> getAllPlayers() {
         return ResponseEntity.ok(playerService.listAll());
     }
@@ -49,6 +49,26 @@ public class PlayerController {
             return ResponseEntity.ok("Player with id " + playerId + " updated successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player with id " + playerId + " not found.");
+        }
+    }
+
+    @PutMapping("/give-achievement/{playerId}/{achievementId}")
+    public ResponseEntity<String> giveAchievement(@PathVariable String playerId, @PathVariable int achievementId) {
+        try
+        {
+            Player updatedPlayerResult = playerService.addAchievement(playerId, achievementId);
+            if (updatedPlayerResult != null)
+            {
+                return ResponseEntity.ok("Player with id " + playerId + " successfully given achievement: " + achievementId);
+            }
+            else
+            {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player with id " + playerId + " not found.");
+            }
+        }
+        catch (RuntimeException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
