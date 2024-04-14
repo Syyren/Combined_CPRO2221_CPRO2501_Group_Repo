@@ -6,7 +6,6 @@ import { useState } from "react";
 
 function PlayerRegistration() {
   //setting usestates for player login
-  const [id, setId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +21,6 @@ function PlayerRegistration() {
         username: username,
       });
       alert("Player Registation Successfully");
-      setId("");
       setFirstName("");
       setEmail("");
       setPassword("");
