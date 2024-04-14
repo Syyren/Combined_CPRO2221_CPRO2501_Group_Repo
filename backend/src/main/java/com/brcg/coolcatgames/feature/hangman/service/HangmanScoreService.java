@@ -29,7 +29,7 @@ public class HangmanScoreService {
         hangmanScore.resetScore();
     }
 
-    // Method to save the current score to MongoDB
+    //method saves current score to MongoDB
     public void saveScore(HangmanScore hangmanScore) {
         //temp test
         hangmanScore.setGameName("test");
