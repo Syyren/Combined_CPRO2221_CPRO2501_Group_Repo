@@ -27,6 +27,8 @@ const ArcadeShooter = () => {
           isPaused={isPaused}
           setScore={setScore}
           setLives={setLives}
+          level={level}
+          setLevel={setLevel} // Ensure this is being passed
         />
       </main>
       <ArcadeShooterFooter onQuit={handleQuit} onPause={handlePause} />

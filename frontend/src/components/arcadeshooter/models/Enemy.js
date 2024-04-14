@@ -26,7 +26,7 @@ export default class Enemy {
     switch (this.patternType) {
       case 0:
         this.x = this.initialX + 50 * Math.cos(this.t);
-        this.y = this.initialY + 50 * Math.sin(this.t) + this.speed * 20;
+        this.y = this.initialY + 100 * Math.sin(this.t + 10);
         break;
       case 1:
         this.x = this.initialX + 100 * Math.sin(this.t);
@@ -37,8 +37,8 @@ export default class Enemy {
         this.y = this.initialY + this.t * 20;
         break;
       case 3:
-        this.x = this.initialX + 75 * Math.sin(this.t);
-        this.y = this.initialY + 50 * Math.cos(this.t);
+        this.x = this.initialX + 100 * Math.cos(this.t);
+        this.y = this.initialY + this.t * 10;
         break;
       case 4:
         this.x = this.initialX + 100 * Math.sin(this.t);

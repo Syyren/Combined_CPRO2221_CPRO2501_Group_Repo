@@ -1,11 +1,17 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import Ship from "./models/Ship";
 import Enemy from "./models/Enemy";
 
-const ArcadeShooterGame = ({ isPaused }) => {
+const ArcadeShooterGame = ({
+  isPaused,
+  setScore,
+  setLives,
+  level,
+  setLevel,
+}) => {
   const canvasRef = useRef(null);
-  const [playerShip, setPlayerShip] = useState(new Ship(390, 580));
-  const [enemies, setEnemies] = useState([]);
+  const enemiesRef = useRef([]);
+  const playerShipRef = useRef(new Ship(390, 580));
   const keys = { right: false, left: false, space: false };
 
   useEffect(() => {
@@ -14,44 +20,40 @@ const ArcadeShooterGame = ({ isPaused }) => {
     canvas.width = 800;
     canvas.height = 600;
 
-    let enemySpawnCounter = 0;
     let animationFrameId;
 
-    const spawnEnemy = () => {
-      console.log("Enemy Spawned!");
-      if (enemies.length < 5) {
+    const spawnEnemies = () => {
+      const numberOfEnemies = 3 + level;
+      enemiesRef.current = [];
+      for (let i = 0; i < numberOfEnemies; i++) {
         const x = Math.random() * (canvas.width - 50);
-        setEnemies((prevEnemies) => [...prevEnemies, new Enemy(x, 10)]);
+        enemiesRef.current.push(new Enemy(x, 10));
       }
     };
 
     const keyDownHandler = (e) => {
-      if (e.key === "ArrowRight") {
-        keys.right = true;
-      } else if (e.key === "ArrowLeft") {
-        keys.left = true;
-      } else if (e.key === " " && !keys.space) {
+      e.preventDefault();
+      if (e.key === "ArrowRight") keys.right = true;
+      else if (e.key === "ArrowLeft") keys.left = true;
+      else if (e.key === " " && !keys.space) {
         keys.space = true;
-        playerShip.shoot();
+        playerShipRef.current.shoot();
       }
     };
 
     const keyUpHandler = (e) => {
-      if (e.key === "ArrowRight") {
-        keys.right = false;
-      } else if (e.key === "ArrowLeft") {
-        keys.left = false;
-      } else if (e.key === " ") {
-        keys.space = false;
-      }
+      e.preventDefault();
+      if (e.key === "ArrowRight") keys.right = false;
+      else if (e.key === "ArrowLeft") keys.left = false;
+      else if (e.key === " ") keys.space = false;
     };
 
     window.addEventListener("keydown", keyDownHandler);
     window.addEventListener("keyup", keyUpHandler);
 
     const checkCollisions = () => {
-      playerShip.bullets.forEach((bullet, bulletIndex) => {
-        enemies.forEach((enemy, enemyIndex) => {
+      playerShipRef.current.bullets.forEach((bullet, bulletIndex) => {
+        enemiesRef.current.forEach((enemy, enemyIndex) => {
           if (
             bullet.x < enemy.x + enemy.width &&
             bullet.x + bullet.width > enemy.x &&
@@ -60,9 +62,10 @@ const ArcadeShooterGame = ({ isPaused }) => {
           ) {
             enemy.hit();
             if (!enemy.isAlive()) {
-              setEnemies((prev) => prev.filter((_, idx) => idx !== enemyIndex));
+              enemiesRef.current.splice(enemyIndex, 1);
+              setScore((prevScore) => prevScore + 10); // Increment score for killing an enemy
             }
-            playerShip.bullets.splice(bulletIndex, 1);
+            playerShipRef.current.bullets.splice(bulletIndex, 1);
           }
         });
       });
@@ -72,25 +75,34 @@ const ArcadeShooterGame = ({ isPaused }) => {
       if (isPaused) return;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-      playerShip.draw(context);
-      playerShip.drawBullets(context);
+      playerShipRef.current.draw(context);
+      playerShipRef.current.drawBullets(context);
 
-      if (enemySpawnCounter++ % 100 === 0) {
-        spawnEnemy();
-      }
-
-      enemies.forEach((enemy) => {
+      enemiesRef.current.forEach((enemy) => {
         enemy.update(canvas.width, canvas.height);
+        if (enemy.y >= canvas.height - (enemy.height + 10)) {
+          // Enemy reaches the bottom
+          setLives((prevLives) => prevLives - 1);
+          enemiesRef.current.splice(enemiesRef.current.indexOf(enemy), 1); // Remove enemy
+        }
         enemy.draw(context);
       });
 
-      if (keys.right) playerShip.moveRight(canvas.width);
-      if (keys.left) playerShip.moveLeft();
+      if (keys.right) playerShipRef.current.moveRight(canvas.width);
+      if (keys.left) playerShipRef.current.moveLeft();
 
       checkCollisions();
 
+      if (enemiesRef.current.length === 0) {
+        setLevel((prevLevel) => prevLevel + 1);
+        setScore((prevScore) => prevScore + 100);
+        spawnEnemies();
+      }
+
       animationFrameId = window.requestAnimationFrame(updateGame);
     };
+
+    spawnEnemies(); // Initial spawn
     updateGame();
 
     return () => {
@@ -98,7 +110,7 @@ const ArcadeShooterGame = ({ isPaused }) => {
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };
-  }, [isPaused, enemies, playerShip]);
+  }, [isPaused, setScore, setLives, level, setLevel]);
 
   return <canvas ref={canvasRef} className="game-canvas"></canvas>;
 };
