@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class Noun {
     private static final String ROOT_DIRECTORY = System.getProperty("user.dir");
-    private static final Path NOUN_FILE_PATH = Paths.get(ROOT_DIRECTORY,  "backend", "data", "unique-noun-list.txt");
+    private static final Path NOUN_FILE_PATH = Paths.get(ROOT_DIRECTORY,   "data", "unique-noun-list.txt");
     public String getNoun() {
         try (Stream<String> lines = Files.lines(NOUN_FILE_PATH)){
             long totalLines = lines.count();
