@@ -7,6 +7,7 @@ function PlayerRegistration() {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -23,10 +24,28 @@ function PlayerRegistration() {
     e.preventDefault();
     setError("");
     setSuccess("");
+
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     try {
-      const response = await register(formData);
+      const response = await register({
+        firstName: formData.firstName,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
       setSuccess("Registration successful! You can now login.");
-      setFormData({ firstName: "", username: "", email: "", password: "" });
+      setFormData({
+        firstName: "",
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (error) {
       setError("Registration failed. Please try again.");
     }
@@ -93,6 +112,20 @@ function PlayerRegistration() {
             onChange={handleChange}
             required
             minLength="8"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="confirmPassword" className="form-label">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">
