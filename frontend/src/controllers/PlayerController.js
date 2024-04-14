@@ -72,7 +72,6 @@ const getPlayerById = async (id) => {
 };
 
 export {
-  login,
   register,
   getAllPlayers,
   getPlayerByUsername,

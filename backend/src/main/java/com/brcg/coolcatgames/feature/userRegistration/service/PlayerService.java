@@ -45,6 +45,14 @@ public class PlayerService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("USER")));
     }
 
+    public String getUserIdByUsername(String username) throws UsernameNotFoundException {
+        Player player = playerRepository.findByUsername(username);
+        if (player == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return player.getId();
+    }
+
     public Player updatePlayer(String playerId, Player updatedPlayer) {
         Player player = getPlayerByID(playerId);
         if (player != null) {
