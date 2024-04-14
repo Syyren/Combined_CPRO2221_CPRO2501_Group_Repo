@@ -7,7 +7,6 @@ import "./NavBar.css";
 
 export default function NavBar() {
   const { currentUser } = useAuth();
-  console.log(currentUser);
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
