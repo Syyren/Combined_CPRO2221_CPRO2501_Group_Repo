@@ -13,7 +13,6 @@ public class HangmanScore {//extends Scores {
     private String userId;
     private int score;
     private String gameName;
-
     private String leaderboard;
 
     // Constructor
