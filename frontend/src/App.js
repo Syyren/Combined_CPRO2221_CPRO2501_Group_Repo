@@ -9,6 +9,7 @@ import Hangman from "./pages/games/Hangman";
 import RunCat from "./pages/games/RunCat";
 import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
+import Logout from "./pages/Logout";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
 import ArcadeShooter from "./pages/games/ArcadeShooter";
 
@@ -29,9 +30,10 @@ export default function App() {
           <Route path="/games/run-cat" element={<RunCat />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
-          <Route path="/games/canineinvaders" element={<ArcadeShooter />} />
+          <Route path="/games/canine-invaders" element={<ArcadeShooter />} />
           <Route path="/games/tictactoe" element={<Tictactoe />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<PlayerRegistration />} />
         </Routes>
       </BrowserRouter>

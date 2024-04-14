@@ -36,45 +36,5 @@ export default function NavBar() {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-    // <nav className="navbar navbar-expand-lg bg-secondary" data-bs-theme="dark">
-    //   <div className="container-fluid">
-    //     <a className="navbar-brand">CoolCatGames.com</a>
-    //     <button
-    //       className="navbar-toggler"
-    //       type="button"
-    //       data-bs-toggle="collapse"
-    //       data-bs-target=".navbar-collapse"
-    //       aria-controls="navbarSupportedContent"
-    //       aria-expanded="false"
-    //       aria-label="Toggle navigation"
-    //     >
-    //       <span className="navbar-toggler-icon"></span>
-    //     </button>
-    //     <div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-    //       <ul className="navbar-nav flex-grow-1">
-    //         <li className="nav-item">
-    //           <Link className="nav-link text-dark" to="/home">
-    //             Home
-    //           </Link>
-    //         </li>
-    //         <li className="nav-item">
-    //           <Link className="nav-link text-dark" to="/games">
-    //             Games
-    //           </Link>
-    //         </li>
-    //         <li className="nav-item">
-    //           <Link className="nav-link text-dark" to="/about">
-    //             About
-    //           </Link>
-    //         </li>
-    //         <li className="nav-item">
-    //           <Link className="nav-link text-dark" to="/leaderboard">
-    //             Leaderboard
-    //           </Link>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </nav>
   );
 }
