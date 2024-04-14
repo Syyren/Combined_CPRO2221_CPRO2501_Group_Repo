@@ -1,96 +1,104 @@
-import React from "react";
-
-import "./PlayerRegistration.css";
-import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
+import { register } from "../../controllers/PlayerController";
 
 function PlayerRegistration() {
-  //setting usestates for player login
-  const [id, setId] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  async function save(event) {
-    event.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
     try {
-      await axios.post("http://localhost:8090/api/v1/player/save", {
-        FirstName: firstName,
-        email: email,
-        password: password,
-        username: username,
-      });
-      alert("Player Registation Successfully");
-      setId("");
-      setFirstName("");
-      setEmail("");
-      setPassword("");
-      setUsername("");
-    } catch (err) {
-      alert("User Registration Failed");
+      const response = await register(formData);
+      setSuccess("Registration successful! You can now login.");
+      setFormData({ firstName: "", username: "", email: "", password: "" });
+    } catch (error) {
+      setError("Registration failed. Please try again.");
     }
-  }
+  };
+
   return (
-    <div class="auth">
-      <div class="container">
-        <form>
-          <h1> WELCOME TO COOL CAT GAMES</h1>
-          <div class="form-group">
-            <label>FirstName</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter FirstName"
-              value={firstName}
-              onChange={(event) => {
-                setFirstName(event.target.value);
-              }}
-            />
-          </div>
-          <div class="form-group">
-            <label>UserName</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter userName"
-              value={username}
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-            />
-          </div>
-          <div class="form-group">
-            <label>EMAIL</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            />
-          </div>
-
-          <button class="btn btn-primary mt-4" onClick={save}>
-            Register
-          </button>
-        </form>
-      </div>
+    <div className="container mt-5">
+      <h2 className="mb-3">Register</h2>
+      {success && <div className="alert alert-success">{success}</div>}
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="firstName" className="form-label">
+            First Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            minLength="8"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+      </form>
     </div>
   );
 }
