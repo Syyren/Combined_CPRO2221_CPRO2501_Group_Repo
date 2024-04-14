@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="found a more streamline way to obtain path to txt">
+    <list default="true" id="18da4a3d-f8ac-42c0-ba5a-cdf21ec2a8d5" name="Changes" comment="updated dependencies to include servlets">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Noun.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Noun.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,13 +23,20 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -41,26 +47,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.CoolcatgamesApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;pvp__backend&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CoolcatgamesApplication.executor": "Run",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Kaden/Documents/College/CPRO_Y2_S1/2501/Final Project/repo/Combined_CPRO2221_CPRO2501_Group_Repo/Combined_CPRO2221_CPRO2501_Group_Repo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }</component>
   <component name="RunManager">
@@ -87,9 +92,14 @@
       <created>1713004898708</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1713004898708</updated>
-      <workItem from="1713004899759" duration="925000" />
-      <workItem from="1713069633128" duration="4686000" />
+      <updated>1709754600569</updated>
+      <workItem from="1709754604333" duration="3227000" />
+      <workItem from="1709757851551" duration="19000" />
+      <workItem from="1709757899651" duration="1871000" />
+      <workItem from="1709770241417" duration="824000" />
+      <workItem from="1709787798505" duration="21866000" />
+      <workItem from="1713081466116" duration="611000" />
+      <workItem from="1713082815733" duration="801000" />
     </task>
     <task id="LOCAL-00001" summary="found a more streamline way to obtain path to txt">
       <option name="closed" value="true" />
