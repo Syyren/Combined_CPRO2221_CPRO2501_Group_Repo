@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="found a more streamline way to obtain path to txt">
+    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/controller/HangmanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/controller/HangmanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +64,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Kaden\Documents\GitHub\CPRO2501_Group_Repo\backend\src\main\java\com\brcg\coolcatgames\feature" />
+      <recent name="C:\Users\Kaden\Documents\GitHub\CPRO2501_Group_Repo\backend\src\main\java\com\brcg\coolcatgames" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="CoolcatgamesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="coolcatgames" />
@@ -107,6 +114,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="found a more streamline way to obtain path to txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="found a more streamline way to obtain path to txt" />
+    <MESSAGE value="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces" />
+    <option name="LAST_COMMIT_MESSAGE" value="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces" />
   </component>
 </project>
