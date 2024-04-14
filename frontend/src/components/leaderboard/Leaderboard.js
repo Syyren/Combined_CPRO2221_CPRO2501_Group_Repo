@@ -18,6 +18,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     const fetchAndSetScores = async () => {
+      console.log(currentUser);
       setLoading(true);
       setError(null);
       try {
@@ -26,7 +27,7 @@ const Leaderboard = () => {
           fetchedScores = await getScoresByGame(activeGame);
         } else if (activeScoreType === "personal" && currentUser) {
           fetchedScores = await getScoresByUserAndGame(
-            currentUser.id,
+            currentUser.userId,
             activeGame
           );
         }
@@ -83,6 +84,8 @@ const Leaderboard = () => {
       <LeaderboardNav
         onGameChange={handleGameChange}
         onScoreTypeChange={handleScoreTypeChange}
+        selectedGame={activeGame}
+        selectedScoreType={activeScoreType}
       />
       <div className="list-group">
         {filteredScores.map((score, index) => (

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
-const LeaderboardNav = ({ onGameChange, onScoreTypeChange }) => {
-  const [selectedGame, setSelectedGame] = useState("canine_invaders");
-  const [selectedScoreType, setSelectedScoreType] = useState("global");
-
+const LeaderboardNav = ({
+  onGameChange,
+  onScoreTypeChange,
+  selectedGame,
+  selectedScoreType,
+}) => {
   const handleGameChange = (e) => {
     const game = e.target.value;
-    setSelectedGame(game);
     onGameChange(game);
   };
 
   const handleScoreTypeChange = (e) => {
     const scoreType = e.target.value;
-    setSelectedScoreType(scoreType);
     onScoreTypeChange(scoreType);
   };
 

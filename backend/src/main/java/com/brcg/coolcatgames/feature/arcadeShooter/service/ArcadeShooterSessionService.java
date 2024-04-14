@@ -4,6 +4,7 @@ import com.brcg.coolcatgames.feature.arcadeShooter.model.ArcadeShooterSession;
 import com.brcg.coolcatgames.feature.arcadeShooter.repository.ArcadeShooterSessionRepository;
 import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
 import com.brcg.coolcatgames.feature.leaderboard.service.ScoreEntryService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +28,21 @@ public class ArcadeShooterSessionService {
         return sessionRepository.save(newSession);
     }
 
+    @Transactional
     public ArcadeShooterSession endSession(String id, int finalScore, int levelReached) {
         return sessionRepository.findById(id)
                 .map(session -> {
+                    if (session.getEndTime() != null) {
+                        return session;
+                    }
+
+                    // Set end time and other final details
                     session.setEndTime(LocalDateTime.now());
                     session.setFinalScore(finalScore);
                     session.setLevelReached(levelReached);
-                    ArcadeShooterSession updatedSession = sessionRepository.save(session);
+                    sessionRepository.save(session);
 
-                    // Create and save a ScoreEntry object
+                    // Create and save a ScoreEntry only if the session is ending for the first time
                     ScoreEntry scoreEntry = new ScoreEntry();
                     scoreEntry.setGameName("canine_invaders");
                     scoreEntry.setUserId(session.getUserId());
@@ -43,7 +50,7 @@ public class ArcadeShooterSessionService {
                     scoreEntry.setLeaderboard("Score");
                     scoreEntryService.submitScore(scoreEntry);
 
-                    return updatedSession;
+                    return session;
                 })
                 .orElse(null);
     }
