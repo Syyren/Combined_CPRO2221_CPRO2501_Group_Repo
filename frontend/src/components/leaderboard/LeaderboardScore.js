@@ -1,18 +1,11 @@
 import React from "react";
 
 const LeaderboardScore = ({ rank, name, score, currentUser }) => {
-  // Check if the score belongs to the current user
   const isCurrentUserScore = name === currentUser;
-
-  // Define the JSX block for the badge element
   const badge = <span className={`badge bg-light me-2 text-dark`}>{rank}</span>;
-
-  // Define the JSX block for the badge element for the current user
   const currentUserBadge = (
     <span className={`badge bg-success me-2 text-dark`}>{rank}</span>
   );
-
-  // Conditionally select the badge element based on whether the score belongs to the current user
   const selectedBadge = isCurrentUserScore ? currentUserBadge : badge;
 
   return (

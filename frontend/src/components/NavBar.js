@@ -8,7 +8,7 @@ import "./NavBar.css";
 // This function creates the navbar for the layout and returns it
 export default function NavBar() {
   const currentUser = useAuth();
-  
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand href="/home">CoolCatGames.com</Navbar.Brand>
