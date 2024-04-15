@@ -1,6 +1,6 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.repository;
+package com.brcg.coolcatgames.feature.arcadeshooter.repository;
 
-import com.brcg.coolcatgames.feature.arcadeShooter.model.ArcadeShooterSession;
+import com.brcg.coolcatgames.feature.arcadeshooter.model.ArcadeShooterSession;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 

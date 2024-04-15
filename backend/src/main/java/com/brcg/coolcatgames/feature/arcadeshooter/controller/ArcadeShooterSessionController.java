@@ -1,13 +1,12 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.controller;
+package com.brcg.coolcatgames.feature.arcadeshooter.controller;
 
-import com.brcg.coolcatgames.feature.arcadeShooter.model.ArcadeShooterSession;
-import com.brcg.coolcatgames.feature.arcadeShooter.model.EndSessionRequest;
-import com.brcg.coolcatgames.feature.arcadeShooter.service.ArcadeShooterSessionService;
+import com.brcg.coolcatgames.feature.arcadeshooter.model.ArcadeShooterSession;
+import com.brcg.coolcatgames.feature.arcadeshooter.model.EndSessionRequest;
+import com.brcg.coolcatgames.feature.arcadeshooter.service.ArcadeShooterSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

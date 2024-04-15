@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.model;
+package com.brcg.coolcatgames.feature.arcadeshooter.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

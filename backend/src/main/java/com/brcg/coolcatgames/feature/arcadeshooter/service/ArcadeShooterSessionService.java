@@ -1,7 +1,7 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.service;
+package com.brcg.coolcatgames.feature.arcadeshooter.service;
 
-import com.brcg.coolcatgames.feature.arcadeShooter.model.ArcadeShooterSession;
-import com.brcg.coolcatgames.feature.arcadeShooter.repository.ArcadeShooterSessionRepository;
+import com.brcg.coolcatgames.feature.arcadeshooter.model.ArcadeShooterSession;
+import com.brcg.coolcatgames.feature.arcadeshooter.repository.ArcadeShooterSessionRepository;
 import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
 import com.brcg.coolcatgames.feature.leaderboard.service.ScoreEntryService;
 import jakarta.transaction.Transactional;
