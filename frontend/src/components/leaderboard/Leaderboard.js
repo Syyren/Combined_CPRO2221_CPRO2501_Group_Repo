@@ -85,7 +85,7 @@ const Leaderboard = () => {
     const gameNames = {
       hangman: "Hangman",
       tictactoe: "Tic Tac Toe",
-      "cat-run": "Run Cat!",
+      "cat-run": "Cat Run!",
       canine_invaders: "Canine Invaders",
     };
 

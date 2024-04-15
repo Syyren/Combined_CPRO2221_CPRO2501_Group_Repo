@@ -55,7 +55,6 @@ const AutoRunner = () => {
     }, []);
 
     useEffect(() => {
-        console.log("achievements: ", userAchievements);
         userAchievements.forEach(achievement => {
             if (achievement === achievement1Id)
             {
