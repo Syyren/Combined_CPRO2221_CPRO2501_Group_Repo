@@ -54,8 +54,8 @@ function PlayerRegistration() {
 
   return (
     <Layout>
-      <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5 mb-3">
-        <h2 className="display-4 mb-3">Register To Be a Cool Cat!</h2>
+      <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">
+        <h2 className="display-4 mb-3">Register, Cool Cat!</h2>
         {success && <div className="alert alert-success">{success}</div>}
         {error && <div className="alert alert-danger">{error}</div>}
         <div className="col-12 col-md-6">
