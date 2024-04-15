@@ -1,28 +1,37 @@
 package com.brcg.coolcatgames.feature.userRegistration.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+import java.util.ArrayList;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Document(collection = "userRegistration")
+@Document(collection = "players")
 public class Player {
-
     @Id
     private String id;
 
+    @NotBlank
+    @Size(max = 100)
     private String firstName;
-    private String userName;
+
+    @NotBlank
+    @Size(max = 50)
+    private String username;
+
+    @Email
+    @NotBlank
+    @Size(max = 45)
     private String email;
+
+    @NotBlank
+    @Size(min = 8, max = 100)
     private String password;
 
-    // Constructors, getters, setters, etc.
+    private ArrayList<Integer> achievements;
 }
-
-

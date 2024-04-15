@@ -6,8 +6,8 @@ const Layout = ({ children }) => {
   return ( //within the 'main' section, the page is rendered
     <>
         <NavBar />
-        <div class="container">
-          <main role="main" class="pb-3">
+        <div className="container">
+          <main role="main" className="pb-3">
             { children }
           </main>
         </div>
