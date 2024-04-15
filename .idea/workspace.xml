@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="updated dependencies to include servlets">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/websockets/controller/WebSocketController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" afterDir="false" />
-    <list default="true" id="18da4a3d-f8ac-42c0-ba5a-cdf21ec2a8d5" name="Changes" comment="updated dependencies to include servlets">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/controller/ArcadeShooterSessionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/model/ArcadeShooterSession.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/repository/ArcadeShooterSessionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/arcadeShooter/service/ArcadeShooterSessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +55,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.CoolcatgamesApplication.executor": "Run",
-    "git-widget-placeholder": "arcadeshooter__backend",
+    "git-widget-placeholder": "pvp__backend",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Computer Programming/Semester 3/2501 (Software Design and Devel)/Final Project/FinalProjApp/Combined_CPRO2221_CPRO2501_Group_Repo/backend",
     "node.js.detected.package.eslint": "true",
@@ -77,7 +68,7 @@
     "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Kaden\Documents\GitHub\CPRO2501_Group_Repo\backend\src\main\java\com\brcg\coolcatgames\feature" />
