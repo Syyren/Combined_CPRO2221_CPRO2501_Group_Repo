@@ -91,11 +91,7 @@ const AutoRunner = () => {
             setAchievementTitle("It's Over Nine-Meowsand!");
             setAchievement1Flag(true);
         }
-<<<<<<< Updated upstream
-    }, [score, highScore]);
-=======
     }, [score]);
->>>>>>> Stashed changes
 
     useEffect(() => {
         if (score >= benchmark && speed <= MAX_SPEED)
