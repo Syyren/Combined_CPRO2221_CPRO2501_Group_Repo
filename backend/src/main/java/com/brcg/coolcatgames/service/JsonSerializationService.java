@@ -21,6 +21,18 @@ public class JsonSerializationService {
         }
     }
 
+    public Object deserializeObjectToJson(String json, Class<?> clazz) {
+        try {
+            //converts json to new object
+            Object newObject =  objectMapper.readValue(json, clazz);
+            System.out.println("String json successfully converted to Class:\n"+clazz.getName());
+            return newObject;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 //
 //    public String wrapJson(String type, String payload) {
 //        try {
