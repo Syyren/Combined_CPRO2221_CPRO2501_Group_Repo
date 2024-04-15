@@ -33,7 +33,7 @@ public class EmailNotificationsController {
                 sendMail = true;
             }
             if (false) {
-                EmailContent += "";
+                EmailContent += "You achieved x achievement!\n";
                 sendMail = true;
             }
 
