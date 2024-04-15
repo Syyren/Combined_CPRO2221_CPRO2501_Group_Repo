@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="workspacexml broke and needed fixing, changed directory for noun">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/config/RestConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/multiplayer/model/HangmanGameStateMultiplayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/HangmanGameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="skeletoning websockets in the back end while I learn more." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,7 +100,7 @@
       <updated>1713004898708</updated>
       <workItem from="1713004899759" duration="925000" />
       <workItem from="1713069633128" duration="4686000" />
-      <workItem from="1713142233368" duration="3877000" />
+      <workItem from="1713142233368" duration="4515000" />
     </task>
     <task id="LOCAL-00001" summary="found a more streamline way to obtain path to txt">
       <option name="closed" value="true" />
@@ -126,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713142397157</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="skeletoning websockets in the back end while I learn more.">
+      <option name="closed" value="true" />
+      <created>1713157273762</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713157273762</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +137,7 @@
     <MESSAGE value="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces" />
     <MESSAGE value="updated dependencies to include servlets" />
     <MESSAGE value="workspacexml broke and needed fixing, changed directory for noun" />
-    <option name="LAST_COMMIT_MESSAGE" value="workspacexml broke and needed fixing, changed directory for noun" />
+    <MESSAGE value="skeletoning websockets in the back end while I learn more." />
+    <option name="LAST_COMMIT_MESSAGE" value="skeletoning websockets in the back end while I learn more." />
   </component>
 </project>
