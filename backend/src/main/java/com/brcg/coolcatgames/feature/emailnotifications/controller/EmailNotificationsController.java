@@ -29,8 +29,8 @@ public class EmailNotificationsController {
 
     private Map<String,Integer> scoresInMemory = new HashMap<>();
 
-    // This should run every 2 hours
-    @Scheduled(fixedRate = 7200000)
+    // This should run every 12 hours
+    @Scheduled(fixedRate = 43200000)
     public void performTask() {
         Iterable<Player> users = playerService.listAll();
         // a variable to replace the scoresInMemory at the end of this function
