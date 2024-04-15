@@ -1,0 +1,19 @@
+const ArcadeShooterHeader = ({ lives, level, score }) => (
+  <header className="d-flex justify-content-between align-items-center bg-primary text-white p-3">
+    <h3 className="h3">Don't let the Dogfighters get past you!</h3>
+    <div className="d-flex align-items-center">
+      <div className="mx-3">
+        <strong>Lives:</strong> <span className="badge bg-danger">{lives}</span>
+      </div>
+      <div className="mx-3">
+        <strong>Level:</strong>{" "}
+        <span className="badge bg-success">{level}</span>
+      </div>
+      <div className="mx-3">
+        <strong>Score:</strong> <span className="badge bg-info">{score}</span>
+      </div>
+    </div>
+  </header>
+);
+
+export default ArcadeShooterHeader;

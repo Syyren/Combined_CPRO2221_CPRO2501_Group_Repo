@@ -2,10 +2,12 @@ package com.brcg.coolcatgames.feature.leaderboard.service;
 
 import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
 import com.brcg.coolcatgames.feature.leaderboard.repository.ScoreEntryRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,53 +38,40 @@ public class ScoreEntryService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ScoreEntry submitScore(ScoreEntry newScore) {
-        // Fetch all scores for the user and game, excluding the newScore
+        // Fetch all existing scores for the user and game
         List<ScoreEntry> scores = repository.findByUserIdAndGameName(newScore.getUserId(), newScore.getGameName());
-
-        // Include newScore in comparison
-        scores.add(newScore);
 
         // Sort scores in descending order to prioritize higher scores
         scores.sort(Comparator.comparing(ScoreEntry::getScore).reversed());
 
-        // Determine if newScore is within the top 3
-        boolean isNewScoreInTop3 = scores.size() <= 3 || scores.subList(0, 3).contains(newScore);
-
         if ("Score".equals(newScore.getLeaderboard())) {
-            // Keep only the top 3 scores, deleting the rest if more than 3 exist
-            if (scores.size() > 3) {
-                List<String> idsToDelete = scores.subList(3, scores.size()).stream()
-                        .map(ScoreEntry::getId)
-                        .collect(Collectors.toList());
+            // Add the new score temporarily for comparison
+            List<ScoreEntry> scoresIncludingNew = new ArrayList<>(scores);
+            scoresIncludingNew.add(newScore);
+            scoresIncludingNew.sort(Comparator.comparing(ScoreEntry::getScore).reversed());
 
-                // Delete scores not in the top 3
-                if (!idsToDelete.isEmpty()) {
-                    repository.deleteByIdIn(idsToDelete);
+            // Determine if newScore is within the top 3
+            boolean isNewScoreInTop3 = scoresIncludingNew.indexOf(newScore) < 3;
+
+            // Keep only the top 3 scores
+            if (isNewScoreInTop3) {
+                if (scores.size() >= 3) {
+                    // Remove the lowest score if there are already 3 scores
+                    repository.delete(scores.get(2)); // Delete the third score, assuming list is already sorted
                 }
-            }
-            // Save the new score if it's among the top 3
-            if (isNewScoreInTop3){
                 return repository.save(newScore);
-            } else {
-                return null;
             }
-
+            return null; // Return null if the new score does not make it into the top 3
         } else if ("Elo".equals(newScore.getLeaderboard())) {
-            // For "Elo", delete all existing scores for the user and game, then save the new score
-            List<String> idsToDelete = scores.stream()
-                    .map(ScoreEntry::getId)
-                    .collect(Collectors.toList());
-
-            if (!idsToDelete.isEmpty()) {
-                repository.deleteByIdIn(idsToDelete);
-            }
-
-            return repository.save(newScore);
+            // For "Elo" leaderboards, replace all existing scores
+            repository.deleteAll(scores); // Efficient bulk delete
+            return repository.save(newScore); // Save the new score
         }
 
-        // Default return, should ideally never be reached
-        return newScore;
+        // Fallback scenario, should not be reached as per your game logic
+        return null;
     }
 }
 
