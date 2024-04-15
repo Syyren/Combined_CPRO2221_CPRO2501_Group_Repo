@@ -40,6 +40,7 @@ const LeaderboardNav = ({
         >
           <option value="personal">Personal</option>
           <option value="global">Global</option>
+          <option value="friends">Friends</option>
         </select>
       </div>
     </div>
