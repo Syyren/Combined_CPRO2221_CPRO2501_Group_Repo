@@ -1,7 +1,7 @@
 package com.brcg.coolcatgames.feature.userRegistration.repository;
 import com.brcg.coolcatgames.feature.userRegistration.model.Friend;
 import com.brcg.coolcatgames.feature.userRegistration.model.Player;
-import com.brcg.coolcatgames.feature.userRegistration.service.PlayerServices;
+import com.brcg.coolcatgames.feature.userRegistration.service.PlayerService;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

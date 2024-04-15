@@ -34,7 +34,7 @@ public class FriendService {
             // Fetch user details from PlayerRepository
             Player player = playerRepository.findById(friend.getFriendId()).orElse(null);
             if (player != null) {
-                friendDTO.setUserName(player.getUserName());
+                friendDTO.setUserName(player.getUsername());
                 friendDTO.setFirstName(player.getFirstName());
                 friendDTO.setEmail(player.getEmail()); // Assuming Player has an email field
             }
