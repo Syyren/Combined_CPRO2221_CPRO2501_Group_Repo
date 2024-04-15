@@ -27,7 +27,7 @@ const LeaderboardNav = ({
         >
           <option value="hangman">Hangman</option>
           <option value="tictactoe">Tic Tac Toe</option>
-          <option value="idlerunner">Idle Runner</option>
+          <option value="cat-run">Run Cat!</option>
           <option value="canine_invaders">Canine Invaders</option>
         </select>
       </div>
