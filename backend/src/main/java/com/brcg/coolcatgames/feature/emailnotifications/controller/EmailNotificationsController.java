@@ -45,7 +45,7 @@ public class EmailNotificationsController {
             // Get all the scores of the user to get all the games they have played
             List<ScoreEntry> scores = scoreEntryService.getScoresByUser(user.getId());
             for (ScoreEntry score :scores) {
-                if (scoresInMemory.containsKey(score.getId()) ) {
+                if (scoresInMemory.containsKey(score.getGameName()+"_"+user.getId()) ) {
                     // TODO replace False with an actual check if a score has been beaten since last time this was checked.
 
                     if (false) {
@@ -53,7 +53,7 @@ public class EmailNotificationsController {
                         sendMail = true;
                     }
                 }
-                newScoresInMemory.put(score.getId(),score.getScore());
+                newScoresInMemory.put(score.getGameName()+"_"+user.getId(),score.getScore());
             }
 
             // TODO make this a loop, replace False with a check if an achievement was gained
