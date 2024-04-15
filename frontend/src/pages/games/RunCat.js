@@ -7,7 +7,7 @@ export default function RunCatView()
     return (
         <Layout>
             <GameLayout>
-                <h2 className="display-4 mb-4">Run Cat!</h2>
+                <h2 className="display-4 mb-4">Cat Run!</h2>
                 <AutoRunner/>
             </GameLayout>
         </Layout> 
