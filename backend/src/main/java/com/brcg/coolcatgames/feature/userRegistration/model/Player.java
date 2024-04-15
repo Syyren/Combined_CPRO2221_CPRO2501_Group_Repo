@@ -34,4 +34,6 @@ public class Player {
     private String password;
 
     private ArrayList<Integer> achievements;
+
+    private int imageID;
 }
