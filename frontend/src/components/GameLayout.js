@@ -10,8 +10,8 @@ const Layout = ({ children }) => {
                     Our Games:
                 </p>
                 <div className="me-2">
-                    <Link className="nav-link" to="/games/run-cat">
-                        Run Cat!
+                    <Link className="nav-link" to="/games/cat-run">
+                        Cat Run!
                     </Link>
                 </div>
                 <div className="me-2">
