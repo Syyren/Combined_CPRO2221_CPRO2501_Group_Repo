@@ -45,13 +45,7 @@ const AutoRunner = () => {
         if (currentUser != null)
         {
             setHighScore(await getHighScore());
-            await fetchAchievements();
-            userAchievements.forEach(achievement => {
-                if (achievement === achievement1Id) 
-                {
-                    setAchievement1Flag(true); 
-                };
-            });
+            setUserAchievements(await fetchAchievements());
         }
         setIsLoading(false);
     };
@@ -59,6 +53,17 @@ const AutoRunner = () => {
     useEffect(() => {
         initialize();
     }, []);
+
+    useEffect(() => {
+        console.log("achievements: ", userAchievements);
+        userAchievements.forEach(achievement => {
+            if (achievement === achievement1Id)
+            {
+                console.log("User has achievement.")
+                setAchievement1Flag(true); 
+            };
+        });
+    }, [userAchievements])
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -95,7 +100,7 @@ const AutoRunner = () => {
         {
             setCatSrc(catImage);
             clearInterval(gameTimer);
-            if (score === highScore) { saveScore(currentUser.userId, score) }
+            if (score === highScore && score != 0) { saveScore(currentUser.userId, score) }
         }
 
         return () => clearInterval(gameTimer);
@@ -120,7 +125,7 @@ const AutoRunner = () => {
                 setAchievement1Flag(true);
             }
         }
-    }, [score, achievement1Flag, currentUser]);
+    }, [score]);
 
     useEffect(() => {
         if (score >= benchmark && speed <= MAX_SPEED)
@@ -133,7 +138,7 @@ const AutoRunner = () => {
     const fetchAchievements = async () => 
     {
         const res = await getUserAchievements(currentUser.userId);;
-        setUserAchievements(res);
+        return res;
     }
 
     const startGame = () => {
@@ -167,7 +172,6 @@ const AutoRunner = () => {
             setGameText("Game Over!\nPress Space to try again.")
         }
 
-        console.log("update speed:", speed);
         //moves the obstacle
         obstacleRef.current.style.left = `${obstacleLeft - speed}px`;
 
