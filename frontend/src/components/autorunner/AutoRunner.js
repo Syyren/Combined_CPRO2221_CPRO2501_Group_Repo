@@ -86,12 +86,16 @@ const AutoRunner = () => {
     // Check for achievements when score reaches multiples of 1000
     useEffect(() => { 
         const milestone = Math.floor(score / 1000) * 1000;
-        if (!achievement1Flag && milestone === 1000)
+        if (!achievement1Flag && milestone === 9000)
         {
             setAchievementTitle("It's Over Nine-Meowsand!");
             setAchievement1Flag(true);
         }
+<<<<<<< Updated upstream
     }, [score, highScore]);
+=======
+    }, [score]);
+>>>>>>> Stashed changes
 
     useEffect(() => {
         if (score >= benchmark && speed <= MAX_SPEED)
