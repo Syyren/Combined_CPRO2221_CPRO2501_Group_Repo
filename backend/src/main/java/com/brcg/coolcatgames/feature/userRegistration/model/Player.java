@@ -35,5 +35,5 @@ public class Player {
 
     private ArrayList<Integer> achievements;
 
-    private int imageID;
+    private ArrayList<String> friends;
 }
