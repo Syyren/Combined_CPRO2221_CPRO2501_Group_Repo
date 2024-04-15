@@ -3,14 +3,11 @@ package com.brcg.coolcatgames.feature.emailnotifications.controller;
 import com.brcg.coolcatgames.feature.achievements.model.Achievement;
 import com.brcg.coolcatgames.feature.achievements.service.AchievementService;
 import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
-import com.brcg.coolcatgames.feature.leaderboard.model.Scores;
 import com.brcg.coolcatgames.feature.leaderboard.service.ScoreEntryService;
 import com.brcg.coolcatgames.feature.userRegistration.model.Player;
 import com.brcg.coolcatgames.feature.userRegistration.service.PlayerService;
 
 import com.brcg.coolcatgames.feature.emailnotifications.service.EmailNotificationsService;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
