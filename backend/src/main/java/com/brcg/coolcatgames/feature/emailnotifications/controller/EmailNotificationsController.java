@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -43,14 +44,22 @@ public class EmailNotificationsController {
 
 
             // Get all the scores of the user to get all the games they have played
-            List<ScoreEntry> scores = scoreEntryService.getScoresByUser(user.getId());
-            for (ScoreEntry score :scores) {
+            List<ScoreEntry> userScores = scoreEntryService.getScoresByUser(user.getId());
+            List<ScoreEntry> allScores = scoreEntryService.getAllScores();
+            for (ScoreEntry score :userScores) {
                 if (scoresInMemory.containsKey(score.getGameName()+"_"+user.getId()) ) {
-                    // TODO replace False with an actual check if a score has been beaten since last time this was checked.
-
-                    if (false) {
-                        EmailContent += "x has beaten your high score in y\n";
+                    List<String> rivals = new ArrayList<>();
+                    // See if the score has been beaten since last time it was checked
+                    for (ScoreEntry score2 : allScores) {
+                        if (score2.getGameName().equals(score.getGameName()) && !scoresInMemory.containsKey(score.getGameName()+"_"+score2.getUserId()) && score.getScore() < score2.getScore()) {
+                            rivals.add(playerService.getPlayerByID(score2.getUserId()).getUsername());
+                        }
+                    }
+                    if (rivals.size() > 0) {
+                        for (String rival : rivals) {
+                        EmailContent += rival + " has beaten your high score in"+ score.getGameName() +"\n";
                         sendMail = true;
+                        }
                     }
                 }
                 newScoresInMemory.put(score.getGameName()+"_"+user.getId(),score.getScore());
