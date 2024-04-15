@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces">
+    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="updated dependencies to include servlets">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/controller/HangmanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/controller/HangmanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/service/JsonSerializationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/websockets/controller/WebSocketController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/websockets/controller/WebSocketController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,11 +32,16 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/frontend/package.json" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2f2h5lv2vUwmRuH5noHBa6QLs1M" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -115,6 +119,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="found a more streamline way to obtain path to txt" />
     <MESSAGE value="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces" />
-    <option name="LAST_COMMIT_MESSAGE" value="all in all, I'm on the wrong branch... will move over after push, added more modularity, split hangman features into smaller pieces" />
+    <MESSAGE value="updated dependencies to include servlets" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated dependencies to include servlets" />
   </component>
 </project>
