@@ -1,5 +1,8 @@
 package com.brcg.coolcatgames.feature.emailnotifications.controller;
 
+import com.brcg.coolcatgames.feature.leaderboard.model.ScoreEntry;
+import com.brcg.coolcatgames.feature.leaderboard.model.Scores;
+import com.brcg.coolcatgames.feature.leaderboard.service.ScoreEntryService;
 import com.brcg.coolcatgames.feature.userRegistration.model.Player;
 import com.brcg.coolcatgames.feature.userRegistration.service.PlayerService;
 
@@ -10,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class EmailNotificationsController {
@@ -18,25 +22,35 @@ public class EmailNotificationsController {
     @Autowired
     private PlayerService playerService;
 
+    @Autowired
+    private ScoreEntryService scoreEntryService;
+
     // This should run every 2 hours
     @Scheduled(fixedRate = 7200000)
     public void performTask() {
         Iterable<Player> users = playerService.listAll();
 
         for (Player user: users) {
+            // If any of the subloops adds to the email body, it will send this to true and send the email
             Boolean sendMail = false;
+            // This is the opening of the email
             String EmailContent = "Dear " + user.getFirstName() +",\n\n";
-
-            // TODO replace false with a way to detect if there's changes in one of the database schemas
-            if (false) {
-                EmailContent += "x has beaten your high score in y\n";
-                sendMail = true;
+            // Get all the scores of the user to get all the games they have played
+            List<ScoreEntry> scores = scoreEntryService.getScoresByUser(user.getId());
+            for (ScoreEntry score :scores) {
+                // TODO replace False with an actual check if a score has been beaten since last time this was checked.
+                if (false) {
+                    EmailContent += "x has beaten your high score in y\n";
+                    sendMail = true;
+                }
             }
+
+            // TODO make this a loop, replace False with a check if an achievement was gained
             if (false) {
                 EmailContent += "You achieved x achievement!\n";
                 sendMail = true;
             }
-
+            // Send the email
             if (sendMail) {
                 EmailContent += "\n\nThanks for being a part of CoolCatGames Community!";
                 String subject = "test";
