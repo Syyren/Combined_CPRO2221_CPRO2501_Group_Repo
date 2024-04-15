@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 @Component
@@ -25,24 +26,34 @@ public class EmailNotificationsController {
     @Autowired
     private ScoreEntryService scoreEntryService;
 
+    private Map<String,Integer> scoresInMemory = new HashMap<>();
+
     // This should run every 2 hours
     @Scheduled(fixedRate = 7200000)
     public void performTask() {
         Iterable<Player> users = playerService.listAll();
+        // a variable to replace the scoresInMemory at the end of this function
+        Map<String, Integer> newScoresInMemory = new HashMap<>();
 
         for (Player user: users) {
             // If any of the subloops adds to the email body, it will send this to true and send the email
             Boolean sendMail = false;
             // This is the opening of the email
             String EmailContent = "Dear " + user.getFirstName() +",\n\n";
+
+
             // Get all the scores of the user to get all the games they have played
             List<ScoreEntry> scores = scoreEntryService.getScoresByUser(user.getId());
             for (ScoreEntry score :scores) {
-                // TODO replace False with an actual check if a score has been beaten since last time this was checked.
-                if (false) {
-                    EmailContent += "x has beaten your high score in y\n";
-                    sendMail = true;
+                if (scoresInMemory.containsKey(score.getId()) ) {
+                    // TODO replace False with an actual check if a score has been beaten since last time this was checked.
+
+                    if (false) {
+                        EmailContent += "x has beaten your high score in y\n";
+                        sendMail = true;
+                    }
                 }
+                newScoresInMemory.put(score.getId(),score.getScore());
             }
 
             // TODO make this a loop, replace False with a check if an achievement was gained
@@ -56,6 +67,7 @@ public class EmailNotificationsController {
                 String subject = "test";
                 emailService.sendEmail(user.getEmail(), subject,EmailContent);
             }
+            scoresInMemory = newScoresInMemory;
         }
 
     }
