@@ -21,11 +21,7 @@ import monaPawImg from "../../images/tictactoe/mona_paw.png";
 import odinPawImg from "../../images/tictactoe/odin_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
-// Authorization, for integration with other features
-const authUserName = "john_doe";
-const authPassword = "password123";
-const preAuthToken = btoa(`${authUserName}:${authPassword}`);
-const authToken = `Basic ${preAuthToken}`;
+import axios from "axios";
 
 export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
@@ -40,16 +36,8 @@ export default function TictactoeGame(props) {
     // This checks if a game was selected, and passed as a prop ie <TictactoeGame gameId = "Joel_Kaden" />
     if (props.gameId) {
       // Get the actual data about the game
-      fetch("http://localhost:8090/tictactoe/game/" + props.gameId, {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken,
-        },
-      })
-        .then((res) => res.json())
+      axios.get("http://localhost:8090/tictactoe/game/" + props.gameId)
+        .then((res) => res.data)
         .then((data) => {
           // Store the game data for use later
           setCurrentGame(data);
@@ -285,20 +273,15 @@ export default function TictactoeGame(props) {
                           style={{ width: "100%", height: "100%" }}
                           onClick={async function () {
                             // When the button is clicked, try to put the player's turn
-                            await fetch(
+                            await axios.put(
                               "http://localhost:8090/tictactoe/update/" +
                                 props.gameId +
                                 "?playerId=" +
                                 props.currentPlayer +
                                 "&position=" +
-                                i,
-                              {
-                                method: "PUT",
-                                mode: "cors",
-                                cache: "no-cache",
-                              }
+                                i
                             )
-                              .then((res) => res.json())
+                              .then((res) => res.data)
                               .then((data) => {
                                 // Store the game data for use later
                                 setCurrentGame(data);
@@ -309,11 +292,7 @@ export default function TictactoeGame(props) {
                               });
                           }}
                         >
-                          <img
-                            src={blank}
-                            alt="blank space for making button larger"
-                            style={{ width: "80%", height: "80%" }}
-                          ></img>
+                          <p>Play here</p>
                         </button>
                       )}
                     </div>

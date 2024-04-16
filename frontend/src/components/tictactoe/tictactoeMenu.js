@@ -72,10 +72,8 @@ export default function TictactoeMenu() {
                   callback={function (updatedGame) {
                     console.log(updatedGame);
                     console.log(updatedGame.id);
-                    axios.get(
-                      `${API_URL}tictactoe/checkWinner/` +
-                        updatedGame.id
-                    )
+                    axios
+                      .get(`${API_URL}tictactoe/checkWinner/` + updatedGame.id)
                       .then((res) => res.data)
                       .then((data) => {
                         console.log(data);
@@ -88,8 +86,7 @@ export default function TictactoeMenu() {
                           );
                         } else if (data === updatedGame.player1) {
                           axios.delete(
-                            `${API_URL}tictactoe/delete/` +
-                              updatedGame.id
+                            `${API_URL}tictactoe/delete/` + updatedGame.id
                           );
                           axios.put(
                             `${API_URL}scores/tictactoe/update/` +
@@ -108,8 +105,7 @@ export default function TictactoeMenu() {
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === updatedGame.player2) {
                           axios.delete(
-                            `${API_URL}tictactoe/delete/` +
-                              updatedGame.id
+                            `${API_URL}tictactoe/delete/` + updatedGame.id
                           );
                           axios.put(
                             `${API_URL}scores/tictactoe/update/` +
@@ -128,8 +124,7 @@ export default function TictactoeMenu() {
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === "draw") {
                           axios.delete(
-                            `${API_URL}tictactoe/delete/` +
-                              updatedGame.id
+                            `${API_URL}tictactoe/delete/` + updatedGame.id
                           );
                           axios.put(
                             `${API_URL}scores/tictactoe/update/` +
@@ -179,11 +174,12 @@ export default function TictactoeMenu() {
                 className="btn btn-primary"
                 // When this button is clicked, create a new game in the database, then load it
                 onClick={async function () {
-                  await axios.post(`${API_URL}tictactoe/save`, JSON.stringify({
+                  await axios
+                    .post(`${API_URL}tictactoe/save`, {
                       player1: currentUser.username,
                       player2: userId,
-                  }))
-                    .then((res) => res.json())
+                    })
+                    .then((res) => res.data)
                     .then((data) => {
                       var tempId = data.id;
 
@@ -211,7 +207,7 @@ export default function TictactoeMenu() {
         })
       );
     }
-  }, [usersIdsList]);
+  }, [usersIdsList,currentUser]);
   // Finalize display
   return (
     <div className="row row-cols-2">
