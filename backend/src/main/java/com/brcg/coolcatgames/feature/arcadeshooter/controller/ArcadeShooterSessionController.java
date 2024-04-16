@@ -19,6 +19,11 @@ public class ArcadeShooterSessionController {
     @PostMapping("/start")
     public ResponseEntity<ArcadeShooterSession> startSession(@RequestParam String userId) {
         ArcadeShooterSession newSession = sessionService.startSession(userId);
+        if (newSession == null) {
+            // Return a 404 Not Found if the session could not be created
+            return ResponseEntity.notFound().build();
+        }
+        // Return a 200 OK if the session was successfully created
         return ResponseEntity.ok(newSession);
     }
 
