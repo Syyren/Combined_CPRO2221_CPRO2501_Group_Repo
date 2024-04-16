@@ -6,7 +6,6 @@ import NoPage from "./pages/NoPage";
 import NoAccess from "./pages/NoAccess";
 import LeaderboardTest from "./pages/LeaderboardPage"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
-import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
 import RunCat from "./pages/games/RunCat";
 import Tictactoe from "./pages/games/TicTacToe";
@@ -51,7 +50,6 @@ export default function App() {
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
           <Route path="/games/cat-run" element={<RunCat />} />
-          <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
           <Route path="/games/canine-invaders" element={<ArcadeShooter />} />
           <Route path="/games/tictactoe" element={<Tictactoe />} />
