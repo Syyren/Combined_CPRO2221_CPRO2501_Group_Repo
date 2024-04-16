@@ -72,11 +72,11 @@ export default function TictactoeMenu() {
                   callback={function (updatedGame) {
                     console.log(updatedGame);
                     console.log(updatedGame.id);
-                    fetch(
-                      "http://localhost:8090/tictactoe/checkWinner/" +
+                    axios.get(
+                      `${API_URL}tictactoe/checkWinner/` +
                         updatedGame.id
                     )
-                      .then((res) => res.text())
+                      .then((res) => res.data)
                       .then((data) => {
                         console.log(data);
                         if (data == null) {
@@ -87,90 +87,63 @@ export default function TictactoeMenu() {
                             />
                           );
                         } else if (data === updatedGame.player1) {
-                          fetch(
-                            "http://localhost:8090/tictactoe/delete/" +
-                              updatedGame.id,
-                            {
-                              method: "DELETE",
-                            }
+                          axios.delete(
+                            `${API_URL}tictactoe/delete/` +
+                              updatedGame.id
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player1 +
                               "?deltaScore=" +
                               10 +
-                              "&conclusion=WINNER",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=WINNER"
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player2 +
                               "?deltaScore=" +
                               -10 +
-                              "&conclusion=LOSER",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=LOSER"
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === updatedGame.player2) {
-                          fetch(
-                            "http://localhost:8090/tictactoe/delete/" +
-                              updatedGame.id,
-                            {
-                              method: "DELETE",
-                            }
+                          axios.delete(
+                            `${API_URL}tictactoe/delete/` +
+                              updatedGame.id
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player1 +
                               "?deltaScore=" +
                               -10 +
-                              "&conclusion=LOSER",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=LOSER"
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player2 +
                               "?deltaScore=" +
                               10 +
-                              "&conclusion=WINNER",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=WINNER"
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         } else if (data === "draw") {
-                          fetch(
-                            "http://localhost:8090/tictactoe/delete/" +
-                              updatedGame.id,
-                            {
-                              method: "DELETE",
-                            }
+                          axios.delete(
+                            `${API_URL}tictactoe/delete/` +
+                              updatedGame.id
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player1 +
                               "?deltaScore=" +
                               0 +
-                              "&conclusion=DRAW",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=DRAW"
                           );
-                          fetch(
-                            "http://localhost:8090/scores/tictactoe/update/" +
+                          axios.put(
+                            `${API_URL}scores/tictactoe/update/` +
                               updatedGame.player2 +
                               "?deltaScore=" +
                               0 +
-                              "&conclusion=DRAW",
-                            {
-                              method: "PUT",
-                            }
+                              "&conclusion=DRAW"
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
                         }
@@ -206,18 +179,10 @@ export default function TictactoeMenu() {
                 className="btn btn-primary"
                 // When this button is clicked, create a new game in the database, then load it
                 onClick={async function () {
-                  await fetch("http://localhost:8090/tictactoe/save", {
-                    method: "POST",
-                    mode: "cors",
-                    cache: "no-cache",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
+                  await axios.post(`${API_URL}tictactoe/save`, JSON.stringify({
                       player1: currentUser.username,
                       player2: userId,
-                    }),
-                  })
+                  }))
                     .then((res) => res.json())
                     .then((data) => {
                       var tempId = data.id;
