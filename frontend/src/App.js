@@ -12,6 +12,7 @@ import RunCat from "./pages/games/RunCat";
 import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
 import Logout from "./pages/Logout";
+import Friends from "./pages/FriendsPage";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
 import ArcadeShooter from "./pages/games/ArcadeShooter";
 
@@ -24,7 +25,7 @@ export default function App() {
           <Route index element={<Login />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* Setting a second home path for clean routing */}
-          <Route path="/no-access" element={<NoAccess/>} />
+          <Route path="/no-access" element={<NoAccess />} />
           <Route path="/about" element={<About />} />
           <Route
             path="leaderboard"
@@ -36,10 +37,20 @@ export default function App() {
               />
             }
           />
+          <Route
+            path="friends"
+            element={
+              <PrivateRoute
+                element={Friends}
+                roles={["user"]}
+                redirectPath="/no-access"
+              />
+            }
+          />
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/achievements" element={<AchievementTest />} />
-          <Route path="/games/run-cat" element={<RunCat />} />
+          <Route path="/games/cat-run" element={<RunCat />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
           <Route path="/games/canine-invaders" element={<ArcadeShooter />} />

@@ -16,6 +16,8 @@ const Leaderboard = () => {
   const [activeGame, setActiveGame] = useState("canine_invaders");
   const [activeScoreType, setActiveScoreType] = useState("global");
 
+  const formattedGameName = getGameDisplayName(activeGame);
+
   useEffect(() => {
     const fetchAndSetScores = async () => {
       console.log(currentUser);
@@ -30,6 +32,15 @@ const Leaderboard = () => {
             currentUser.userId,
             activeGame
           );
+        } else if (activeScoreType === "friends" && currentUser) {
+          const user = await getPlayerById(currentUser.userId);
+          const allUserIds = [currentUser.userId, ...user.friends];
+
+          const friendsScoresPromises = allUserIds.map((userId) =>
+            getScoresByUserAndGame(userId, activeGame)
+          );
+          const friendsScoresArrays = await Promise.all(friendsScoresPromises);
+          fetchedScores = friendsScoresArrays.flat();
         }
 
         // Fetch user names for all scores
@@ -70,17 +81,23 @@ const Leaderboard = () => {
     setActiveScoreType(scoreType);
   };
 
-  const capitalizedActiveGame =
-    activeGame.charAt(0).toUpperCase() + activeGame.slice(1);
+  function getGameDisplayName(activeGame) {
+    const gameNames = {
+      hangman: "Hangman",
+      tictactoe: "Tic Tac Toe",
+      "cat-run": "Cat Run!",
+      canine_invaders: "Canine Invaders",
+    };
+
+    return gameNames[activeGame] || "Game";
+  }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container mt-5">
-      <h3 className="display-4 mb-5">
-        Leaderboard for {capitalizedActiveGame}
-      </h3>
+      <h3 className="display-4 mb-5">Leaderboard for {formattedGameName}</h3>
       <LeaderboardNav
         onGameChange={handleGameChange}
         onScoreTypeChange={handleScoreTypeChange}
@@ -94,7 +111,7 @@ const Leaderboard = () => {
             rank={index + 1}
             name={score.username}
             score={score.score}
-            game={capitalizedActiveGame}
+            game={formattedGameName}
             currentUser={currentUser && currentUser.username}
           />
         ))}

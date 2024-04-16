@@ -71,6 +71,17 @@ const getPlayerById = async (id) => {
   }
 };
 
+// Function to get a user ID by username
+const getUserIdByUsername = async (username) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/id-by-username/${username}`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching user ID by username:", error);
+    throw error;
+  }
+};
+
 export {
   register,
   getAllPlayers,
@@ -78,4 +89,5 @@ export {
   updatePlayer,
   deletePlayer,
   getPlayerById,
+  getUserIdByUsername,
 };

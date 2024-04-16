@@ -1,18 +1,71 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Ship from "./models/Ship";
 import Enemy from "./models/Enemy";
+import AchievementNotification from "../../components/achievements/AchievementNotification";
+import {
+  getUserAchievements,
+  giveAchievement,
+} from "../../controllers/AchievementController";
 
 const ArcadeShooterGame = ({
   isPaused,
   setScore,
   setLives,
   level,
+  lives,
+  score,
   setLevel,
+  currentUser,
 }) => {
   const canvasRef = useRef(null);
   const enemiesRef = useRef([]);
   const playerShipRef = useRef(new Ship(390, 560));
   const keys = { right: false, left: false, space: false };
+  const [userAchievements, setUserAchievements] = useState([]);
+  const [achievement1Flag, setAchievement1Flag] = useState(false);
+  const [achievement2Flag, setAchievement2Flag] = useState(false);
+  const [achievementTitle, setAchievementTitle] = useState("");
+
+  const achievement1Id = 7;
+  const achievement2Id = 8;
+
+  const fetchAchievements = async () => {
+    if (currentUser) {
+      const achievements = await getUserAchievements(currentUser.userId);
+      setUserAchievements(achievements);
+      achievements.forEach((achievement) => {
+        if (achievement.id === achievement1Id) {
+          setAchievement1Flag(true);
+        } else if (achievement.id === achievement2Id) {
+          setAchievement2Flag(true);
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [currentUser]);
+
+  useEffect(() => {
+    // Check for Achievement 1
+    if (score >= 1000 && lives === 3 && !achievement1Flag) {
+      setAchievementTitle("Never tell me the odds!");
+      if (currentUser) {
+        giveAchievement(currentUser.userId, achievement1Id);
+        setAchievement1Flag(true);
+      }
+    }
+
+    // Check for Achievement 2
+    if (level === 12 && !achievement2Flag) {
+      setAchievementTitle("Kessel Run in less than 12 Paw-secs");
+      if (currentUser) {
+        giveAchievement(currentUser.userId, achievement2Id);
+        setAchievement2Flag(true);
+      }
+    }
+  }, [score, level, currentUser, achievement1Flag, achievement2Flag, lives]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -114,7 +167,14 @@ const ArcadeShooterGame = ({
     };
   }, [isPaused, setScore, setLives, level, setLevel]);
 
-  return <canvas ref={canvasRef} className="game-canvas"></canvas>;
+  return (
+    <div className="game-canvas-container">
+      <canvas ref={canvasRef} className="game-canvas"></canvas>
+      {achievementTitle && (
+        <AchievementNotification achievementTitle={achievementTitle} />
+      )}
+    </div>
+  );
 };
 
 export default ArcadeShooterGame;

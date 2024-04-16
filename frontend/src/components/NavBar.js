@@ -38,9 +38,14 @@ export default function NavBar() {
             )}
           </div>
           {currentUser ? (
-            <Nav.Link as={Link} to="/logout">
-              Logout
-            </Nav.Link>
+            <>
+              <Nav.Link as={Link} to="/friends">
+                Friends
+              </Nav.Link>
+              <Nav.Link as={Link} to="/logout">
+                Logout
+              </Nav.Link>
+            </>
           ) : (
             <>
               <Nav.Link as={Link} to="/login">
