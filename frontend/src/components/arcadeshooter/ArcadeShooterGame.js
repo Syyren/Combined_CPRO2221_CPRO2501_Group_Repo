@@ -25,6 +25,9 @@ const ArcadeShooterGame = ({
   const [achievement1Flag, setAchievement1Flag] = useState(false);
   const [achievement2Flag, setAchievement2Flag] = useState(false);
   const [achievementTitle, setAchievementTitle] = useState("");
+  const [canvasWidth, setCanvasWidth] = useState(
+    window.innerWidth > 1000 ? 775 : window.innerWidth > 770 ? 700 : 0
+  );
 
   const achievement1Id = 7;
   const achievement2Id = 8;
@@ -68,11 +71,37 @@ const ArcadeShooterGame = ({
   }, [score, level, currentUser, achievement1Flag, achievement2Flag, lives]);
 
   useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width > 1000) {
+        setCanvasWidth(775);
+      } else if (width > 770 && width <= 1000) {
+        setCanvasWidth(700);
+      } else {
+        setCanvasWidth(0);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [currentUser]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    canvas.width = 750;
+    if (!canvasWidth) {
+      return;
+    }
+
+    canvas.width = canvasWidth;
     canvas.height = 600;
 
+    const context = canvas.getContext("2d");
     let animationFrameId;
 
     const spawnEnemies = () => {
@@ -116,7 +145,7 @@ const ArcadeShooterGame = ({
             enemy.hit();
             if (!enemy.isAlive()) {
               enemiesRef.current.splice(enemyIndex, 1);
-              setScore((prevScore) => prevScore + 10); // Increment score for killing an enemy
+              setScore((prevScore) => prevScore + 10);
             }
             playerShipRef.current.bullets.splice(bulletIndex, 1);
           }
@@ -128,7 +157,7 @@ const ArcadeShooterGame = ({
       if (isPaused) return;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = "#000022"; // Dark blue, like a night sky
+      context.fillStyle = "#000022";
       context.fillRect(0, 0, canvas.width, canvas.height);
       playerShipRef.current.draw(context);
       playerShipRef.current.drawBullets(context);
@@ -136,9 +165,8 @@ const ArcadeShooterGame = ({
       enemiesRef.current.forEach((enemy) => {
         enemy.update(canvas.width, canvas.height);
         if (enemy.y >= canvas.height - (enemy.height + 10)) {
-          // Enemy reaches the bottom
           setLives((prevLives) => prevLives - 1);
-          enemiesRef.current.splice(enemiesRef.current.indexOf(enemy), 1); // Remove enemy
+          enemiesRef.current.splice(enemiesRef.current.indexOf(enemy), 1);
         }
         enemy.draw(context);
       });
@@ -157,7 +185,7 @@ const ArcadeShooterGame = ({
       animationFrameId = window.requestAnimationFrame(updateGame);
     };
 
-    spawnEnemies(); // Initial spawn
+    spawnEnemies();
     updateGame();
 
     return () => {
@@ -165,7 +193,11 @@ const ArcadeShooterGame = ({
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };
-  }, [isPaused, setScore, setLives, level, setLevel]);
+  }, [canvasWidth, isPaused, setScore, setLives, level, setLevel]);
+
+  if (!canvasWidth) {
+    return <div>Cannot play Canine Invaders on this small of a screen!</div>;
+  }
 
   return (
     <div className="game-canvas-container">
