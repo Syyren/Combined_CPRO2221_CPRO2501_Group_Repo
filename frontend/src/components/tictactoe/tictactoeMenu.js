@@ -1,6 +1,10 @@
 import TictactoeGame from "./tictactoeGame";
 import React, { useState, useEffect } from "react";
 
+import { useAuth } from "../../context/AuthContext";
+
+import { getAllPlayers } from "../../controllers/PlayerController";
+
 // Fake data, in reality we would get this from the users backend branch
 let fakeUsersList = [
   "Joel",
@@ -27,8 +31,6 @@ let fakeUsersList = [
   "420forL1fe",
 ];
 
-let fakeCurrentUser = "Joel";
-
 // Authorization, for integration with other features
 const authUserName = "john_doe";
 const authPassword = "password123";
@@ -42,7 +44,7 @@ export default function TictactoeMenu() {
     <TictactoeGame />
   );
   // Get current userId; replace with API call when login feature done
-  var currentUserId = fakeCurrentUser;
+  var { currentUserId } = useAuth();
   // Get list of all users; replace with API call when login feature done
   var usersIdsList = fakeUsersList;
   // Get a list of all ongoing games the current user is participating in
@@ -50,14 +52,19 @@ export default function TictactoeMenu() {
   var allOpponents = [];
   const [currentGames, setCurrentGames] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8090/tictactoe/games/" + currentUserId, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      headers: { "Content-Type": "application/json", Authorization: authToken },
-    })
-      .then((res) => res.json())
-      .then((data) => setCurrentGames(data));
+    if (currentUserId) {
+      fetch("http://localhost:8090/tictactoe/games/" + currentUserId, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authToken,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setCurrentGames(data));
+    }
   }, [displayTictactoeGame, currentUserId]);
   //console.log(currentGames);
   // take the list of current games and make it into clickable buttons
