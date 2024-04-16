@@ -20,7 +20,7 @@ export default function TictactoeMenu() {
   const [usersIdsList, setUsersIdsList] = useState([]);
   const [recomendedUsers, setRecomendedUsers] = useState();
   // Get current userId
-  var { currentUserId } = useAuth();
+  var { currentUser } = useAuth();
   useEffect(() => {
     // Get list of all users
     getAllPlayers()
@@ -37,8 +37,9 @@ export default function TictactoeMenu() {
   var allOpponents = [];
   const [currentGames, setCurrentGames] = useState([]);
   useEffect(() => {
-    if (currentUserId) {
-      fetch("http://localhost:8090/tictactoe/games/" + currentUserId, {
+    //console.log(currentUser)
+    if (currentUser) {
+      fetch("http://localhost:8090/tictactoe/games/" + currentUser.username, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -50,19 +51,19 @@ export default function TictactoeMenu() {
         .then((res) => res.json())
         .then((data) => setCurrentGames(data));
     }
-  }, [displayTictactoeGame, currentUserId]);
+  }, [displayTictactoeGame, currentUser]);
   //console.log(currentGames);
   // take the list of current games and make it into clickable buttons
   if (currentGames.constructor === Array) {
     var displayGames = currentGames.map((currentGame) => {
       // determine which player in the currently selected game is the opponent
       var opponent = [currentGame.player1, currentGame.player2].filter(
-        (e) => e !== currentUserId
+        (e) => e !== currentUser.username
       )[0];
       // get whether it's the user's turn in the current game:
       var buttonClass = "btn btn-warning";
       var buttonAdditionalText = "It's their turn";
-      if (currentGame.lastPlayerMoved !== currentUserId) {
+      if (currentGame.lastPlayerMoved !== currentUser.username) {
         buttonClass = "btn btn-success";
         buttonAdditionalText = "It's your turn";
       }
@@ -78,7 +79,7 @@ export default function TictactoeMenu() {
               setDisplayTictactoeGame(
                 <TictactoeGame
                   gameId={currentGame.id}
-                  currentPlayer={currentUserId}
+                  currentPlayer={currentUser.username}
                   callback={function (updatedGame) {
                     console.log(updatedGame);
                     console.log(updatedGame.id);
@@ -94,7 +95,7 @@ export default function TictactoeMenu() {
                           setDisplayTictactoeGame(
                             <TictactoeGame
                               gameId={updatedGame.id}
-                              currentPlayer={currentUserId}
+                              currentPlayer={currentUser.username}
                             />
                           );
                         } else if (data === updatedGame.player1) {
@@ -213,7 +214,7 @@ export default function TictactoeMenu() {
     // remove current user and current opponents from list and scramble it, then get just the top 10
     var tempUsersIdsList = shuffleArray(
       usersIdsList.filter(
-        (e) => e !== currentUserId && !allOpponents.includes(e)
+        (e) => e !== currentUser.username && !allOpponents.includes(e)
       )
     ).slice(0, Math.min(10, usersIdsList.length - 1));
     //console.log(usersIdsList);
@@ -235,7 +236,7 @@ export default function TictactoeMenu() {
                       Authorization: authToken,
                     },
                     body: JSON.stringify({
-                      player1: currentUserId,
+                      player1: currentUser.username,
                       player2: userId,
                     }),
                   })
@@ -246,12 +247,12 @@ export default function TictactoeMenu() {
                       setDisplayTictactoeGame(
                         <TictactoeGame
                           gameId={tempId}
-                          currentPlayer={currentUserId}
+                          currentPlayer={currentUser.username}
                           callback={function (updatedGame) {
                             setDisplayTictactoeGame(
                               <TictactoeGame
                                 gameId={updatedGame.id}
-                                currentPlayer={currentUserId}
+                                currentPlayer={currentUser.username}
                               />
                             );
                           }}
