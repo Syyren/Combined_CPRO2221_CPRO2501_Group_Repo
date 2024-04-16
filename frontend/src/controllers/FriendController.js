@@ -1,6 +1,8 @@
 import axios from "axios";
 
+// Base URL for the friend requests API
 const BASE_URL = "http://localhost:8090/api/friend-requests"; // Change to your actual API URL
+
 // Function to create a new friend request
 export const createFriendRequest = async (friendRequest) => {
   try {

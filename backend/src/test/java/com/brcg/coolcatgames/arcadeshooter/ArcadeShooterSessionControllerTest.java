@@ -32,6 +32,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Unit tests for ArcadeShooterSessionController.
+ */
 @WebMvcTest(ArcadeShooterSessionController.class)
 @ExtendWith(SpringExtension.class)
 @Import({TestConfig.class, SecurityTestConfig.class})
@@ -55,6 +58,11 @@ public class ArcadeShooterSessionControllerTest {
     @Captor
     private ArgumentCaptor<String> stringArgumentCaptor;
 
+    /**
+     * Tests the successful start of a new session.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testStartSession_Success() throws Exception {
@@ -73,6 +81,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value("userId"));
     }
 
+    /**
+     * Tests the failure to start a session, returning null.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testStartSession_Failure_ReturnsNull() throws Exception {
@@ -86,6 +99,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Tests the successful end of a session.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testEndSession_Success() throws Exception {
@@ -109,6 +127,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value("userId"));
     }
 
+    /**
+     * Tests the failure to end a session due to session not found.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testEndSession_Failure_SessionNotFound() throws Exception {
@@ -127,6 +150,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isNotFound());  // Check for 404 status
     }
 
+    /**
+     * Tests the successful update of a session.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testUpdateSession_Success() throws Exception {
@@ -150,6 +178,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value("updatedUserId"));
     }
 
+    /**
+     * Tests the failure to update a session due to session not found.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testUpdateSession_Failure_SessionNotFound() throws Exception {
@@ -168,6 +201,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isNotFound());  // Expect 404 Not Found if the session could not be updated
     }
 
+    /**
+     * Tests the successful retrieval of a session by ID.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testGetSessionById_Success() throws Exception {
@@ -184,6 +222,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value("userId"));
     }
 
+    /**
+     * Tests the failure to retrieve a session by ID due to session not found.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testGetSessionById_Failure_SessionNotFound() throws Exception {
@@ -195,6 +238,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isNotFound());  // Expect 404 Not Found if the session cannot be found
     }
 
+    /**
+     * Tests the successful retrieval of sessions by user ID.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testGetSessionsByUserId_Success() throws Exception {
@@ -217,6 +265,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].userId").value("userId"));
     }
 
+    /**
+     * Tests the failure to retrieve sessions by user ID due to no sessions found.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testGetSessionsByUserId_Failure_NoSessionsFound() throws Exception {
@@ -228,6 +281,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isNotFound());  // Expect 404 Not Found if no sessions are found
     }
 
+    /**
+     * Tests the successful deletion of a session by ID.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testDeleteSession_Success() throws Exception {
@@ -239,6 +297,11 @@ public class ArcadeShooterSessionControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the failure to delete a session by ID due to session not found.
+     *
+     * @throws Exception if an error occurs during the test execution
+     */
     @Test
     @WithMockUser
     public void testDeleteSession_Failure_SessionNotFound() throws Exception {

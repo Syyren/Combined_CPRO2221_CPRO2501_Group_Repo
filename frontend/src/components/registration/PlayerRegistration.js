@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Layout from "../Layout";
 import { register } from "../../controllers/PlayerController";
 
+/**
+ * Component for rendering the player registration form.
+ */
 function PlayerRegistration() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -13,6 +16,10 @@ function PlayerRegistration() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  /**
+   * Handles input change in the form fields.
+   * @param {Event} e - The input change event.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -21,6 +28,10 @@ function PlayerRegistration() {
     }));
   };
 
+  /**
+   * Handles form submission for player registration.
+   * @param {Event} e - The form submit event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -52,6 +63,7 @@ function PlayerRegistration() {
     }
   };
 
+  // Render component
   return (
     <Layout>
       <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">

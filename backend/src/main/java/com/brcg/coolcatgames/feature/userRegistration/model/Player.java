@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a player.
+ */
 @Data
 @Document(collection = "players")
 public class Player {

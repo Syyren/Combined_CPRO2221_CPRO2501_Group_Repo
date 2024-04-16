@@ -7,20 +7,18 @@ import {
 } from "../../controllers/FriendController";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Component to display friend requests for the current user.
+ */
 function FriendRequests() {
-  const { currentUser } = useAuth();
-  const [requests, setRequests] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  console.log(requests);
+  const { currentUser } = useAuth(); // Current user context
+  const [requests, setRequests] = useState([]); // State for friend requests
+  const [error, setError] = useState(null); // Error state
+  const [loading, setLoading] = useState(true); // Loading state
 
+  // Fetch friend requests when component mounts or currentUser changes
   useEffect(() => {
-    if (!currentUser) {
-      setError("Please log in to view friend requests.");
-      setLoading(false);
-      return;
-    }
-
+    // Fetches friend requests for the current user
     const fetchRequests = async () => {
       setLoading(true);
       try {
@@ -33,48 +31,57 @@ function FriendRequests() {
       setLoading(false);
     };
 
-    fetchRequests();
+    // Check if currentUser exists and fetch friend requests
+    if (currentUser) {
+      fetchRequests();
+    } else {
+      setError("Please log in to view friend requests.");
+      setLoading(false);
+    }
   }, [currentUser]);
 
+  // Handles accepting a friend request
   const handleAccept = async (requestId) => {
     try {
-      console.log(requestId);
-      const updatedRequest = await acceptFriendRequest(requestId);
+      await acceptFriendRequest(requestId);
       setRequests(requests.filter((request) => request.id !== requestId));
-      console.log("Friend request accepted:", updatedRequest);
     } catch (error) {
       console.error("Error accepting friend request:", error);
     }
   };
 
+  // Handles denying a friend request
   const handleDeny = async (requestId) => {
     try {
-      const updatedRequest = await denyFriendRequest(requestId);
+      await denyFriendRequest(requestId);
       setRequests(requests.filter((request) => request.id !== requestId));
-      console.log("Friend request denied:", updatedRequest);
     } catch (error) {
       console.error("Error denying friend request:", error);
     }
   };
 
+  // Handles deleting a friend request
   const handleDelete = async (requestId) => {
     try {
-      const response = await deleteFriendRequest(requestId);
+      await deleteFriendRequest(requestId);
       setRequests(requests.filter((request) => request.id !== requestId));
-      console.log("Friend request deleted:", response);
     } catch (error) {
       console.error("Error deleting friend request:", error);
     }
   };
 
+  // Render loading state
   if (loading) return <div>Loading...</div>;
+  // Render error or unauthorized state if currentUser is null
   if (!currentUser) return <div>{error || "Unauthorized"}</div>;
 
+  // Render friend requests list
   return (
     <div className="card">
       <div className="card-header">Friend Requests</div>
       <ul className="list-group list-group-flush">
         {requests.length > 0 ? (
+          // Render each friend request as a list item
           requests.map((request) => (
             <li
               key={request.id}
@@ -98,6 +105,7 @@ function FriendRequests() {
             </li>
           ))
         ) : (
+          // Render message when no friend requests are available
           <li className="list-group-item">No friend requests available.</li>
         )}
       </ul>

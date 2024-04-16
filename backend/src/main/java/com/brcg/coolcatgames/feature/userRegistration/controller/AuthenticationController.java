@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller class for handling user authentication.
+ */
 @RestController
 @RequestMapping("/api/players")
 public class AuthenticationController {
@@ -35,6 +38,13 @@ public class AuthenticationController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
+    /**
+     * Generates a JWT token for the user upon successful authentication.
+     *
+     * @param loginRequest the user login request
+     * @return ResponseEntity containing the JWT token and user details
+     * @throws Exception if an error occurs during authentication
+     */
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody Player loginRequest) throws Exception {
         Authentication authentication = authenticationManager.authenticate(

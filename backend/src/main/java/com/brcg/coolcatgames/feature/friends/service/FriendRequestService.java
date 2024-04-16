@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Service class for managing friend requests.
+ */
 @Service
 @RequiredArgsConstructor
 public class FriendRequestService {
@@ -18,17 +22,34 @@ public class FriendRequestService {
     private final FriendRequestRepository friendRequestRepository;
     private final PlayerRepository playerRepository;
 
-    // Creates a friend request
+    /**
+     * Creates a friend request.
+     *
+     * @param friendRequest the friend request to create
+     * @return the created friend request
+     */
     public FriendRequest createFriendRequest(FriendRequest friendRequest) {
         return friendRequestRepository.save(friendRequest);
     }
 
-    // Gets a users friend requests
+    /**
+     * Gets a user's friend requests.
+     *
+     * @param userId the ID of the user
+     * @return a list of friend requests for the user
+     */
     public List<FriendRequest> getFriendRequestsByUserId(String userId) {
         return friendRequestRepository.findByToUserIdAndStatus(userId, "pending");
     }
 
-    // Updates a friend requests status
+    /**
+     * Updates a friend request's status.
+     *
+     * @param id     the ID of the friend request to update
+     * @param status the new status of the friend request
+     * @return the updated friend request
+     * @throws RuntimeException if the friend request is not found
+     */
     public FriendRequest updateFriendRequestStatus(String id, String status) {
         Optional<FriendRequest> requestOptional = friendRequestRepository.findById(id);
         if (requestOptional.isPresent()) {
@@ -67,7 +88,11 @@ public class FriendRequestService {
         }
     }
 
-    // Deletes a friend request
+    /**
+     * Deletes a friend request.
+     *
+     * @param id the ID of the friend request to delete
+     */
     public void deleteFriendRequest(String id) {
         friendRequestRepository.deleteById(id);
     }

@@ -6,13 +6,17 @@ import {
   getUserIdByUsername,
 } from "../../controllers/PlayerController";
 
+/**
+ * Component to create and send friend requests.
+ */
 function CreateFriendRequest() {
-  const { currentUser } = useAuth();
-  const [username, setUsername] = useState("");
-  const [userId, setUserId] = useState(null);
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState("");
+  const { currentUser } = useAuth(); // Current user context
+  const [username, setUsername] = useState(""); // State for username input
+  const [userId, setUserId] = useState(null); // State for user ID
+  const [user, setUser] = useState(null); // State for found user
+  const [error, setError] = useState(""); // Error state
 
+  // Handles searching for a user by username
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!username) {
@@ -20,6 +24,7 @@ function CreateFriendRequest() {
       return;
     }
     try {
+      // Fetch user details and ID by username
       const foundUser = await getPlayerByUsername(username);
       const foundUserId = await getUserIdByUsername(username);
       setUser(foundUser);
@@ -31,14 +36,18 @@ function CreateFriendRequest() {
     }
   };
 
+  // Handles sending a friend request to the selected user
   const handleSendFriendRequest = async () => {
     if (user && currentUser) {
       try {
+        // Create friend request object
         const friendRequest = {
           fromUserId: currentUser.userId,
           toUserId: userId,
         };
+        // Send friend request
         const response = await createFriendRequest(friendRequest);
+        // Show success message
         alert("Friend request sent successfully!");
         setError("");
       } catch (error) {
@@ -50,6 +59,7 @@ function CreateFriendRequest() {
     }
   };
 
+  // Render component
   return (
     <div className="card">
       <div className="card-body">

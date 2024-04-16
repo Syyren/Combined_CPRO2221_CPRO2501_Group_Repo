@@ -7,10 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
+/**
+ * Model class representing an arcade shooter session.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "canineinvaders_gamesessions")
+@Document(collection = "arcadeshooter_sessions")
 public class ArcadeShooterSession {
 
     @Id

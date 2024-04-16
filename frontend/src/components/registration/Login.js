@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Layout from "../Layout";
 
+/**
+ * Component for rendering the login form.
+ */
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,6 +13,10 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  /**
+   * Handles form submission for login.
+   * @param {Event} event - The form submit event.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
@@ -36,6 +43,7 @@ const Login = () => {
     }
   };
 
+  // Render component
   return (
     <Layout>
       <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">
@@ -68,11 +76,6 @@ const Login = () => {
             <button type="submit" className="btn btn-primary btn-block">
               Login
             </button>
-            {error && (
-              <div className="alert alert-danger mt-2" role="alert">
-                {error}
-              </div>
-            )}
           </form>
         </div>
       </div>

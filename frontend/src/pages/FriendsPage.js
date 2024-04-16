@@ -4,6 +4,9 @@ import FriendRequests from "../components/friends/FriendRequests";
 import CreateFriendRequest from "../components/friends/CreateFriendRequest";
 import Layout from "../components/Layout";
 
+/**
+ * Friends page component.
+ */
 function FriendsPage() {
   return (
     <Layout>
