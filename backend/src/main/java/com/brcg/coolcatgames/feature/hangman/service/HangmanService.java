@@ -14,7 +14,8 @@ public class HangmanService {
                 hangman.getDisplayedWord(),
                 hangman.getGuesses(),
                 hangman.getTotalScore(),
-                hangman.getGameStatus()
+                hangman.getGameStatus(),
+                hangman.getLettersGuessed()
         );
     }
 
@@ -29,7 +30,13 @@ public class HangmanService {
     }
 
     public Hangman guessLetter(char letterGuessed) {
+        System.out.println("Guessing: "+letterGuessed+"...");
         hangman.guessLetter(letterGuessed);
+        System.out.println("Guessed!");
+        System.out.println("adding to list!");
+        // Add the guessed letter to the lettersGuessed list
+        hangman.getLettersGuessed().add(letterGuessed);
+        System.out.println("Added to list! current list: \n"+hangman.getLettersGuessed());
         return hangman;
     }
 }

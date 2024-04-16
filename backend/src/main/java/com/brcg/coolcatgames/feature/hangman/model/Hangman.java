@@ -1,7 +1,10 @@
 package com.brcg.coolcatgames.feature.hangman.model;
 
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Data
 public class Hangman {
@@ -9,6 +12,7 @@ public class Hangman {
     private char[] displayedWord;
     private char letterGuessed;
     private HangmanScore score = new HangmanScore();
+    private List<Character> lettersGuessed;
 
     private boolean again;
     private String gameStatus;
@@ -21,6 +25,7 @@ public class Hangman {
 
     //constructor
     public Hangman(){
+        this.lettersGuessed = new ArrayList<>();
         getSecretWord();
         setDisplayedWord();
     }
@@ -106,17 +111,26 @@ public class Hangman {
 
     //New game, score resets
     public void newGame(){
+        System.out.println("starting new game");
         this.guesses = 7;
+        System.out.println("this.guesses = 7; "+this.guesses);
         score.resetScore();
+        System.out.println("score.resetScore(); "+this.score);
         getSecretWord();
+        System.out.println("getSecretWord(); "+ Arrays.toString(this.secretWord));
+        this.lettersGuessed.clear();
+        System.out.println("this.lettersGuessed.clear(); "+ this.lettersGuessed);
         setDisplayedWord();
+        System.out.println("setDisplayedWord(); "+ Arrays.toString(this.displayedWord));
         this.gameStatus = "in progress";
+        System.out.println("this.gameStatus: "+this.gameStatus);
     }
 
     //Continue Game, score persists
     public void continueGame(){
         this.guesses = 7;
         getSecretWord();
+        this.lettersGuessed.clear();
         setDisplayedWord();
         this.gameStatus = "in progress";
     }
