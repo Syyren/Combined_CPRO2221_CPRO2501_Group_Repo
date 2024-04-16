@@ -360,10 +360,10 @@ export default function TictactoeGame(props) {
     <div>
       {" "}
       {gameTitle}
-      <div class="container">
-        <div class="row">
+      <div className="container">
+        <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -373,7 +373,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[0]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -384,7 +384,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[1]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -395,9 +395,9 @@ export default function TictactoeGame(props) {
           </div>
         </div>
 
-        <div class="row">
+        <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -408,7 +408,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[3]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -420,7 +420,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[4]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -432,7 +432,7 @@ export default function TictactoeGame(props) {
           </div>
         </div>
 
-        <div class="row">
+        <div className="row">
           <div
             class="col-4"
             style={{
@@ -444,7 +444,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[6]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -455,7 +455,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[7]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",

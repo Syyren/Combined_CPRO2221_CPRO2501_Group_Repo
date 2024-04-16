@@ -5,8 +5,6 @@ import { useAuth } from "../../context/AuthContext";
 
 import { getAllPlayers } from "../../controllers/PlayerController";
 
-
-
 // Authorization, for integration with other features
 const authUserName = "john_doe";
 const authPassword = "password123";
@@ -19,13 +17,21 @@ export default function TictactoeMenu() {
   const [displayTictactoeGame, setDisplayTictactoeGame] = useState(
     <TictactoeGame />
   );
+  const [usersIdsList, setUsersIdsList] = useState([]);
+  const [recomendedUsers, setRecomendedUsers] = useState();
   // Get current userId
   var { currentUserId } = useAuth();
-  // Get list of all users
-  var usersIdsList = [];
-  getAllPlayers().forEach(user => {
-    usersIdsList.push(user.username)
-  });
+  useEffect(() => {
+    // Get list of all users
+    getAllPlayers()
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }, []);
   // Get a list of all ongoing games the current user is participating in
   // and compile a list of opponents in active games against this user
   var allOpponents = [];
@@ -66,7 +72,7 @@ export default function TictactoeMenu() {
       return (
         <li key={currentGame.id}>
           <button
-            class={buttonClass}
+            className={buttonClass}
             // When this button is clicked, load the game with this id
             onClick={() => {
               setDisplayTictactoeGame(
@@ -203,69 +209,75 @@ export default function TictactoeMenu() {
     });
   }
 
-  // remove current user and current opponents from list and scramble it, then get just the top 10
-  usersIdsList = shuffleArray(
-    usersIdsList.filter((e) => e !== currentUserId && !allOpponents.includes(e))
-  ).slice(0, Math.min(10, usersIdsList.length - 1));
-  //console.log(usersIdsList);
-  if (usersIdsList.constructor === Array) {
-    var recomendedUsers = usersIdsList.map((userId) => {
-      return (
-        <li key={userId}>
-          <button
-            class="btn btn-primary"
-            // When this button is clicked, create a new game in the database, then load it
-            onClick={async function () {
-              await fetch("http://localhost:8090/tictactoe/save", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: authToken,
-                },
-                body: JSON.stringify({
-                  player1: currentUserId,
-                  player2: userId,
-                }),
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  var tempId = data.id;
+  useEffect(() => {
+    // remove current user and current opponents from list and scramble it, then get just the top 10
+    var tempUsersIdsList = shuffleArray(
+      usersIdsList.filter(
+        (e) => e !== currentUserId && !allOpponents.includes(e)
+      )
+    ).slice(0, Math.min(10, usersIdsList.length - 1));
+    //console.log(usersIdsList);
+    if (tempUsersIdsList.constructor === Array) {
+      setRecomendedUsers(
+        tempUsersIdsList.map((userId) => {
+          return (
+            <li key={userId}>
+              <button
+                className="btn btn-primary"
+                // When this button is clicked, create a new game in the database, then load it
+                onClick={async function () {
+                  await fetch("http://localhost:8090/tictactoe/save", {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "no-cache",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: authToken,
+                    },
+                    body: JSON.stringify({
+                      player1: currentUserId,
+                      player2: userId,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      var tempId = data.id;
 
-                  setDisplayTictactoeGame(
-                    <TictactoeGame
-                      gameId={tempId}
-                      currentPlayer={currentUserId}
-                      callback={function (updatedGame) {
-                        setDisplayTictactoeGame(
-                          <TictactoeGame
-                            gameId={updatedGame.id}
-                            currentPlayer={currentUserId}
-                          />
-                        );
-                      }}
-                    />
-                  );
-                });
-            }}
-          >
-            Start game against {userId}
-          </button>
-        </li>
+                      setDisplayTictactoeGame(
+                        <TictactoeGame
+                          gameId={tempId}
+                          currentPlayer={currentUserId}
+                          callback={function (updatedGame) {
+                            setDisplayTictactoeGame(
+                              <TictactoeGame
+                                gameId={updatedGame.id}
+                                currentPlayer={currentUserId}
+                              />
+                            );
+                          }}
+                        />
+                      );
+                    });
+                }}
+              >
+                Start game against {userId}
+              </button>
+            </li>
+          );
+        })
       );
-    });
-  }
+    }
+  }, [usersIdsList]);
   // Finalize display
   return (
-    <div class="row row-cols-2">
-      <div class="col-md-4">
+    <div className="row row-cols-2">
+      <div className="col-md-4">
         <h2>Current Games:</h2>
-        <ul class="gap-3">{displayGames}</ul>
+        <ul className="gap-3">{displayGames}</ul>
         <h2>Recomended opponents:</h2>
-        <ul class="gap-3">{recomendedUsers}</ul>
+        <ul className="gap-3">{recomendedUsers}</ul>
       </div>
-      <div class="col-md-8">{displayTictactoeGame}</div>
+      <div className="col-md-8">{displayTictactoeGame}</div>
     </div>
   );
 }
