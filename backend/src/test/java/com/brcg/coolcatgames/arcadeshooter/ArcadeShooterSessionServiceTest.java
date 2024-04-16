@@ -19,8 +19,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 /**
- * Tests for ArcadeShooterSessionService.
+ * Unit tests for the ArcadeShooterSessionService class.
  */
 @ExtendWith(MockitoExtension.class)
 public class ArcadeShooterSessionServiceTest {
@@ -36,6 +37,9 @@ public class ArcadeShooterSessionServiceTest {
 
     private ArcadeShooterSession session;
 
+    /**
+     * Initializes objects used across multiple test cases.
+     */
     @BeforeEach
     void setUp() {
         session = new ArcadeShooterSession();
@@ -46,6 +50,9 @@ public class ArcadeShooterSessionServiceTest {
         session.setLevelReached(0);
     }
 
+    /**
+     * Tests the successful creation of a session.
+     */
     @Test
     void testStartSession_Success() {
         when(sessionRepository.save(any(ArcadeShooterSession.class))).thenReturn(session);
@@ -55,6 +62,9 @@ public class ArcadeShooterSessionServiceTest {
         verify(sessionRepository).save(any(ArcadeShooterSession.class));
     }
 
+    /**
+     * Tests the behavior when starting a session fails due to null data.
+     */
     @Test
     void testStartSession_Failure_NullData() {
         when(sessionRepository.save(any(ArcadeShooterSession.class))).thenReturn(null);
@@ -62,6 +72,9 @@ public class ArcadeShooterSessionServiceTest {
         assertNull(createdSession);
     }
 
+    /**
+     * Tests the successful ending of a session.
+     */
     @Test
     void testEndSession_Success() {
         when(sessionRepository.findById("sessionId")).thenReturn(Optional.of(session));
@@ -76,22 +89,21 @@ public class ArcadeShooterSessionServiceTest {
         verify(scoreEntryService).submitScore(any(ScoreEntry.class));
     }
 
+    /**
+     * Tests the behavior when ending a session fails due to the session not being found.
+     */
     @Test
     void testEndSession_Failure_SessionNotFound() {
-        // Simulate the repository not finding the session by returning an empty Optional
         when(sessionRepository.findById("nonExistentSessionId")).thenReturn(Optional.empty());
-
-        // Attempt to end a session that does not exist
         ArcadeShooterSession endedSession = sessionService.endSession("nonExistentSessionId", 100, 10);
-
-        // Assert that the result is null, indicating the session was not found and hence not ended
         assertNull(endedSession);
-
-        // Verify that no further interactions (like saving or creating score entries) happen with the repository and score service
         verify(sessionRepository, never()).save(any(ArcadeShooterSession.class));
         verify(scoreEntryService, never()).submitScore(any(ScoreEntry.class));
     }
 
+    /**
+     * Tests the successful updating of a session.
+     */
     @Test
     void testUpdateSession_Success() {
         when(sessionRepository.findById("sessionId")).thenReturn(Optional.of(session));
@@ -105,6 +117,9 @@ public class ArcadeShooterSessionServiceTest {
         verify(sessionRepository).save(session);
     }
 
+    /**
+     * Tests the behavior when updating a session fails due to the session not being found.
+     */
     @Test
     void testUpdateSession_NotFound() {
         when(sessionRepository.findById("nonExistentSessionId")).thenReturn(Optional.empty());
@@ -117,6 +132,9 @@ public class ArcadeShooterSessionServiceTest {
         assertNull(updatedSession);
     }
 
+    /**
+     * Tests the retrieval of a session by its ID when the session is found.
+     */
     @Test
     void testGetSessionById_Found() {
         when(sessionRepository.findById("sessionId")).thenReturn(Optional.of(session));
@@ -124,6 +142,9 @@ public class ArcadeShooterSessionServiceTest {
         assertEquals("sessionId", retrievedSession.getId());
     }
 
+    /**
+     * Tests the behavior when retrieving a session by its ID fails due to the session not being found.
+     */
     @Test
     void testGetSessionById_NotFound() {
         when(sessionRepository.findById("nonExistentSessionId")).thenReturn(Optional.empty());
@@ -131,18 +152,27 @@ public class ArcadeShooterSessionServiceTest {
         assertNull(retrievedSession);
     }
 
+    /**
+     * Tests the retrieval of all sessions for a user when at least one session is found.
+     */
     @Test
     void testGetSessionsByUserId_Found() {
         when(sessionRepository.findByUserId("userId")).thenReturn(java.util.Arrays.asList(session));
         assertEquals(1, sessionService.getSessionsByUserId("userId").size());
     }
 
+    /**
+     * Tests the behavior when retrieving sessions for a user fails due to no sessions being found.
+     */
     @Test
     void testGetSessionsByUserId_NotFound() {
         when(sessionRepository.findByUserId("nonExistentUserId")).thenReturn(Collections.emptyList());
         assertTrue(sessionService.getSessionsByUserId("nonExistentUserId").isEmpty());
     }
 
+    /**
+     * Tests the successful deletion of a session.
+     */
     @Test
     void testDeleteSession_Success() {
         when(sessionRepository.findById("sessionId")).thenReturn(Optional.of(session));
@@ -151,6 +181,9 @@ public class ArcadeShooterSessionServiceTest {
         verify(sessionRepository).delete(session);
     }
 
+    /**
+     * Tests the behavior when deleting a session fails due to the session not being found.
+     */
     @Test
     void testDeleteSession_NotFound() {
         when(sessionRepository.findById("nonExistentSessionId")).thenReturn(Optional.empty());
