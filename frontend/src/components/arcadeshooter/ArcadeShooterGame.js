@@ -70,7 +70,7 @@ const ArcadeShooterGame = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    canvas.width = 800;
+    canvas.width = 750;
     canvas.height = 600;
 
     let animationFrameId;

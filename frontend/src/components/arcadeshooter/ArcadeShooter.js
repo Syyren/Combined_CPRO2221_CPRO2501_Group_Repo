@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const ArcadeShooter = () => {
   // State for managing game status, score, levels, and user session.
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(1000);
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState(0);
   const [isPaused, setIsPaused] = useState(false);

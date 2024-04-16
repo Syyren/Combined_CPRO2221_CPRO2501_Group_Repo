@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useGame } from "../context/GameContext";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
@@ -8,6 +9,11 @@ import "./NavBar.css";
 
 export default function NavBar() {
   const { currentUser } = useAuth();
+  const { setGame } = useGame();
+
+  const handleGameSelect = (game) => {
+    setGame(game);
+  };
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -21,26 +27,42 @@ export default function NavBar() {
             Home
           </Nav.Link>
           <NavDropdown title="Games" id="basic-nav-dropdown">
-              <NavDropdown.Item>
-                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/canine-invaders">
-                  Canine Invaders
-                </Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/cat-run">
-                  Cat Run!
-                </Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/hangman">
-                  Hangman
-                </Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/tictactoe">
-                  Tic-Tac-Toe
-                </Link>
-              </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("canine_invaders")}
+                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/canine-invaders"
+              >
+                Canine Invaders
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("cat-run")}
+                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/cat-run"
+              >
+                Cat Run!
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("hangman")}
+                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/hangman"
+              >
+                Hangman
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("tictactoe")}
+                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/tictactoe"
+              >
+                Tic-Tac-Toe
+              </Link>
+            </NavDropdown.Item>
           </NavDropdown>
           <Nav.Link as={Link} to="/about">
             About

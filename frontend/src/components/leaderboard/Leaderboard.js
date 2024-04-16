@@ -7,13 +7,15 @@ import {
 } from "../../controllers/LeaderboardController";
 import { getPlayerById } from "../../controllers/PlayerController";
 import { useAuth } from "../../context/AuthContext";
+import { useGame } from "../../context/GameContext";
 
 const Leaderboard = () => {
+  const { game } = useGame();
   const { currentUser } = useAuth();
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeGame, setActiveGame] = useState("canine_invaders");
+  const [activeGame, setActiveGame] = useState(game);
   const [activeScoreType, setActiveScoreType] = useState("global");
 
   const formattedGameName = getGameDisplayName(activeGame);
