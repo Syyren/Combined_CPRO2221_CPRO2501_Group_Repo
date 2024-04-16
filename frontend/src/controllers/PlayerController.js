@@ -16,7 +16,7 @@ const register = async (player) => {
 // Function to fetch all players
 const getAllPlayers = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/all`);
+    const { data } = await axios.get(`${API_URL}/get/all`);
     return data;
   } catch (error) {
     console.error("Error fetching players:", error);
