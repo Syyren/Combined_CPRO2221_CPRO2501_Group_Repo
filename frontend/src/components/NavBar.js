@@ -5,6 +5,7 @@ import { useGame } from "../context/GameContext";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
+import Image from "../images/home/coolcatlogo.png"
 import "./NavBar.css";
 
 export default function NavBar() {
@@ -18,7 +19,7 @@ export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={Link} to="/home">
-        CoolCatGames.com
+        <img src={Image} className="logo"></img>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -64,6 +65,13 @@ export default function NavBar() {
               </Link>
             </NavDropdown.Item>
           </NavDropdown>
+          <div className="d-flex align-items-center">
+            {currentUser && (
+              <Nav.Link as={Link} to="/profile">
+                Profile
+              </Nav.Link>
+            )}
+          </div>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>
