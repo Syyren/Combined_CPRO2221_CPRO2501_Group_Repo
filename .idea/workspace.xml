@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="skeletoning websockets in the back end while I learn more." />
+    <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="A lot of hum and hah about how to do this, created child classes of hangman class and worked in room id logic for multiplayer purposes.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/hangman/Alphabet.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/hangman/Alphabet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/hangman/Hangman.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/hangman/Hangman.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +58,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.CoolcatgamesApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;pvp__backend&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pvp__frontend&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Computer Programming/Semester 3/2501 (Software Design and Devel)/Final Project/FinalProjApp/Combined_CPRO2221_CPRO2501_Group_Repo/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -100,7 +105,8 @@
       <updated>1713004898708</updated>
       <workItem from="1713004899759" duration="925000" />
       <workItem from="1713069633128" duration="4686000" />
-      <workItem from="1713142233368" duration="4515000" />
+      <workItem from="1713142233368" duration="7334000" />
+      <workItem from="1713215411396" duration="20983000" />
     </task>
     <task id="LOCAL-00001" summary="found a more streamline way to obtain path to txt">
       <option name="closed" value="true" />
@@ -126,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713157273762</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="A lot of hum and hah about how to do this, created child classes of hangman class and worked in room id logic for multiplayer purposes.">
+      <option name="closed" value="true" />
+      <created>1713244422944</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713244422944</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +152,7 @@
     <MESSAGE value="updated dependencies to include servlets" />
     <MESSAGE value="workspacexml broke and needed fixing, changed directory for noun" />
     <MESSAGE value="skeletoning websockets in the back end while I learn more." />
-    <option name="LAST_COMMIT_MESSAGE" value="skeletoning websockets in the back end while I learn more." />
+    <MESSAGE value="A lot of hum and hah about how to do this, created child classes of hangman class and worked in room id logic for multiplayer purposes." />
+    <option name="LAST_COMMIT_MESSAGE" value="A lot of hum and hah about how to do this, created child classes of hangman class and worked in room id logic for multiplayer purposes." />
   </component>
 </project>

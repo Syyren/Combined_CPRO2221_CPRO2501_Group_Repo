@@ -8,13 +8,18 @@ import Alphabet from './Alphabet';
 import Message from './Message';
 
 const HangmanMultiplayer = () => {
-  const API_URL = 'http://localhost:8090/api/hangman';
+  const { roomId } = useParams();
   const [gameState, setGameState] = useState(null);
   const [disabledLetters, setDisabledLetters] = useState([]);
 
+  useEffect(() => {
+    // Fetch initial game state when component mounts
+    fetchGameState();
+  }, []);
+
   const fetchGameState = async () => {
     try {
-        const response = await axios.get(API_URL+`/gamestate`);
+      const response = await axios.get(`http://localhost:8090/api/hangman/${roomId}/gamestate`);
       setGameState(response.data);
       setDisabledLetters(response.data.lettersGuessed);
     } catch (error) {
@@ -24,7 +29,7 @@ const HangmanMultiplayer = () => {
 
   const handleLetterSelect = async (letter) => {
     try {
-      const response = await axios.post(`http://localhost:8090/api/hangman/guess`, null, {
+      const response = await axios.post(`http://localhost:8090/api/hangman/${roomId}/guess`, null, {
         params: { letterGuessed: letter }
       });
       setGameState(response.data);
@@ -51,7 +56,7 @@ const HangmanMultiplayer = () => {
 
   const handleNewGame = async () => {
     try {
-      await axios.get(`http://localhost:8090/api/hangman/new-game`);
+      await axios.get(`http://localhost:8090/api/hangman/${roomId}/new-game`);
       await fetchGameState();
       } catch (error) {
         console.error('Error starting new game:', error);
@@ -60,7 +65,7 @@ const HangmanMultiplayer = () => {
 
   const handleContinueGame = async () => {
     try {
-      await axios.get(`http://localhost:8090/api/hangman/continue-game`);
+      await axios.get(`http://localhost:8090/api/hangman/${roomId}/continue-game`);
       await fetchGameState();
     } catch (error) {
       console.error('Error continuing game:', error);
