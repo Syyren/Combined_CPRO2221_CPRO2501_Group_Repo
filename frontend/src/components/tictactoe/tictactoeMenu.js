@@ -22,9 +22,8 @@ export default function TictactoeMenu() {
   // Get current userId
   var { currentUserId } = useAuth();
   // Get list of all users
-  var usersList = getAllPlayers()
   var usersIdsList = [];
-  getAllPlayers.forEach(user => {
+  getAllPlayers().forEach(user => {
     usersIdsList.push(user.username)
   });
   // Get a list of all ongoing games the current user is participating in
