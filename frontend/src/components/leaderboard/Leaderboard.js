@@ -38,12 +38,21 @@ const Leaderboard = () => {
           );
         } else if (activeScoreType === "friends" && currentUser) {
           const user = await getPlayerById(currentUser.userId);
-          const allUserIds = [currentUser.userId, ...user.friends];
-          const friendsScoresPromises = allUserIds.map((userId) =>
-            getScoresByUserAndGame(userId, activeGame)
-          );
-          const friendsScoresArrays = await Promise.all(friendsScoresPromises);
-          fetchedScores = friendsScoresArrays.flat();
+          if (user.friends != null) {
+            const allUserIds = [currentUser.userId, ...user.friends];
+            const friendsScoresPromises = allUserIds.map((userId) =>
+              getScoresByUserAndGame(userId, activeGame)
+            );
+            const friendsScoresArrays = await Promise.all(
+              friendsScoresPromises
+            );
+            fetchedScores = friendsScoresArrays.flat();
+          } else {
+            fetchedScores = await getScoresByUserAndGame(
+              currentUser.userId,
+              activeGame
+            );
+          }
         }
 
         // Fetch usernames for all scores

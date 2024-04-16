@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import Layout from "../Layout";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout";
 import { register } from "../../controllers/PlayerController";
+import {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+  validateConfirmPassword,
+} from "../../services/validation";
 
-/**
- * Component for rendering the player registration form.
- */
-function PlayerRegistration() {
+const PlayerRegistration = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     username: "",
@@ -13,134 +18,115 @@ function PlayerRegistration() {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [errors, setErrors] = useState({});
+  const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
-  /**
-   * Handles input change in the form fields.
-   * @param {Event} e - The input change event.
-   */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    handleValidation(name, value);
   };
 
-  /**
-   * Handles form submission for player registration.
-   * @param {Event} e - The form submit event.
-   */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
+  const handleValidation = (name, value) => {
+    let errorMsg = null;
+    switch (name) {
+      case "firstName":
+        if (!value.trim()) errorMsg = "First name is required.";
+        break;
+      case "username":
+        errorMsg = validateUsername(value);
+        break;
+      case "email":
+        errorMsg = validateEmail(value);
+        break;
+      case "password":
+        errorMsg = validatePassword(value);
+        if (
+          !errorMsg &&
+          formData.confirmPassword &&
+          value !== formData.confirmPassword
+        ) {
+          errorMsg = "Passwords do not match.";
+        }
+        break;
+      case "confirmPassword":
+        errorMsg = validateConfirmPassword(value, formData.password);
+        break;
+      default:
+        break;
     }
-
-    try {
-      const response = await register({
-        firstName: formData.firstName,
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      });
-      setSuccess("Registration successful! You can now login.");
-      setFormData({
-        firstName: "",
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-    } catch (error) {
-      setError("Registration failed. Please try again.");
-    }
+    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
   };
 
-  // Render component
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (
+      form.checkValidity() === false ||
+      Object.values(errors).some((err) => err !== null)
+    ) {
+      event.stopPropagation();
+    } else {
+      try {
+        await register(formData);
+        navigate("/login");
+      } catch (error) {
+        setErrors({
+          ...errors,
+          form: "Registration failed. Please try again.",
+        });
+      }
+    }
+    setValidated(true);
+  };
+
   return (
-    <Layout>
-      <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">
-        <h2 className="display-4 mb-3">Register, Cool Cat!</h2>
-        {success && <div className="alert alert-success">{success}</div>}
-        {error && <div className="alert alert-danger">{error}</div>}
-        <div className="col-12 col-md-6">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="username"
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                minLength="8"
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
+    <Layout title="Player Registration">
+      <h2 className="display-3 mb-4 text-center">Register, Cool Cat!</h2>
+      <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="col-md-6">
+          {errors.form && <Alert variant="danger">{errors.form}</Alert>}
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            {[
+              "firstName",
+              "username",
+              "email",
+              "password",
+              "confirmPassword",
+            ].map((field) => (
+              <Form.Group className="mb-3" controlId={`form${field}`}>
+                <Form.Label>
+                  {field.charAt(0).toUpperCase() +
+                    field
+                      .slice(1)
+                      .replace(/([A-Z])/g, " $1")
+                      .trim()}
+                  *
+                </Form.Label>
+                <Form.Control
+                  type={field.includes("Password") ? "password" : field}
+                  name={field}
+                  value={formData[field] || ""}
+                  onChange={handleChange}
+                  isInvalid={!!errors[field]}
+                  required
+                />
+                {errors[field] && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors[field]}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+            ))}
+            <Button variant="primary" type="submit">
               Register
-            </button>
-          </form>
+            </Button>
+          </Form>
         </div>
       </div>
     </Layout>
   );
-}
+};
 
 export default PlayerRegistration;
