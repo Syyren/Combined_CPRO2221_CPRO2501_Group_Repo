@@ -86,7 +86,10 @@ const ArcadeShooter = () => {
             setScore={setScore}
             setLives={setLives}
             level={level}
+            lives={lives}
+            score={score}
             setLevel={setLevel}
+            currentUser={currentUser}
           />
         )}
         {gameOver && (
