@@ -96,8 +96,8 @@ const Leaderboard = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container mt-5">
-      <h3 className="display-4 mb-5">Leaderboard for {formattedGameName}</h3>
+    <div className="container">
+      <h3 className="mb-5">{formattedGameName} Leaderboard</h3>
       <LeaderboardNav
         onGameChange={handleGameChange}
         onScoreTypeChange={handleScoreTypeChange}

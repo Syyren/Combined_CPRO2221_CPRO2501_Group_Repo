@@ -22,29 +22,26 @@ export default function NavBar() {
           </Nav.Link>
           <NavDropdown title="Games" id="basic-nav-dropdown">
               <NavDropdown.Item>
-                <Link className="" to="/games/canine-invaders">
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/canine-invaders">
                   Canine Invaders
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item>
-                <Link className="" to="/games/cat-run">
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/cat-run">
                   Cat Run!
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item>
-                <Link className="" to="/games/hangman">
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/hangman">
                   Hangman
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item>
-                <Link className="" to="/games/tictactoe">
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/tictactoe">
                   Tic-Tac-Toe
                 </Link>
               </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link as={Link} to="/leaderboard">
-            Leaderboard
-          </Nav.Link>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>

@@ -32,7 +32,7 @@ const LeaderboardNav = ({
         </select>
       </div>
       <div className="col-md-6">
-        <label className="mb-0">Select Leaderboard Type:</label>
+        <label className="mb-0">Select Rankings:</label>
         <select
           className="form-control bg-light"
           value={selectedScoreType}
