@@ -5,31 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import { getAllPlayers } from "../../controllers/PlayerController";
 
-// Fake data, in reality we would get this from the users backend branch
-let fakeUsersList = [
-  "Joel",
-  "Annette",
-  "Ryan",
-  "Bergen",
-  "Kaden",
-  "Kayden",
-  "Travis",
-  "Mohammed",
-  "Travis2",
-  "Greg",
-  "SpidersGoerg",
-  "Rohit",
-  "Webster",
-  "Watson",
-  "Mario",
-  "Luigi",
-  "IAmGroot",
-  "Mordenkainen",
-  "Kermit",
-  "Murphy",
-  "xXILikeFeetXx",
-  "420forL1fe",
-];
+
 
 // Authorization, for integration with other features
 const authUserName = "john_doe";
@@ -43,10 +19,14 @@ export default function TictactoeMenu() {
   const [displayTictactoeGame, setDisplayTictactoeGame] = useState(
     <TictactoeGame />
   );
-  // Get current userId; replace with API call when login feature done
+  // Get current userId
   var { currentUserId } = useAuth();
-  // Get list of all users; replace with API call when login feature done
-  var usersIdsList = fakeUsersList;
+  // Get list of all users
+  var usersList = getAllPlayers()
+  var usersIdsList = [];
+  getAllPlayers.forEach(user => {
+    usersIdsList.push(user.username)
+  });
   // Get a list of all ongoing games the current user is participating in
   // and compile a list of opponents in active games against this user
   var allOpponents = [];
