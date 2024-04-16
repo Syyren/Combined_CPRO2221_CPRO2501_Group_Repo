@@ -20,14 +20,13 @@ export default function TictactoeMenu() {
   var { currentUser } = useAuth();
   useEffect(() => {
     // Get list of all users
-    getAllPlayers()
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
+    getAllPlayers().then((res) => {
+      var tempUsersIdsList = [];
+      res.forEach((element) => {
+        tempUsersIdsList.push(element.username);
       });
+      setUsersIdsList(tempUsersIdsList);
+    });
   }, []);
   // Get a list of all ongoing games the current user is participating in
   // and compile a list of opponents in active games against this user
@@ -36,8 +35,9 @@ export default function TictactoeMenu() {
   useEffect(() => {
     //console.log(currentUser)
     if (currentUser) {
-      axios.get(`${API_URL}tictactoe/games/` + currentUser.username)
-        .then((res) => res.json())
+      axios
+        .get(`${API_URL}tictactoe/games/` + currentUser.username)
+        .then((res) => res.data)
         .then((data) => setCurrentGames(data));
     }
   }, [displayTictactoeGame, currentUser]);
