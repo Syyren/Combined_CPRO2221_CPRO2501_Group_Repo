@@ -1,54 +1,60 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:8090/api/games/hangman/${roomId}";
+const BASE_URL = `http://localhost:8090/api/hangman/`;
 
-export const fetchGameState = async (roomId) => {
-  try {
-      const response = await axios.get(`${API_URL}/gamestate`);
-      console.log("Fetched game state:", response.data);
-      return response.data;
-  } catch (error) {
-      console.error('Error fetching game state:', error);
-      throw error;
-  }
+const fetchGameState = async (roomId) => {
+    try {
+        const response = await axios.get(BASE_URL + `${roomId}/gamestate`);
+        console.log("Fetch Game State Response:", response);
+        console.log("Response Data:", response.data);
+        return response;
+    } catch (error) {
+        console.error("Error Fetching Game State:", error);
+        throw error;
+    }
 };
 
-export const handleLetterSelect = async (letter) => {
+
+const handleLetterSelect = async (letter, roomId) => {
     try {
-        const response = await axios.post(`${API_URL}/guess`, null, {
+        const response = await axios.post(BASE_URL + `${roomId}/guess`, null, {
             params: { letterGuessed: letter }
         });
-        return response.data; // Return the updated game state
+        console.log("Handle Letter Select Response:", response);
+        return response;
     } catch (error) {
-        console.error('Error selecting letter:', error);
-        throw error; // Throw the error so that callers can handle it
+        console.error("Error Handling Letter Select:", error);
+        throw error;
     }
 };
 
-export const handleNewGame = async () => {
+const handleNewGame = async (roomId) => {
     try {
-        await axios.get(`${API_URL}/new-game`);
+        await axios.get(BASE_URL + `${roomId}/new-game`);
+        console.log("New Game Started");
+        const response = await fetchGameState(roomId);
+        return response;
     } catch (error) {
-        console.error('Error starting new game:', error);
-        throw error; // Throw the error so that callers can handle it
+        console.error("Error Creating New Game:", error);
+        throw error;
     }
 };
 
-export const handleContinueGame = async () => {
+const handleContinueGame = async (roomId) => {
     try {
-        await axios.get(`${API_URL}/continue-game`);
+        await axios.get(BASE_URL + `${roomId}/continue-game`);
+        console.log("Game Continued");
+        const response = await fetchGameState(roomId);
+        return response;
     } catch (error) {
-        console.error('Error continuing game:', error);
-        throw error; // Throw the error so that callers can handle it
+        console.error("Error Continuing Game:", error);
+        throw error;
     }
 };
 
-export const checkGameResult = (gameState) => {
-    if (gameState.gameStatus === 'won') {
-        console.log("Game won!");
-        // Perform actions for winning
-    } else if (gameState.gameStatus === 'lost') {
-        console.log("Game lost!");
-        // Perform actions for losing
-    }
+export const HangmanMultiplayerAPI = {
+    fetchGameState,
+    handleLetterSelect,
+    handleNewGame,
+    handleContinueGame,
 };
