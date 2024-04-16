@@ -31,15 +31,18 @@ export default function TictactoeGame(props) {
   const [currentGame, setCurrentGame] = useState();
   const [boardDisplay, setBoardDisplay] = useState([]);
   const [boardState, setBoardState] = useState([]);
+  const [lastPlayerMoved, setLastPlayerMoved] = useState("");
   // This runs and refreshes whenever the variables declared AFTER the function changes.
   useEffect(() => {
     // This checks if a game was selected, and passed as a prop ie <TictactoeGame gameId = "Joel_Kaden" />
     if (props.gameId) {
       // Get the actual data about the game
-      axios.get("http://localhost:8090/tictactoe/game/" + props.gameId)
+      axios
+        .get("http://localhost:8090/tictactoe/game/" + props.gameId)
         .then((res) => res.data)
         .then((data) => {
           // Store the game data for use later
+          //console.log(data)
           setCurrentGame(data);
           setBoardState(data.boardState);
           setGameTitle(
@@ -47,6 +50,7 @@ export default function TictactoeGame(props) {
               Game between {data.player1} and {data.player2}
             </h1>
           );
+          setLastPlayerMoved(data.lastPlayerMoved);
           // A list/array of images to display if player1 selected that segment
           var X = [
             <div style={{ textAlign: "center", width: "70%" }}>
@@ -261,40 +265,41 @@ export default function TictactoeGame(props) {
                 boardState.map((division, i) => {
                   return (
                     <div style={{ position: "absolute" }}>
-                      {division === data.player1 ? (
-                        // Player 1 played here, so get the JSX from the X list
-                        X[i]
-                      ) : division === data.player2 ? (
-                        // Player 2 played here, so get the JSX from the Y list
-                        O[i]
-                      ) : (
-                        // No player has played here, so display a button
-                        <button
-                          style={{ width: "100%", height: "100%" }}
-                          onClick={async function () {
-                            // When the button is clicked, try to put the player's turn
-                            await axios.put(
-                              "http://localhost:8090/tictactoe/update/" +
-                                props.gameId +
-                                "?playerId=" +
-                                props.currentPlayer +
-                                "&position=" +
-                                i
-                            )
-                              .then((res) => res.data)
-                              .then((data) => {
-                                // Store the game data for use later
-                                setCurrentGame(data);
-                                // Let the parent element know a move has been made
-                                if (props.callback) {
-                                  props.callback(currentGame);
-                                }
-                              });
-                          }}
-                        >
-                          <p>Play here</p>
-                        </button>
-                      )}
+                      {division === data.player1
+                        ? // Player 1 played here, so get the JSX from the X list
+                          X[i]
+                        : division === data.player2
+                        ? // Player 2 played here, so get the JSX from the Y list
+                          O[i]
+                        : // No player has played here, so display a button
+                          props.currentPlayer !== data.lastPlayerMoved && (
+                            <button
+                              style={{ width: "100%", height: "100%" }}
+                              onClick={async function () {
+                                // When the button is clicked, try to put the player's turn
+                                await axios
+                                  .put(
+                                    "http://localhost:8090/tictactoe/update/" +
+                                      props.gameId +
+                                      "?playerId=" +
+                                      props.currentPlayer +
+                                      "&position=" +
+                                      i
+                                  )
+                                  .then((res) => res.data)
+                                  .then((data) => {
+                                    // Store the game data for use later
+                                    setCurrentGame(data);
+                                    // Let the parent element know a move has been made
+                                    if (props.callback) {
+                                      props.callback(currentGame);
+                                    }
+                                  });
+                              }}
+                            >
+                              <p>Play here</p>
+                            </button>
+                          )}
                     </div>
                   );
                 })
