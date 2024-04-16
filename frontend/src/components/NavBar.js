@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { NavDropdown } from "react-bootstrap";
 import "./NavBar.css";
 
 export default function NavBar() {
@@ -19,12 +20,28 @@ export default function NavBar() {
           <Nav.Link as={Link} to="/home">
             Home
           </Nav.Link>
-          <Nav.Link as={Link} to="/games">
-            Games
-          </Nav.Link>
-          <Nav.Link as={Link} to="/leaderboard">
-            Leaderboard
-          </Nav.Link>
+          <NavDropdown title="Games" id="basic-nav-dropdown">
+              <NavDropdown.Item>
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/canine-invaders">
+                  Canine Invaders
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/cat-run">
+                  Cat Run!
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/hangman">
+                  Hangman
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link className="link-warning link-offset-2 link-underline link-underline-opacity-0" to="/games/tictactoe">
+                  Tic-Tac-Toe
+                </Link>
+              </NavDropdown.Item>
+          </NavDropdown>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>
