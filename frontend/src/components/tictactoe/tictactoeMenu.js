@@ -4,12 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import { getAllPlayers } from "../../controllers/PlayerController";
+import axios from "axios";
 
-// Authorization, for integration with other features
-const authUserName = "john_doe";
-const authPassword = "password123";
-const preAuthToken = btoa(`${authUserName}:${authPassword}`);
-const authToken = `Basic ${preAuthToken}`;
+const API_URL = "http://localhost:8090/";
 
 export default function TictactoeMenu() {
   //console.log("Loading tictactoe");
@@ -39,15 +36,7 @@ export default function TictactoeMenu() {
   useEffect(() => {
     //console.log(currentUser)
     if (currentUser) {
-      fetch("http://localhost:8090/tictactoe/games/" + currentUser.username, {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken,
-        },
-      })
+      axios.get(`${API_URL}tictactoe/games/` + currentUser.username)
         .then((res) => res.json())
         .then((data) => setCurrentGames(data));
     }
@@ -85,8 +74,7 @@ export default function TictactoeMenu() {
                     console.log(updatedGame.id);
                     fetch(
                       "http://localhost:8090/tictactoe/checkWinner/" +
-                        updatedGame.id,
-                      { headers: { Authorization: authToken } }
+                        updatedGame.id
                     )
                       .then((res) => res.text())
                       .then((data) => {
@@ -104,7 +92,6 @@ export default function TictactoeMenu() {
                               updatedGame.id,
                             {
                               method: "DELETE",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -115,7 +102,6 @@ export default function TictactoeMenu() {
                               "&conclusion=WINNER",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -126,7 +112,6 @@ export default function TictactoeMenu() {
                               "&conclusion=LOSER",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
@@ -136,7 +121,6 @@ export default function TictactoeMenu() {
                               updatedGame.id,
                             {
                               method: "DELETE",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -147,7 +131,6 @@ export default function TictactoeMenu() {
                               "&conclusion=LOSER",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -158,7 +141,6 @@ export default function TictactoeMenu() {
                               "&conclusion=WINNER",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
@@ -168,7 +150,6 @@ export default function TictactoeMenu() {
                               updatedGame.id,
                             {
                               method: "DELETE",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -179,7 +160,6 @@ export default function TictactoeMenu() {
                               "&conclusion=DRAW",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           fetch(
@@ -190,7 +170,6 @@ export default function TictactoeMenu() {
                               "&conclusion=DRAW",
                             {
                               method: "PUT",
-                              headers: { Authorization: authToken },
                             }
                           );
                           setDisplayTictactoeGame(<TictactoeGame />);
@@ -233,7 +212,6 @@ export default function TictactoeMenu() {
                     cache: "no-cache",
                     headers: {
                       "Content-Type": "application/json",
-                      Authorization: authToken,
                     },
                     body: JSON.stringify({
                       player1: currentUser.username,
