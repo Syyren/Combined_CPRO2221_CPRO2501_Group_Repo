@@ -61,7 +61,7 @@ public class ArcadeShooterSessionService {
 
                     // Create and save a ScoreEntry only if the session is ending for the first time
                     ScoreEntry scoreEntry = new ScoreEntry();
-                    scoreEntry.setGameName("arcadeshooter");
+                    scoreEntry.setGameName("canine_invaders");
                     scoreEntry.setUserId(session.getUserId());
                     scoreEntry.setScore(finalScore);
                     scoreEntry.setLeaderboard("Score");
