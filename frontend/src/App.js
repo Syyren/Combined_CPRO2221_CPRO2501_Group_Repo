@@ -53,6 +53,12 @@ export default function App() {
           <Route path="/games/cat-run" element={<RunCat />} />
           <Route path="/games/hangman" element={<Hangman />} />
 
+            
+          <Route path="/room" element={<PrivateRoute
+                element={Rooms}
+                roles={["user"]}
+                redirectPath="/no-access"
+              />}/>
           <Route
             path="/games/hangman/:roomId"
             element={
@@ -65,10 +71,28 @@ export default function App() {
           />
 
 
-          <Route path="/games/canine-invaders" element={<ArcadeShooter />} />
-          <Route path="/games/tictactoe" element={<Tictactoe />} />
+          <Route path="/games/canine-invaders" element={<PrivateRoute
+                roles={["user"]}
+                redirectPath="/no-access"
+                element={ArcadeShooter}
+              />
+            }
+          />
+          <Route path="/games/tictactoe" element={<PrivateRoute
+                roles={["user"]}
+                redirectPath="/no-access"
+                element={Tictactoe}
+              />
+            }
+          />
           <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/logout" element={<PrivateRoute
+                roles={["user"]}
+                redirectPath="/no-access"
+                element={Logout}
+              />
+            }
+          />
           <Route path="/register" element={<PlayerRegistration />} />
         </Routes>
       </BrowserRouter>
