@@ -78,17 +78,17 @@ const Hangman = () => {
     let buttons = [];
     if (gameState && gameState.gameStatus === "won") {
       buttons.push(
-        <button key="newGameButton" onClick={handleNewGame}>
+        <button className="btn btn-outline-primary"  key="newGameButton" onClick={handleNewGame}>
           Start New Game
         </button>,
-        <button key="continueGameButton" onClick={handleContinueGame}>
+        <button className="btn btn-outline-primary"  key="continueGameButton" onClick={handleContinueGame}>
           Continue Game
         </button>
       );
       
     } else if (gameState && gameState.gameStatus === "lost") {
       buttons.push(
-        <button key="newGameButton" onClick={handleNewGame}>
+        <button className="btn btn-outline-primary"  key="newGameButton" onClick={handleNewGame}>
           Start New Game
         </button>
       );
@@ -140,7 +140,7 @@ const Hangman = () => {
 
   return (
     <div>
-      <button className='btn btn-outline-primary' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>
+      
       {gameState ? (
         <>
         <h2 className="display-4 mb-4">9 Lives</h2>
@@ -152,9 +152,12 @@ const Hangman = () => {
             onLetterSelect={handleLetterSelect}
             disabledLetters={disabledLetters}
           />}
+          <button className='btn btn-outline-primary' onClick={saveScore} >Save your Score</button>
           {renderPlayAgain()}
+
         </>
       ) : (
+        
         <button className="btn btn-outline-primary" onClick={handleNewGame}>Start New Game</button>
       )}
     </div>

@@ -51,7 +51,11 @@ export default function App() {
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
           <Route path="/games/cat-run" element={<RunCat />} />
-          <Route path="/games/hangman" element={<Hangman />} />
+          <Route path="/games/hangman" element={<PrivateRoute
+                element={Hangman}
+                roles={["user"]}
+                redirectPath="/no-access"
+              />}/>
 
             
           <Route path="/room" element={<PrivateRoute
