@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/hangman")
 public class HangmanMultiplayerController {
 
+
+
     private final HangmanMultiplayerService hangmanMultiplayerService;
 
     @Autowired

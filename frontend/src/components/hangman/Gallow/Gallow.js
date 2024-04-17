@@ -25,7 +25,7 @@ class Gallow extends React.Component {
                     {guessesRemaining <= 5 && <RowOfBooks1 colours={colours} />}
                     {guessesRemaining <= 4 && <RowOfBooks2 colours={colours} />}
                     {guessesRemaining <= 3 && <RowOfBooks3 colours={colours} />}
-                    {(guessesRemaining == 2 ||guessesRemaining == 1) && <Cup />}
+                    {(guessesRemaining === 2 ||guessesRemaining === 1) && <Cup />}
                     {guessesRemaining <= 1 && <CatBody />}
                     {guessesRemaining <= 0 && <CatArm />}
                 </svg>

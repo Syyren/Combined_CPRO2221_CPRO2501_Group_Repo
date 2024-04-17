@@ -17,8 +17,8 @@ public class HangmanMultiplayerService {
         Hangman hangman = hangmanGames.get(roomId);
         if (hangman == null) {
             hangman = new Hangman();
-            hangman.newGame();// Create a new game if none exists
-            hangmanGames.put(roomId, hangman); // Store the new game in the map
+            hangman.newGame();
+            hangmanGames.put(roomId, hangman);
         }
         return new HangmanGameState(
                 hangman.getDisplayedWord(),

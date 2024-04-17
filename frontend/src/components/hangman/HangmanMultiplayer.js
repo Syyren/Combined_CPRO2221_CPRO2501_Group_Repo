@@ -7,6 +7,8 @@ import Alphabet from './Alphabet';
 import Message from './Message';
 import { HangmanMultiplayerAPI } from '../../controllers/HangmanMultiplayerController';
 import { useAuth } from '../../context/AuthContext';
+import { submitScore } from '../../controllers/LeaderboardController';
+
 
 const HangmanMultiplayer = () => {
   const { roomId } = useParams();
@@ -15,9 +17,15 @@ const HangmanMultiplayer = () => {
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [guessesLeft, setGuessesLeft] = useState(null);
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
+  const [Nine, setNine] = useState(9)
+  const [antiSpam, setAntiSpam] = useState(false)
 
   useEffect(() => {
     fetchGameState();
+      const intervalId = setInterval(() => {
+      fetchGameState();
+    }, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const fetchGameState = async () => {
@@ -27,6 +35,7 @@ const HangmanMultiplayer = () => {
       setGameState(response.data);
       setDisabledLetters(response.data.lettersGuessed);
       setGuessesLeft(response.data.guessesLeft);
+      setNine(guessesLeft);
       setIsCurrentUserTurn(response.data.turnTaken !== currentUser.userId);
       console.log("isCurrentUserTurn:", isCurrentUserTurn);
       console.log('currentUserId: '+currentUser.userId)
@@ -37,6 +46,7 @@ const HangmanMultiplayer = () => {
 
   const handleLetterSelect = async (letter) => {
     try {
+      setAntiSpam(false);
       console.log("Handling letter select:", letter);
       const response = await HangmanMultiplayerAPI.handleLetterSelect(letter, roomId, currentUser.userId)
       console.log("Letter select response:", response.data);
@@ -60,11 +70,9 @@ const HangmanMultiplayer = () => {
     if (gameState.gameStatus === 'won') {
       console.log("Game won!");
       renderMessage('won')
-      win();
     } else if (gameState.gameStatus === 'lost') {
       console.log("Game lost!");
       renderMessage('lost')
-      lose();
     }
   };
 
@@ -87,6 +95,29 @@ const HangmanMultiplayer = () => {
       await fetchGameState();
     } catch (error) {
       console.error('Error continuing game:', error);
+    }
+  };
+
+  const saveScore = async () => {
+    if (!gameState || !currentUser) {
+      console.error("Game state or user not defined, cannot save score.");
+      return;
+    }
+    if(antiSpam){
+      return;
+    }
+    const scoreEntry = {
+      gameName: "hangman",
+      userId: currentUser.userId,
+      score: gameState.totalScore,
+      leaderboard: "Score",
+    };
+    try {
+      const savedScore = await submitScore(scoreEntry);
+      setAntiSpam(true)
+      console.log("Score saved successfully:", savedScore);
+    } catch (error) {
+      console.error("Failed to save score:", error);
     }
   };
 
@@ -128,18 +159,12 @@ const HangmanMultiplayer = () => {
     }
   };
 
-  const win = () => {
-    console.log("Game won logic executed.");
-  }
-
-  const lose = () => {
-    console.log("Game lost logic executed.");
-  }
-
   return (
     <div>
-      {gameState ? (
+      <h4 style={{ textAlign: 'left' }}>Your Room ID: {roomId}</h4>
+      <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>      {gameState ? (
         <>
+        <h2 className="display-4 mb-4">{Nine} Lives</h2>
           <Score score={gameState.totalScore} />
           {renderGallow()}
           {renderMessage(gameState.gameStatus)}
@@ -148,7 +173,7 @@ const HangmanMultiplayer = () => {
           {isCurrentUserTurn && gameState.gameStatus==='in progress' && (
             <Alphabet onLetterSelect={handleLetterSelect} disabledLetters={disabledLetters} />
           )}
-          {renderPlayAgain()}
+          {!isCurrentUserTurn && renderPlayAgain()}
         </>
       ) : (
         <button onClick={handleNewGame}>Start New Game</button>
