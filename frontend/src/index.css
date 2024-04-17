@@ -7,6 +7,10 @@
   width: 120px;
 }
 
+body {
+  background-color: rgb(45, 35, 54);
+}
+
 .homeLogo {
   height:fit-content;
   width: 30vw;

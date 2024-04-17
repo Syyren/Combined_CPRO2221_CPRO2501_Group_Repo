@@ -19,6 +19,22 @@ export const getAchievements = async () => {
   }
 };
 
+//function that pulls an achievement via it's id
+export const getAchievementById = async (achievementId) => {
+  try
+  {
+    const res = await axios.get(`${API_URL}/achievement/get/${achievementId}`);
+    const achievement = res.data;
+    console.log("Achievement from API:", achievement);
+    return achievement;
+  }
+  catch (err)
+  {
+    console.error("Error fetching achievement:", err); //outputs in the event of an error fetching the categories
+    return null;
+  }
+}
+
 export const getUserAchievements = async (userId) => {
   try
   {
