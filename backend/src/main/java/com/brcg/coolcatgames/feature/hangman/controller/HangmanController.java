@@ -41,4 +41,5 @@ public class HangmanController {
         Hangman updatedHangman = hangmanService.guessLetter(letterGuessed);
         return ResponseEntity.ok(updatedHangman);
     }
+
 }

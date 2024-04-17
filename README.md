@@ -10,4 +10,4 @@ This application is a fullstack web app that uses Java EE (Through Spring Framew
 
 ################################################
 
-Group members: Ryan, Kayden, Bergen, Joel, Annette
+Group members: Ryan, Kaden, Bergen, Joel, Annette
