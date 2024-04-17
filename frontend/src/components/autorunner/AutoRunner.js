@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
 import { getUserAchievements, giveAchievement } from "../../controllers/AchievementController";
 import { getScoresByUserAndGame } from '../../controllers/LeaderboardController';
 import AchievementNotification from "../../components/achievements/AchievementNotification";
@@ -183,7 +184,9 @@ const AutoRunner = () => {
 
     return (
         isLoading ? (
-          <div>Loading...</div>
+            <Container className="text-center mt-5">
+                <Spinner animation="border" />
+            </Container>
         ) : (
             <div className="gameBody">
                 {/* notification component that pops up the achievement */}
