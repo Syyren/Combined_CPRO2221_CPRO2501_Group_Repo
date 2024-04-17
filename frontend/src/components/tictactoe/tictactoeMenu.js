@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 
 import { useAuth } from "../../context/AuthContext";
 
-import { getAllPlayers } from "../../controllers/PlayerController";
+import {
+  getAllPlayers,
+  getPlayerByUsername,
+} from "../../controllers/PlayerController";
 import axios from "axios";
 
 const API_URL = "http://localhost:8090/";
@@ -76,72 +79,83 @@ export default function TictactoeMenu() {
                       .get(`${API_URL}tictactoe/checkWinner/` + updatedGame.id)
                       .then((res) => res.data)
                       .then((data) => {
-                        console.log(data);
-                        if (data == null) {
-                          setDisplayTictactoeGame(
-                            <TictactoeGame
-                              gameId={updatedGame.id}
-                              currentPlayer={currentUser.username}
-                            />
-                          );
-                        } else if (data === updatedGame.player1) {
-                          axios.delete(
-                            `${API_URL}tictactoe/delete/` + updatedGame.id
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player1 +
-                              "?deltaScore=" +
-                              10 +
-                              "&conclusion=WINNER"
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player2 +
-                              "?deltaScore=" +
-                              -10 +
-                              "&conclusion=LOSER"
-                          );
-                          setDisplayTictactoeGame(<TictactoeGame />);
-                        } else if (data === updatedGame.player2) {
-                          axios.delete(
-                            `${API_URL}tictactoe/delete/` + updatedGame.id
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player1 +
-                              "?deltaScore=" +
-                              -10 +
-                              "&conclusion=LOSER"
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player2 +
-                              "?deltaScore=" +
-                              10 +
-                              "&conclusion=WINNER"
-                          );
-                          setDisplayTictactoeGame(<TictactoeGame />);
-                        } else if (data === "draw") {
-                          axios.delete(
-                            `${API_URL}tictactoe/delete/` + updatedGame.id
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player1 +
-                              "?deltaScore=" +
-                              0 +
-                              "&conclusion=DRAW"
-                          );
-                          axios.put(
-                            `${API_URL}scores/tictactoe/update/` +
-                              updatedGame.player2 +
-                              "?deltaScore=" +
-                              0 +
-                              "&conclusion=DRAW"
-                          );
-                          setDisplayTictactoeGame(<TictactoeGame />);
-                        }
+                        getPlayerByUsername(updatedGame.player1).then(
+                          (player1) => {
+                            getPlayerByUsername(updatedGame.player2).then(
+                              (player2) => {
+                                console.log(data);
+                                if (data == null) {
+                                  setDisplayTictactoeGame(
+                                    <TictactoeGame
+                                      gameId={updatedGame.id}
+                                      currentPlayer={currentUser.username}
+                                    />
+                                  );
+                                } else if (data === updatedGame.player1) {
+                                  axios.delete(
+                                    `${API_URL}tictactoe/delete/` +
+                                      updatedGame.id
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player1.userId +
+                                      "?deltaScore=" +
+                                      10 +
+                                      "&conclusion=WINNER"
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player2.userId +
+                                      "?deltaScore=" +
+                                      -10 +
+                                      "&conclusion=LOSER"
+                                  );
+                                  setDisplayTictactoeGame(<TictactoeGame />);
+                                } else if (data === updatedGame.player2) {
+                                  axios.delete(
+                                    `${API_URL}tictactoe/delete/` +
+                                      updatedGame.id
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player1.userId +
+                                      "?deltaScore=" +
+                                      -10 +
+                                      "&conclusion=LOSER"
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player2.userId +
+                                      "?deltaScore=" +
+                                      10 +
+                                      "&conclusion=WINNER"
+                                  );
+                                  setDisplayTictactoeGame(<TictactoeGame />);
+                                } else if (data === "draw") {
+                                  axios.delete(
+                                    `${API_URL}tictactoe/delete/` +
+                                      updatedGame.id
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player1.userId +
+                                      "?deltaScore=" +
+                                      0 +
+                                      "&conclusion=DRAW"
+                                  );
+                                  axios.put(
+                                    `${API_URL}scores/tictactoe/update/` +
+                                      player2.userId +
+                                      "?deltaScore=" +
+                                      0 +
+                                      "&conclusion=DRAW"
+                                  );
+                                  setDisplayTictactoeGame(<TictactoeGame />);
+                                }
+                              }
+                            );
+                          }
+                        );
                       });
                   }}
                 />
@@ -207,7 +221,7 @@ export default function TictactoeMenu() {
         })
       );
     }
-  }, [usersIdsList,currentUser]);
+  }, [usersIdsList, currentUser]);
   // Finalize display
   return (
     <div className="row row-cols-2">
