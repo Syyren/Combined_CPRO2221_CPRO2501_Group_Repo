@@ -44,7 +44,7 @@ const LeaderboardNav = ({
           onChange={handleGameChange}
         >
           <option value="hangman">9 Lives</option>
-          <option value="tictactoe">Tic Tac Toe</option>
+          <option value="tictactoe">Tic Tac Toe Beans</option>
           <option value="cat-run">Cat Run!</option>
           <option value="canine_invaders">Canine Invaders</option>
         </select>
