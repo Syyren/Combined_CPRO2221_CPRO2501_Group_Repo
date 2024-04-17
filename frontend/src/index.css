@@ -7,12 +7,21 @@
   width: 120px;
 }
 
+.homeLogo {
+  height:fit-content;
+  width: 30vw;
+}
+
 .card-img-top {
   height:max-content;
 }
 
 .homePageContainer {
   height: 100vh;
+}
+
+.contentWrap{
+  width: 30rem;
 }
 
 .gameContainer {
@@ -23,5 +32,11 @@
 @media (max-width: 1000px) {
   .gameContainer {
       flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  .contentWrap{
+    width: 80vw;
   }
 }
