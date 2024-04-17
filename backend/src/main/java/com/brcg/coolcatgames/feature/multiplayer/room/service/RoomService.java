@@ -1,28 +1,30 @@
 package com.brcg.coolcatgames.feature.multiplayer.room.service;
 
-import com.brcg.coolcatgames.feature.hangman.model.HangmanGameState;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+@Service
 public class RoomService {
-    private Map<String, HangmanGameState> roomStates;
 
-    public RoomService() {
-        this.roomStates = new HashMap<>();
+    private final Map<String, Set<String>> roomUsers = new HashMap<>();
+
+    public void addUserToRoom(String roomId, String userId) {
+        Set<String> users = roomUsers.getOrDefault(roomId, new HashSet<>());
+        users.add(userId);
+        roomUsers.put(roomId, users);
     }
 
-    public void createRoom(String roomId) {
-        roomStates.put(roomId, new HangmanGameState());
+    public void removeUserFromRoom(String roomId, String userId) {
+        Set<String> users = roomUsers.getOrDefault(roomId, new HashSet<>());
+        users.remove(userId);
+        roomUsers.put(roomId, users);
     }
 
-    public HangmanGameState getRoomState(String roomId) {
-        return roomStates.get(roomId);
+    public Set<String> getUsersInRoom(String roomId) {
+        return roomUsers.getOrDefault(roomId, new HashSet<>());
     }
-
-    public void updateRoomState(String roomId, HangmanGameState gameState) {
-        roomStates.put(roomId, gameState);
-    }
-
-    // Other methods for managing rooms
 }

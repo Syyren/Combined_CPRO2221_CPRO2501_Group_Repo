@@ -16,4 +16,5 @@ public class HangmanGameState {
     private int totalScore;
     private String gameStatus;
     private List<Character> lettersGuessed;
+    private String turnTaken;
 }

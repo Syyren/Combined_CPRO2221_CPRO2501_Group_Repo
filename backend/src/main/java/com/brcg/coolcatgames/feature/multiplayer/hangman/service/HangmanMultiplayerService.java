@@ -16,7 +16,8 @@ public class HangmanMultiplayerService {
     public HangmanGameState getGameState(String roomId) {
         Hangman hangman = hangmanGames.get(roomId);
         if (hangman == null) {
-            hangman = new Hangman(); // Create a new game if none exists
+            hangman = new Hangman();
+            hangman.newGame();// Create a new game if none exists
             hangmanGames.put(roomId, hangman); // Store the new game in the map
         }
         return new HangmanGameState(
@@ -24,7 +25,8 @@ public class HangmanMultiplayerService {
                 hangman.getGuesses(),
                 hangman.getTotalScore(),
                 hangman.getGameStatus(),
-                hangman.getLettersGuessed()
+                hangman.getLettersGuessed(),
+                hangman.getTurnTaken()
         );
     }
 
@@ -42,12 +44,12 @@ public class HangmanMultiplayerService {
         return getGameState(roomId);
     }
 
-    public Hangman guessLetter(String roomId, char letterGuessed) {
+    public Hangman guessLetter(String roomId, char letterGuessed, String userId) {
         Hangman hangman = hangmanGames.get(roomId);
         if (hangman != null) {
             hangman.guessLetter(letterGuessed);
             hangman.getLettersGuessed().add(letterGuessed);
-            System.out.println("Added to list! current list: \n"+hangman.getLettersGuessed());
+            hangman.setTurnTaken(userId);
             hangmanGames.put(roomId, hangman);
         }
         return hangman;

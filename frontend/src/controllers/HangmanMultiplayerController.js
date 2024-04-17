@@ -15,10 +15,10 @@ const fetchGameState = async (roomId) => {
 };
 
 
-const handleLetterSelect = async (letter, roomId) => {
+const handleLetterSelect = async (letter, roomId, userId) => {
     try {
         const response = await axios.post(BASE_URL + `${roomId}/guess`, null, {
-            params: { letterGuessed: letter }
+            params: { letterGuessed: letter, userId: userId }
         });
         console.log("Handle Letter Select Response:", response);
         return response;

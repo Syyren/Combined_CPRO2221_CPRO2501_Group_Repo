@@ -13,6 +13,7 @@ public class Hangman {
     private char letterGuessed;
     private HangmanScore score = new HangmanScore();
     private List<Character> lettersGuessed;
+    private String turnTaken;
 
     private boolean again;
     private String gameStatus;

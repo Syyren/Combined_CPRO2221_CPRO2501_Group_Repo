@@ -15,7 +15,8 @@ public class HangmanService {
                 hangman.getGuesses(),
                 hangman.getTotalScore(),
                 hangman.getGameStatus(),
-                hangman.getLettersGuessed()
+                hangman.getLettersGuessed(),
+                hangman.getTurnTaken()
         );
     }
 

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useState } from 'react';
 import Word from './Word';
 import Score from './Score';
 import Gallow from './Gallow/Gallow';
@@ -61,6 +60,7 @@ const Hangman = () => {
   const handleContinueGame = async () => {
     try {
       await HangmanAPI.handleContinueGame()
+      await fetchGameState();
     } catch (error) {
       console.error('Error continuing game:', error);
     }

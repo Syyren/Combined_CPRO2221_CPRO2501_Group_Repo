@@ -37,8 +37,8 @@ public class HangmanMultiplayerController {
     }
 
     @PostMapping("/{roomId}/guess")
-    public ResponseEntity<Hangman> guessLetter(@PathVariable String roomId, @RequestParam char letterGuessed) {
-        Hangman updatedHangman = hangmanMultiplayerService.guessLetter(roomId, letterGuessed);
+    public ResponseEntity<Hangman> guessLetter(@PathVariable String roomId, @RequestParam char letterGuessed, @RequestParam String userId) {
+        Hangman updatedHangman = hangmanMultiplayerService.guessLetter(roomId, letterGuessed, userId);
         return ResponseEntity.ok(updatedHangman);
     }
 
