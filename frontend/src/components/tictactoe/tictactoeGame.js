@@ -306,7 +306,7 @@ export default function TictactoeGame(props) {
               );
             }
           }
-        });
+        }).catch();
     } else {
       // No game has been selected, so display an empty board
       setBoardState([null, null, null, null, null, null, null, null, null]);
