@@ -38,16 +38,6 @@ export default function App() {
             }
           />
           <Route
-            path="/leaderboard"
-            element={
-              <PrivateRoute
-                element={LeaderboardTest}
-                roles={["user"]}
-                redirectPath="/no-access"
-              />
-            }
-          />
-          <Route
             path="/friends"
             element={
               <PrivateRoute
@@ -59,7 +49,6 @@ export default function App() {
           />
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
-          <Route path="/achievements" element={<AchievementTest />} />
           <Route path="/games/cat-run" element={<RunCat />} />
           <Route path="/games/hangman" element={<Hangman />} />
           <Route path="/games/canine-invaders" element={<ArcadeShooter />} />
