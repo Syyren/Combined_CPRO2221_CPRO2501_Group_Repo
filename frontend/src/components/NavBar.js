@@ -67,9 +67,14 @@ export default function NavBar() {
           </NavDropdown>
           <div className="d-flex align-items-center">
             {currentUser && (
-              <Nav.Link as={Link} to="/profile">
-                Profile
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/friends">
+                  Friends
+                </Nav.Link>
+              </>
             )}
           </div>
           <Nav.Link as={Link} to="/about">
@@ -86,9 +91,6 @@ export default function NavBar() {
           </div>
           {currentUser ? (
             <>
-              <Nav.Link as={Link} to="/friends">
-                Friends
-              </Nav.Link>
               <Nav.Link as={Link} to="/logout">
                 Logout
               </Nav.Link>
