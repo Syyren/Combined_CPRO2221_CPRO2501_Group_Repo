@@ -256,7 +256,7 @@ export default function TictactoeMenu() {
         })
       );
     }
-  }, [usersIdsList, currentUser, allOpponents]);
+  }, [usersIdsList, currentUser]);
   // Finalize display
   return (
     <div className="row row-cols-2">
