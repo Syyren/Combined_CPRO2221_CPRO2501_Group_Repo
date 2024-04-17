@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Container, Spinner } from "react-bootstrap";
 import Icon from "../../images/body/bobahead.png"
 import "./AchievementList.css";
 import { useAuth } from "../../context/AuthContext";
@@ -24,7 +25,7 @@ const AchievementList = () => {
 
     function getGameDisplayName(unformattedGameName) {
         const gameNames = {
-          hangman: "Hangman",
+          hangman: "9 Lives",
           tictactoe: "Tic Tac Toe",
           "cat-run": "Cat Run!",
           canine_invaders: "Canine Invaders",
@@ -34,7 +35,9 @@ const AchievementList = () => {
       }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return  <Container className="text-center mt-5">
+                    <Spinner animation="border" />
+                </Container>;
     }
 
     return (
