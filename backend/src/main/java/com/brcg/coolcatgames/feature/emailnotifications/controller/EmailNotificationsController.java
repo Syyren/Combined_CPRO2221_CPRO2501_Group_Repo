@@ -21,7 +21,7 @@ import java.util.List;
 public class EmailNotificationsController {
     // Link to each service that we want to email about
     @Autowired
-    private EmailNotificationsService emailService;
+    private EmailNotificationsService emailService = EmailNotificationsService.getInstance();
     @Autowired
     private PlayerService playerService;
 
@@ -37,8 +37,10 @@ public class EmailNotificationsController {
     private Map<String,ArrayList<Integer>> achievementsInMemory = new HashMap<>();
 
     // This should run every 12 hours
-    @Scheduled(fixedRate = 43200000)
+    // as long as fixedRate = 43200000
+    @Scheduled(fixedRate = 60000)
     public void performTask() {
+        System.out.println("Starting email check");
         Iterable<Player> users = playerService.listAll();
         // a variable to replace the scoresInMemory at the end of this function
         Map<String, Integer> newScoresInMemory = new HashMap<>();
@@ -46,6 +48,7 @@ public class EmailNotificationsController {
         Map<String,ArrayList<Integer>> newAchievementsInMemory = new HashMap<>();
 
         for (Player user: users) {
+            System.out.println("Checking email for user: " + user.getUsername());
             // If any of the subloops adds to the email body, it will send this to true and send the email
             Boolean sendMail = false;
             // This is the opening of the email
@@ -54,14 +57,19 @@ public class EmailNotificationsController {
 
             // Get all the scores of the user to get all the games they have played
             List<ScoreEntry> userScores = scoreEntryService.getScoresByUser(user.getId());
+            System.out.println("UserId checked:"+user.getId());
             List<ScoreEntry> allScores = scoreEntryService.getAllScores();
             for (ScoreEntry score :userScores) {
                 if (scoresInMemory.containsKey(score.getGameName()+"_"+user.getId()) ) {
                     List<String> rivals = new ArrayList<>();
                     // See if the score has been beaten since last time it was checked
                     for (ScoreEntry score2 : allScores) {
+                        System.out.println("Testing if score was beaten");
                         if (score2.getGameName().equals(score.getGameName()) && !scoresInMemory.containsKey(score.getGameName()+"_"+score2.getUserId()) && score.getScore() < score2.getScore()) {
+                            System.out.println("Adding 'rival' to list of players who beat score");
+                            // Crash is happening at this line:
                             rivals.add(playerService.getPlayerByID(score2.getUserId()).getUsername());
+                            System.out.println("Rival added");
                         }
                     }
                     if (rivals.size() > 0) {
@@ -73,6 +81,7 @@ public class EmailNotificationsController {
                 }
                 newScoresInMemory.put(score.getGameName()+"_"+user.getId(),score.getScore());
             }
+            System.out.println("Successfully checked scores");
 
             // Check if the user has gained a new achievement since the last email.
             List<Achievement> achievementList = achievementService.getAllAchievements();

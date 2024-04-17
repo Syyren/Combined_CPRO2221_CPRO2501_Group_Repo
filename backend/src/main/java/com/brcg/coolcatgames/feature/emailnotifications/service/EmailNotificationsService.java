@@ -7,6 +7,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailNotificationsService {
+    private static  EmailNotificationsService instance;
+    private EmailNotificationsService(){};
+
+    public static EmailNotificationsService getInstance() {
+        if (instance == null) {
+            synchronized (EmailNotificationsService.class) {
+                if (instance == null) {
+                    instance = new EmailNotificationsService();
+                }
+            }
+        }
+        return instance;
+    }
     @Autowired
     private JavaMailSender javaMailSender;
 
