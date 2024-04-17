@@ -33,17 +33,34 @@ function Room() {
   };
 
   return (
-    <div>
-      <h1>Rooms Page</h1>
-      <GameList onSelectGame={setSelectedGame} />
-      <input
-        id="roomId"
-        value={roomId}
-        onChange={(e) => setRoomId(e.target.value)}
-        placeholder="Enter Room ID or Generate One"
-      />
-      <button onClick={handleGenerateRoomId}>Generate Room ID</button>
-      <button onClick={handleJoinRoom}>Join Room</button>
+    <div className="homePageContainer">
+      <div className="mt-5 mb-2">
+        <h1 className="display-4 mb-2">Player vs Player Rooms</h1>
+        <div className="d-flex flex-column align-items-end">
+          <GameList onSelectGame={setSelectedGame} />
+        </div>
+      </div>
+      <div className="input-group d-flex align-items-center justify-content-center">
+        <input
+          className="form-control"
+          id="roomId"
+          value={roomId}
+          onChange={(e) => setRoomId(e.target.value)}
+          placeholder="Enter Room ID or Generate One"
+        />
+        <button 
+          className="btn btn-outline-secondary"
+          id=""
+          onClick={handleGenerateRoomId}>
+          Generate Room ID
+        </button>
+        <button
+          className="btn btn-outline-secondary"
+          id=""
+          onClick={handleJoinRoom}>
+          Join Room
+        </button>
+      </div>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </div>
   );
