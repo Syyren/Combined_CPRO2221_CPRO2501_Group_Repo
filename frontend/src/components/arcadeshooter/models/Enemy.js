@@ -16,7 +16,7 @@ export default class Enemy {
   constructor(
     x,
     y,
-    speed = 0.06,
+    speed = 0.057,
     health = 1,
     patternType = Math.floor(Math.random() * 4)
   ) {

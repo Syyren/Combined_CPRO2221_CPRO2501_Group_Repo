@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "canineinvaders_gamesessions ")
+@Document(collection = "canineinvaders_gamesessions")
 public class ArcadeShooterSession {
 
     @Id

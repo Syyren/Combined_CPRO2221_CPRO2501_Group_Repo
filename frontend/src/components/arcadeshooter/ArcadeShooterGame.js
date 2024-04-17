@@ -29,14 +29,14 @@ const ArcadeShooterGame = ({
   setLevel,
   currentUser,
 }) => {
-  const canvasRef = useRef(null);
   const enemiesRef = useRef([]);
-  const playerShipRef = useRef(new Ship(390, 560));
+  const playerShipRef = useRef(new Ship(400, 515));
   const keys = { right: false, left: false, space: false };
   const [userAchievements, setUserAchievements] = useState([]);
   const [achievement1Flag, setAchievement1Flag] = useState(false);
   const [achievement2Flag, setAchievement2Flag] = useState(false);
   const [achievementTitle, setAchievementTitle] = useState("");
+  const canvasRef = useRef(null);
   const [canvasWidth, setCanvasWidth] = useState(
     window.innerWidth > 1000 ? 775 : window.innerWidth > 770 ? 700 : 0
   );
@@ -85,23 +85,21 @@ const ArcadeShooterGame = ({
     }
   }, [score, level, currentUser, achievement1Flag, achievement2Flag, lives]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width > 1000) {
-        setCanvasWidth(775);
-      } else if (width > 770 && width <= 1000) {
-        setCanvasWidth(700);
-      } else {
-        setCanvasWidth(0);
-      }
-    };
+  const handleResize = () => {
+    const newCanvasWidth =
+      window.innerWidth > 1000 ? 775 : window.innerWidth > 770 ? 700 : 0;
 
+    if (newCanvasWidth !== canvasWidth) {
+      setCanvasWidth(newCanvasWidth);
+    }
+  };
+
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [canvasWidth]);
 
   useEffect(() => {
     fetchAchievements();
@@ -114,7 +112,7 @@ const ArcadeShooterGame = ({
     }
 
     canvas.width = canvasWidth;
-    canvas.height = 600;
+    canvas.height = 550;
 
     const context = canvas.getContext("2d");
     let animationFrameId;
