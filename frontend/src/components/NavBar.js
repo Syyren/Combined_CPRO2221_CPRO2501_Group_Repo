@@ -31,7 +31,7 @@ export default function NavBar() {
             <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("canine_invaders")}
-                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/canine-invaders"
               >
                 Canine Invaders
@@ -40,7 +40,7 @@ export default function NavBar() {
             <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("cat-run")}
-                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/cat-run"
               >
                 Cat Run!
@@ -49,7 +49,7 @@ export default function NavBar() {
             <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("hangman")}
-                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/hangman"
               >
                 Hangman
@@ -58,7 +58,7 @@ export default function NavBar() {
             <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("tictactoe")}
-                className="link-warning link-offset-2 link-underline link-underline-opacity-0"
+                className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/tictactoe"
               >
                 Tic-Tac-Toe
