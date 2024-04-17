@@ -5,8 +5,6 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import NoAccess from "./pages/NoAccess";
-import LeaderboardTest from "./pages/LeaderboardPage"; //importing each of my pages
-import AchievementTest from "./pages/AchievementTest";
 import Hangman from "./pages/games/Hangman";
 import Rooms from './pages/multiplayer/RoomView';
 import HangmanMultiplayer from "./pages/multiplayer/HangmanMultiplayerPage";
@@ -41,16 +39,6 @@ export default function App() {
             }
           />
           <Route
-            path="/leaderboard"
-            element={
-              <PrivateRoute
-                element={LeaderboardTest}
-                roles={["user"]}
-                redirectPath="/no-access"
-              />
-            }
-          />
-          <Route
             path="/friends"
             element={
               <PrivateRoute
@@ -62,13 +50,7 @@ export default function App() {
           />
           <Route path="*" element={<NoPage />} />{" "}
           {/* All undefined routes will raise the 404 page here */}
-          <Route path="/achievements" element={<AchievementTest />} />
-          <Route path="/room" element={<PrivateRoute
-                element={Rooms}
-                roles={["user"]}
-                redirectPath="/no-access"
-              />} />
-          <Route path="/games/run-cat" element={<RunCat />} />
+          <Route path="/games/cat-run" element={<RunCat />} />
           <Route path="/games/hangman" element={<Hangman />} />
 
           <Route

@@ -40,33 +40,35 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">
-        <h1 className="display-4 text-center mb-3">Login, Cool Cat!</h1>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <div className="col-12 col-md-6">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Control
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Button type="submit" className="btn btn-primary btn-block">
-              Login
-            </Button>
-          </Form>
+      <div className="homePageContainer d-flex flex-column justify-content-center">
+        <div className="d-flex flex-column text-center justify-content-center align-items-center mt-5">
+          <h1 className="display-4 text-center mb-5">Login, Cool Cat!</h1>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <div className="col-12 col-md-6">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Button type="submit" className="btn btn-primary btn-block">
+                Login
+              </Button>
+            </Form>
+          </div>
         </div>
       </div>
     </Layout>
