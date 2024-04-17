@@ -1,4 +1,4 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.model;
+package com.brcg.coolcatgames.feature.arcadeshooter.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
+/**
+ * Model class representing an arcade shooter session.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "canineinvaders_gamesessions")
+@Document(collection = "canineinvaders_gamesessions ")
 public class ArcadeShooterSession {
 
     @Id

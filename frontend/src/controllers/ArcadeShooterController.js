@@ -1,7 +1,9 @@
 import axios from "axios";
 
+// Base URL for the Arcade Shooter sessions API
 const BASE_URL = "http://localhost:8090/api/arcadeshooter/sessions";
 
+// Function to start a new session
 const startSession = async (userId) => {
   try {
     const response = await axios.post(`${BASE_URL}/start`, null, {
@@ -14,6 +16,7 @@ const startSession = async (userId) => {
   }
 };
 
+// Function to end an existing session
 const endSession = async (id, finalScore, levelReached) => {
   try {
     const response = await axios.put(`${BASE_URL}/end/${id}`, {
@@ -27,6 +30,7 @@ const endSession = async (id, finalScore, levelReached) => {
   }
 };
 
+// Function to update an existing session
 const updateSession = async (id, sessionData) => {
   try {
     const response = await axios.put(`${BASE_URL}/update/${id}`, sessionData);
@@ -37,6 +41,7 @@ const updateSession = async (id, sessionData) => {
   }
 };
 
+// Function to retrieve a session by ID
 const getSessionById = async (id) => {
   try {
     const response = await axios.get(`${BASE_URL}/search/${id}`);
@@ -47,6 +52,7 @@ const getSessionById = async (id) => {
   }
 };
 
+// Function to retrieve sessions by user ID
 const getSessionsByUserId = async (userId) => {
   try {
     const response = await axios.get(`${BASE_URL}/search/user/${userId}`);
@@ -57,6 +63,7 @@ const getSessionsByUserId = async (userId) => {
   }
 };
 
+// Function to delete a session by ID
 const deleteSession = async (id) => {
   try {
     const response = await axios.delete(`${BASE_URL}/delete/${id}`);
@@ -67,6 +74,7 @@ const deleteSession = async (id) => {
   }
 };
 
+// Exported object containing Arcade Shooter API functions
 export const ArcadeShooterApi = {
   startSession,
   endSession,

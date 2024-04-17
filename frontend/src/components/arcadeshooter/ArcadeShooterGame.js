@@ -7,6 +7,18 @@ import {
   giveAchievement,
 } from "../../controllers/AchievementController";
 
+/**
+ * Component for the main game screen of the Arcade Shooter game.
+ *
+ * @param {boolean} isPaused - Flag indicating whether the game is paused.
+ * @param {Function} setScore - Function to set the player's score.
+ * @param {Function} setLives - Function to set the player's remaining lives.
+ * @param {number} level - Current level of the game.
+ * @param {number} lives - Remaining lives of the player.
+ * @param {number} score - Current score of the player.
+ * @param {Function} setLevel - Function to set the current level.
+ * @param {object} currentUser - Current user object.
+ */
 const ArcadeShooterGame = ({
   isPaused,
   setScore,
@@ -32,6 +44,9 @@ const ArcadeShooterGame = ({
   const achievement1Id = 7;
   const achievement2Id = 8;
 
+  /**
+   * Fetches user achievements from the server.
+   */
   const fetchAchievements = async () => {
     if (currentUser) {
       const achievements = await getUserAchievements(currentUser.userId);
@@ -104,6 +119,9 @@ const ArcadeShooterGame = ({
     const context = canvas.getContext("2d");
     let animationFrameId;
 
+    /**
+     * Spawns enemies based on the current level.
+     */
     const spawnEnemies = () => {
       const numberOfEnemies = 3 + level;
       enemiesRef.current = [];
@@ -113,6 +131,11 @@ const ArcadeShooterGame = ({
       }
     };
 
+    /**
+     * Handles key down events for player controls.
+     *
+     * @param {Event} e - The keydown event object.
+     */
     const keyDownHandler = (e) => {
       e.preventDefault();
       if (e.key === "ArrowRight") keys.right = true;
@@ -123,6 +146,11 @@ const ArcadeShooterGame = ({
       }
     };
 
+    /**
+     * Handles key up events for player controls.
+     *
+     * @param {Event} e - The keyup event object.
+     */
     const keyUpHandler = (e) => {
       e.preventDefault();
       if (e.key === "ArrowRight") keys.right = false;
@@ -133,6 +161,9 @@ const ArcadeShooterGame = ({
     window.addEventListener("keydown", keyDownHandler);
     window.addEventListener("keyup", keyUpHandler);
 
+    /**
+     * Checks for collisions between bullets and enemies.
+     */
     const checkCollisions = () => {
       playerShipRef.current.bullets.forEach((bullet, bulletIndex) => {
         enemiesRef.current.forEach((enemy, enemyIndex) => {
@@ -153,6 +184,9 @@ const ArcadeShooterGame = ({
       });
     };
 
+    /**
+     * Updates the game state and draws on the canvas.
+     */
     const updateGame = () => {
       if (isPaused) return;
 

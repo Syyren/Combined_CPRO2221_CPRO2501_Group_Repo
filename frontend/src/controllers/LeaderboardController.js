@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Base URL for the API
 const API_URL = "http://localhost:8090";
 
 // Function to retrieve all scores from the backend
@@ -45,7 +46,8 @@ export const getScoresByUser = async (userId) => {
 export const getScoresByUserAndGame = async (userId, gameName) => {
   try {
     const res = await axios.get(
-      `${API_URL}/scores/user/${userId}/game/${gameName}`);
+      `${API_URL}/scores/user/${userId}/game/${gameName}`
+    );
     const scores = res.data;
     console.log(
       `Scores for user ${userId} and game ${gameName} from API:`,
