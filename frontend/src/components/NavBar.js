@@ -19,7 +19,7 @@ export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={Link} to="/home">
-        <img src={Image} className="logo"></img>
+        <img src={Image} alt="coolcatgames.com logo" className="logo"></img>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
