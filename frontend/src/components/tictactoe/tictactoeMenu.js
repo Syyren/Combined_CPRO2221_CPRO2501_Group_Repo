@@ -22,14 +22,16 @@ export default function TictactoeMenu() {
   // Get current userId
   var { currentUser } = useAuth();
   useEffect(() => {
-    // Get list of all users
-    getAllPlayers().then((res) => {
-      var tempUsersIdsList = [];
-      res.forEach((element) => {
-        tempUsersIdsList.push(element.username);
+    if (currentUser) {
+      // Get list of all users
+      getAllPlayers().then((res) => {
+        var tempUsersIdsList = [];
+        res.forEach((element) => {
+          tempUsersIdsList.push(element.username);
+        });
+        setUsersIdsList(tempUsersIdsList);
       });
-      setUsersIdsList(tempUsersIdsList);
-    });
+    }
   }, []);
   // Get a list of all ongoing games the current user is participating in
   // and compile a list of opponents in active games against this user
