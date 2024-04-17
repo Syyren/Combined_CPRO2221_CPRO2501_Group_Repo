@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import {
   getAllPlayers,
-  getPlayerByUsername,
+  getUserIdByUsername,
 } from "../../controllers/PlayerController";
 import axios from "axios";
 
@@ -82,9 +82,9 @@ export default function TictactoeMenu() {
                       .get(`${API_URL}tictactoe/checkWinner/` + updatedGame.id)
                       .then((res) => res.data)
                       .then((data) => {
-                        getPlayerByUsername(updatedGame.player1).then(
+                        getUserIdByUsername(updatedGame.player1).then(
                           (player1) => {
-                            getPlayerByUsername(updatedGame.player2).then(
+                            getUserIdByUsername(updatedGame.player2).then(
                               (player2) => {
                                 console.log("player1", player1);
                                 if (data == null) {
@@ -98,7 +98,7 @@ export default function TictactoeMenu() {
                                   axios
                                     .put(
                                       `${API_URL}scores/tictactoe/update/` +
-                                        player1.userId +
+                                        player1 +
                                         "?deltaScore=" +
                                         10 +
                                         "&conclusion=WINNER"
@@ -107,29 +107,27 @@ export default function TictactoeMenu() {
                                       axios
                                         .put(
                                           `${API_URL}scores/tictactoe/update/` +
-                                            player2.userId +
+                                            player2 +
                                             "?deltaScore=" +
                                             -10 +
                                             "&conclusion=LOSER"
                                         )
                                         .then(
-                                          axios
-                                            .delete(
+                                          setDisplayTictactoeGame(
+                                            <TictactoeGame />
+                                          ).then(
+                                            axios.delete(
                                               `${API_URL}tictactoe/delete/` +
                                                 updatedGame.id
                                             )
-                                            .then(
-                                              setDisplayTictactoeGame(
-                                                <TictactoeGame />
-                                              )
-                                            )
+                                          )
                                         )
                                     );
                                 } else if (data === updatedGame.player2) {
                                   axios
                                     .put(
                                       `${API_URL}scores/tictactoe/update/` +
-                                        player1.userId +
+                                        player1 +
                                         "?deltaScore=" +
                                         -10 +
                                         "&conclusion=LOSER"
@@ -138,29 +136,27 @@ export default function TictactoeMenu() {
                                       axios
                                         .put(
                                           `${API_URL}scores/tictactoe/update/` +
-                                            player2.userId +
+                                            player2 +
                                             "?deltaScore=" +
                                             10 +
                                             "&conclusion=WINNER"
                                         )
                                         .then(
-                                          axios
-                                            .delete(
+                                          setDisplayTictactoeGame(
+                                            <TictactoeGame />
+                                          ).then(
+                                            axios.delete(
                                               `${API_URL}tictactoe/delete/` +
                                                 updatedGame.id
                                             )
-                                            .then(
-                                              setDisplayTictactoeGame(
-                                                <TictactoeGame />
-                                              )
-                                            )
+                                          )
                                         )
                                     );
                                 } else if (data === "draw") {
                                   axios
                                     .put(
                                       `${API_URL}scores/tictactoe/update/` +
-                                        player1.userId +
+                                        player1 +
                                         "?deltaScore=" +
                                         0 +
                                         "&conclusion=DRAW"
@@ -169,22 +165,20 @@ export default function TictactoeMenu() {
                                       axios
                                         .put(
                                           `${API_URL}scores/tictactoe/update/` +
-                                            player2.userId +
+                                            player2 +
                                             "?deltaScore=" +
                                             0 +
                                             "&conclusion=DRAW"
                                         )
                                         .then(
-                                          axios
-                                            .delete(
+                                          setDisplayTictactoeGame(
+                                            <TictactoeGame />
+                                          ).then(
+                                            axios.delete(
                                               `${API_URL}tictactoe/delete/` +
                                                 updatedGame.id
                                             )
-                                            .then(
-                                              setDisplayTictactoeGame(
-                                                <TictactoeGame />
-                                              )
-                                            )
+                                          )
                                         )
                                     );
                                 }
