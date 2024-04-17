@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Base URL for the players API
 const API_URL = "http://localhost:8090/api/players";
 
 // Function to register a player
@@ -16,7 +17,7 @@ const register = async (player) => {
 // Function to fetch all players
 const getAllPlayers = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/all`);
+    const { data } = await axios.get(`${API_URL}/get/all`);
     return data;
   } catch (error) {
     console.error("Error fetching players:", error);

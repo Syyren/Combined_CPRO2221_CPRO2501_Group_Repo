@@ -2,11 +2,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"; //importing the
 import PrivateRoute from "./context/PrivateRoute";
 import About from "./pages/About";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import NoAccess from "./pages/NoAccess";
 import LeaderboardTest from "./pages/LeaderboardPage"; //importing each of my pages
 import AchievementTest from "./pages/AchievementTest";
-import Games from "./pages/Games";
 import Hangman from "./pages/games/Hangman";
 import Rooms from './pages/multiplayer/RoomView';
 import HangmanMultiplayer from "./pages/multiplayer/HangmanMultiplayerPage";
@@ -25,13 +25,23 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Login />} />
+          <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* Setting a second home path for clean routing */}
           <Route path="/no-access" element={<NoAccess />} />
           <Route path="/about" element={<About />} />
           <Route
-            path="leaderboard"
+            path="/profile"
+            element={
+              <PrivateRoute
+                element={Profile}
+                roles={["user"]}
+                redirectPath="/no-access"
+              />
+            }
+          />
+          <Route
+            path="/leaderboard"
             element={
               <PrivateRoute
                 element={LeaderboardTest}
@@ -41,7 +51,7 @@ export default function App() {
             }
           />
           <Route
-            path="friends"
+            path="/friends"
             element={
               <PrivateRoute
                 element={Friends}

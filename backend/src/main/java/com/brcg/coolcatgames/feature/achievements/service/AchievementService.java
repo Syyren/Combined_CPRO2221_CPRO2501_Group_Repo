@@ -11,7 +11,7 @@ public class AchievementService
 {
     //injecting the achievementRepository bean with the autowired annotation
     @Autowired
-    private AchievementRepository achievementRepository = new AchievementRepository();
+    private AchievementRepository achievementRepository;
     //method that passes the achievement object to the repository and saves it
     public Achievement saveAchievement(Achievement achievement)
     {

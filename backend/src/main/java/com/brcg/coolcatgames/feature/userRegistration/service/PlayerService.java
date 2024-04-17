@@ -15,26 +15,53 @@ import java.util.Collections;
 import java.util.Optional;
 
 
+/**
+ * Service class for managing player entities.
+ */
 @Service
 public class PlayerService implements UserDetailsService {
+
     @Autowired
     private PlayerRepository playerRepository;
+
     @Autowired
     private AchievementService achievementService;
 
+    /**
+     * Registers a new player.
+     *
+     * @param player the player to register
+     */
     public void register(Player player) {
         player.setAchievements(new ArrayList<>());
         playerRepository.save(player);
     }
 
+    /**
+     * Retrieves all players.
+     *
+     * @return an iterable of all players
+     */
     public Iterable<Player> listAll() {
         return playerRepository.findAll();
     }
 
+    /**
+     * Deletes a player by their ID.
+     *
+     * @param playerId the ID of the player to delete
+     */
     public void deletePlayer(String playerId) {
         playerRepository.deleteById(playerId);
     }
 
+    /**
+     * Retrieves a player by their ID.
+     *
+     * @param playerId the ID of the player to retrieve
+     * @return the player with the specified ID
+     * @throws UsernameNotFoundException if the player is not found
+     */
     public Player getPlayerByID(String playerId) {
         Optional<Player> player = playerRepository.findById(playerId);
         return player.orElseThrow(() -> new UsernameNotFoundException("Player not found with id: " + playerId));
@@ -50,6 +77,13 @@ public class PlayerService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("USER")));
     }
 
+    /**
+     * Retrieves the ID of a user by their username.
+     *
+     * @param username the username of the user
+     * @return the ID of the user
+     * @throws UsernameNotFoundException if the user is not found
+     */
     public String getUserIdByUsername(String username) throws UsernameNotFoundException {
         Player player = playerRepository.findByUsername(username);
         if (player == null) {
@@ -58,17 +92,26 @@ public class PlayerService implements UserDetailsService {
         return player.getId();
     }
 
-    public Player addAchievement(String playerId, int achievementId)
-    {
+    /**
+     * Adds an achievement to a player.
+     *
+     * @param playerId       the ID of the player
+     * @param achievementId  the ID of the achievement to add
+     * @return the updated player
+     */
+    public Player addAchievement(String playerId, int achievementId) {
         Player player = getPlayerByID(playerId);
-        if (player != null)
-        {
-            if (player.getAchievements() == null) { player.setAchievements(new ArrayList<>()); }
+        if (player != null) {
+            if (player.getAchievements() == null) {
+                player.setAchievements(new ArrayList<>());
+            }
             achievementService.getById(achievementId);
             ArrayList<Integer> tempList = player.getAchievements();
             boolean hasMatchingId = tempList.stream()
                     .anyMatch(a -> a == achievementId);
-            if (hasMatchingId) { throw new RuntimeException("User already has this achievement!"); };
+            if (hasMatchingId) {
+                throw new RuntimeException("User already has this achievement!");
+            }
             tempList.add(achievementId);
             player.setAchievements(tempList);
             return playerRepository.save(player);
@@ -76,6 +119,13 @@ public class PlayerService implements UserDetailsService {
         return null;
     }
 
+    /**
+     * Updates a player's information.
+     *
+     * @param playerId      the ID of the player to update
+     * @param updatedPlayer the updated player information
+     * @return the updated player
+     */
     public Player updatePlayer(String playerId, Player updatedPlayer) {
         Player player = getPlayerByID(playerId);
         if (player != null) {
@@ -89,5 +139,3 @@ public class PlayerService implements UserDetailsService {
         return null;
     }
 }
-
-

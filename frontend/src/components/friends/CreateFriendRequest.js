@@ -5,7 +5,19 @@ import {
   getPlayerByUsername,
   getUserIdByUsername,
 } from "../../controllers/PlayerController";
+import {
+  Card,
+  Form,
+  Button,
+  InputGroup,
+  FormControl,
+  Alert,
+} from "react-bootstrap";
 
+/**
+ * Component for creating and sending friend requests.
+ * @returns {React.Component} A component that allows users to search for other users by username and send friend requests.
+ */
 function CreateFriendRequest() {
   const { currentUser } = useAuth();
   const [username, setUsername] = useState("");
@@ -13,6 +25,10 @@ function CreateFriendRequest() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
 
+  /**
+   * Handles the search operation to find a user by username.
+   * @param {Object} e - The event object from the form submission.
+   */
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!username) {
@@ -31,6 +47,9 @@ function CreateFriendRequest() {
     }
   };
 
+  /**
+   * Handles the action of sending a friend request to another user.
+   */
   const handleSendFriendRequest = async () => {
     if (user && currentUser) {
       try {
@@ -38,7 +57,7 @@ function CreateFriendRequest() {
           fromUserId: currentUser.userId,
           toUserId: userId,
         };
-        const response = await createFriendRequest(friendRequest);
+        await createFriendRequest(friendRequest);
         alert("Friend request sent successfully!");
         setError("");
       } catch (error) {
@@ -51,39 +70,36 @@ function CreateFriendRequest() {
   };
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Send Friend Request</h5>
-        <form onSubmit={handleSearch}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
+    <Card className="mt-3">
+      <Card.Body>
+        <Card.Title>Search for a Friend</Card.Title>
+        <Form onSubmit={handleSearch}>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Enter username"
+              aria-label="Enter username"
+              aria-describedby="basic-addon2"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
             />
-            <button type="submit" className="btn btn-primary mt-2">
+            <Button variant="outline-primary" type="submit">
               Search
-            </button>
-          </div>
-        </form>
+            </Button>
+          </InputGroup>
+        </Form>
         {user && (
-          <div className="card mt-3">
-            <div className="card-body">
-              <p>Username: {user.username}</p>
-              <button
-                onClick={handleSendFriendRequest}
-                className="btn btn-success"
-              >
+          <Card className="mt-3">
+            <Card.Body>
+              <Card.Text>Username: {user.username}</Card.Text>
+              <Button onClick={handleSendFriendRequest} variant="success">
                 Send Friend Request
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Card.Body>
+          </Card>
         )}
-        {error && <div className="alert alert-danger mt-2">{error}</div>}
-      </div>
-    </div>
+        {error && <Alert variant="danger">{error}</Alert>}
+      </Card.Body>
+    </Card>
   );
 }
 

@@ -1,11 +1,22 @@
 import React from "react";
 import dogShipImage from "../../../images/arcadeshooter/dogship.png";
 
+/**
+ * Represents an enemy ship in the game.
+ */
 export default class Enemy {
+  /**
+   * Creates a new instance of Enemy.
+   * @param {number} x - The initial x-coordinate of the enemy.
+   * @param {number} y - The initial y-coordinate of the enemy.
+   * @param {number} speed - The speed of the enemy (default is 0.06).
+   * @param {number} health - The health of the enemy (default is 1).
+   * @param {number} patternType - The pattern type of the enemy's movement (default is random).
+   */
   constructor(
     x,
     y,
-    speed = 0.06,
+    speed = 0.057,
     health = 1,
     patternType = Math.floor(Math.random() * 4)
   ) {
@@ -23,7 +34,11 @@ export default class Enemy {
     this.image.src = dogShipImage;
   }
 
-  // Update method to move and update enemy state
+  /**
+   * Updates the position and state of the enemy.
+   * @param {number} canvasWidth - The width of the canvas.
+   * @param {number} canvasHeight - The height of the canvas.
+   */
   update(canvasWidth, canvasHeight) {
     this.t += this.speed;
 
@@ -65,14 +80,25 @@ export default class Enemy {
     }
   }
 
+  /**
+   * Draws the enemy ship on the canvas context.
+   * @param {CanvasRenderingContext2D} context - The canvas rendering context.
+   */
   draw(context) {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
+  /**
+   * Handles a hit on the enemy ship.
+   */
   hit() {
     this.health -= 1;
   }
 
+  /**
+   * Checks if the enemy ship is alive.
+   * @returns {boolean} - True if the enemy ship is alive, otherwise false.
+   */
   isAlive() {
     return this.health > 0;
   }

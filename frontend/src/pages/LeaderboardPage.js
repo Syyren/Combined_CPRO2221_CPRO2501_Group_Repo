@@ -1,6 +1,10 @@
+import React from "react";
 import Layout from "../components/Layout";
 import Leaderboard from "../components/leaderboard/Leaderboard";
 
+/**
+ * Home page component displaying the leaderboard.
+ */
 export default function Home() {
   return (
     <Layout>

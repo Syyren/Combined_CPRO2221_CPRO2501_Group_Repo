@@ -1,9 +1,12 @@
-package com.brcg.coolcatgames.feature.arcadeShooter.model;
+package com.brcg.coolcatgames.feature.arcadeshooter.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Model class representing a request to end an arcade shooter session.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Filter to intercept requests and validate JWT tokens for authentication.
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
