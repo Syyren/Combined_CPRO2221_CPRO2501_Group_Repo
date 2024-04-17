@@ -1,21 +1,110 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; //importing link so that the navbar can navigate using routes
-//this function creates the navbar for the layout and returns it
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useGame } from "../context/GameContext";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import { NavDropdown } from "react-bootstrap";
+import Image from "../images/home/coolcatlogo.png"
+import "./NavBar.css";
+
 export default function NavBar() {
+  const { currentUser } = useAuth();
+  const { setGame } = useGame();
+
+  const handleGameSelect = (game) => {
+    setGame(game);
+  };
+
   return (
-    <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-      <div className="container-fluid">
-        <a className="navbar-brand">CoolCatGames.com</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul className="navbar-nav flex-grow-1">
-              <li className="nav-item"><Link className="nav-link text-dark" to="/home">Home</Link></li>
-              <li className="nav-item"><Link className="nav-link text-dark" to="/about">About</Link></li>
-            </ul>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar.Brand as={Link} to="/home">
+        <img src={Image} alt="coolcatgames.com logo" className="logo"></img>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/home">
+            Home
+          </Nav.Link>
+          <NavDropdown title="Games" id="basic-nav-dropdown">
+            <NavDropdown.Item>
+                <Link
+                  onClick={() => handleGameSelect("hangman")}
+                  className="link link-offset-2 link-underline link-underline-opacity-0"
+                  to="/games/hangman"
+                >
+                  9 Lives
+                </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("canine_invaders")}
+                className="link link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/canine-invaders"
+              >
+                Canine Invaders
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("cat-run")}
+                className="link link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/cat-run"
+              >
+                Cat Run!
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link
+                onClick={() => handleGameSelect("tictactoe")}
+                className="link link-offset-2 link-underline link-underline-opacity-0"
+                to="/games/tictactoe"
+              >
+                Tic-Tac-Toebeans
+              </Link>
+            </NavDropdown.Item>
+          </NavDropdown>
+          {currentUser && (
+              <>
+                <Nav.Link as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/friends">
+                  Friends
+                </Nav.Link>
+              </>
+            )}
+          <Nav.Link as={Link} to="/about">
+            About
+          </Nav.Link>
+        </Nav>
+        <Nav>
+          <div className="d-flex align-items-center">
+            {currentUser && (
+              <Navbar.Text className="userWelcome px-3">
+                Welcome, {currentUser.username}!
+              </Navbar.Text>
+            )}
           </div>
-      </div>
-    </nav>
+          {currentUser ? (
+            <>
+              <Nav.Link as={Link} to="/logout">
+                Logout
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+              <Nav.Link as={Link} to="/login">
+                Login
+              </Nav.Link>
+              <Nav.Link as={Link} to="/register">
+                Register
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }

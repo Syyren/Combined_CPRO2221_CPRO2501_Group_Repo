@@ -1,4 +1,55 @@
-.nav-link:hover
-{
-    text-decoration: underline;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+  background-color: rgb(45, 35, 54);
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  height:fit-content;
+  width: 120px;
+}
+
+.homeLogo {
+  height:fit-content;
+  width: 30vw;
+}
+
+.card-img-top {
+  height:max-content;
+}
+
+.homePageContainer {
+  min-height: 100vh;
+}
+
+.contentWrap{
+  width: 30rem;
+}
+
+.gameContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 1000px) {
+  .gameContainer {
+      flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  .contentWrap{
+    width: 80vw;
+  }
 }

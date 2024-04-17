@@ -1,6 +1,7 @@
-#  CoolCatGames.com Repository
+# CoolCatGames.com Repository
 
 ### This is the repository for our group project in CPRO2501
+
 ### AKA CoolCatGames
 
 ################################################
