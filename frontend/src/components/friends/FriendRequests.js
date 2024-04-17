@@ -3,113 +3,128 @@ import {
   getFriendRequestsByUserId,
   acceptFriendRequest,
   denyFriendRequest,
-  deleteFriendRequest,
 } from "../../controllers/FriendController";
+import { getPlayerById } from "../../controllers/PlayerController";
 import { useAuth } from "../../context/AuthContext";
+import { Card, Button, ListGroup, Spinner, Alert } from "react-bootstrap";
 
 /**
- * Component to display friend requests for the current user.
+ * Component for displaying and managing incoming friend requests.
+ * @returns {React.Component} A component that renders friend requests with options to accept or deny each.
  */
 function FriendRequests() {
-  const { currentUser } = useAuth(); // Current user context
-  const [requests, setRequests] = useState([]); // State for friend requests
-  const [error, setError] = useState(null); // Error state
-  const [loading, setLoading] = useState(true); // Loading state
+  const { currentUser } = useAuth();
+  const [requests, setRequests] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch friend requests when component mounts or currentUser changes
   useEffect(() => {
-    // Fetches friend requests for the current user
     const fetchRequests = async () => {
-      setLoading(true);
-      try {
-        const data = await getFriendRequestsByUserId(currentUser.userId);
-        setRequests(data);
-      } catch (err) {
-        console.error("Failed to fetch friend requests:", err);
-        setError("Failed to load friend requests.");
+      if (currentUser) {
+        setLoading(true);
+        try {
+          const requestsData = await getFriendRequestsByUserId(
+            currentUser.userId
+          );
+          const userDetailsPromises = requestsData.map((request) =>
+            getPlayerById(request.fromUserId).then((user) => ({
+              ...request,
+              fromUsername: user.username,
+            }))
+          );
+          const requestsWithUserDetails = await Promise.all(
+            userDetailsPromises
+          );
+          setRequests(requestsWithUserDetails);
+        } catch (err) {
+          console.error("Failed to fetch friend requests:", err);
+          setError("Failed to load friend requests.");
+        }
+        setLoading(false);
+      } else {
+        setError("Please log in to view friend requests.");
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    // Check if currentUser exists and fetch friend requests
-    if (currentUser) {
-      fetchRequests();
-    } else {
-      setError("Please log in to view friend requests.");
-      setLoading(false);
-    }
+    fetchRequests();
   }, [currentUser]);
 
-  // Handles accepting a friend request
+  /**
+   * Handles accepting a friend request.
+   * @param {string} requestId - The ID of the friend request to accept.
+   */
   const handleAccept = async (requestId) => {
     try {
       await acceptFriendRequest(requestId);
-      setRequests(requests.filter((request) => request.id !== requestId));
+      setRequests((prevRequests) =>
+        prevRequests.filter((request) => request.id !== requestId)
+      );
     } catch (error) {
       console.error("Error accepting friend request:", error);
     }
   };
 
-  // Handles denying a friend request
+  /**
+   * Handles denying a friend request.
+   * @param {string} requestId - The ID of the friend request to deny.
+   */
   const handleDeny = async (requestId) => {
     try {
       await denyFriendRequest(requestId);
-      setRequests(requests.filter((request) => request.id !== requestId));
+      setRequests((prevRequests) =>
+        prevRequests.filter((request) => request.id !== requestId)
+      );
     } catch (error) {
       console.error("Error denying friend request:", error);
     }
   };
 
-  // Handles deleting a friend request
-  const handleDelete = async (requestId) => {
-    try {
-      await deleteFriendRequest(requestId);
-      setRequests(requests.filter((request) => request.id !== requestId));
-    } catch (error) {
-      console.error("Error deleting friend request:", error);
-    }
-  };
+  if (loading)
+    return <Spinner animation="border" className="text-center mt-5" />;
+  if (error)
+    return (
+      <Alert variant="danger" className="mt-3">
+        {error}
+      </Alert>
+    );
 
-  // Render loading state
-  if (loading) return <div>Loading...</div>;
-  // Render error or unauthorized state if currentUser is null
-  if (!currentUser) return <div>{error || "Unauthorized"}</div>;
-
-  // Render friend requests list
   return (
-    <div className="card">
-      <div className="card-header">Friend Requests</div>
-      <ul className="list-group list-group-flush">
+    <Card className="mt-3">
+      <Card.Header>Friend Requests</Card.Header>
+      <ListGroup variant="flush">
         {requests.length > 0 ? (
-          // Render each friend request as a list item
           requests.map((request) => (
-            <li
+            <ListGroup.Item
               key={request.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
+              className="d-flex justify-content-between align-items-center"
             >
-              {request.fromUserId}
+              Request from: {request.fromUsername}
               <div>
-                <button
-                  className="btn btn-success btn-sm me-2"
+                <Button
+                  variant="success"
+                  size="sm"
+                  className="me-2"
                   onClick={() => handleAccept(request.id)}
                 >
                   Accept
-                </button>
-                <button
-                  className="btn btn-warning btn-sm me-2"
+                </Button>
+                <Button
+                  variant="warning"
+                  size="sm"
+                  className="me-2"
                   onClick={() => handleDeny(request.id)}
                 >
                   Deny
-                </button>
+                </Button>
               </div>
-            </li>
+            </ListGroup.Item>
           ))
         ) : (
-          // Render message when no friend requests are available
-          <li className="list-group-item">No friend requests available.</li>
+          <ListGroup.Item>No friend requests available.</ListGroup.Item>
         )}
-      </ul>
-    </div>
+      </ListGroup>
+    </Card>
   );
 }
 

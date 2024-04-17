@@ -38,5 +38,6 @@ public class Player {
 
     private ArrayList<Integer> achievements;
 
+    // List of Friends ids
     private ArrayList<String> friends;
 }

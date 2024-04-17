@@ -1,87 +1,85 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { getPlayerById } from "../../controllers/PlayerController";
+import { Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 
 /**
- * Component to display the list of friends for the current user.
+ * Component for displaying a list of friends associated with the current user.
+ * @returns {React.Component} A component that renders a list of friends, or relevant messages based on the loading state or errors.
  */
 function FriendsList() {
-  const [friends, setFriends] = useState([]); // State to store friends' details
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const { currentUser } = useAuth(); // Current user context
+  const [friends, setFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { currentUser } = useAuth();
 
-  // Fetches details of each friend when the component mounts or currentUser changes
   useEffect(() => {
-    // Function to fetch details of each friend
-    const fetchFriendsDetails = async (friendsIds) => {
+    loadFriends();
+  }, [currentUser]);
+
+  /**
+   * Loads the details of the friends of the current user.
+   */
+  const loadFriends = async () => {
+    if (currentUser && currentUser.userId) {
       try {
-        const friendsPromises = friendsIds.map((id) => getPlayerById(id));
-        const friendsDetails = await Promise.all(friendsPromises);
-        setFriends(friendsDetails); // Store details of each friend
+        setLoading(true);
+        const player = await getPlayerById(currentUser.userId);
+        if (player && player.friends && player.friends.length > 0) {
+          const friendsDetails = await Promise.all(
+            player.friends.map((id) => getPlayerById(id))
+          );
+          setFriends(friendsDetails);
+        } else {
+          setFriends([]);
+        }
         setLoading(false);
       } catch (err) {
         console.error("Error fetching friends' details:", err);
-        setError("Failed to load friends' details.");
+        setError("Failed to load data.");
         setLoading(false);
       }
-    };
-
-    // Check if currentUser exists and fetch friends' details
-    if (currentUser && currentUser.userId) {
-      setLoading(true);
-      getPlayerById(currentUser.userId)
-        .then((player) => {
-          if (player.friends && player.friends.length > 0) {
-            fetchFriendsDetails(player.friends);
-          } else {
-            setFriends([]); // No friends to show
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.error("Error fetching user details:", err);
-          setError("Failed to load user details.");
-          setLoading(false);
-        });
     } else {
       setError("Please log in to view friends list.");
       setLoading(false);
     }
-  }, [currentUser]);
+  };
 
-  // Render loading state
-  if (loading) return <div>Loading...</div>;
-  // Render error state
-  if (error) return <div>Error: {error}</div>;
+  if (loading) {
+    return (
+      <Container className="text-center mt-5">
+        <Spinner animation="border" />
+      </Container>
+    );
+  }
 
-  // Render friends list
+  if (error) {
+    return (
+      <Alert variant="danger" className="mt-3">
+        {error}
+      </Alert>
+    );
+  }
+
   return (
-    <div className="container mt-3">
-      <h5 className="mb-4">Friends List</h5>
-      <div className="row">
-        {friends.length > 0 ? (
-          // Render each friend as a card
-          friends.map((friend) => (
-            <div key={friend.id} className="col-md-4 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h6 className="card-title">{friend.username}</h6>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          // Render message when no friends are available
-          <>
-            <p>No friends to show</p>
-            <p>Well...</p>
-            <p>Lonely yet?</p>
-            <p>:(</p>
-          </>
-        )}
-      </div>
-    </div>
+    <Container className="mt-3">
+      {friends.length > 0 ? (
+        friends.map((friend) => (
+          <Row key={friend.id} className="mb-3">
+            <Col>
+              <Card style={{ width: "100%" }}>
+                <Card.Body>
+                  <Card.Title>{friend.username}</Card.Title>
+                  {/* Removed the remove button */}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        ))
+      ) : (
+        <p>No friends to show.</p>
+      )}
+    </Container>
   );
 }
 

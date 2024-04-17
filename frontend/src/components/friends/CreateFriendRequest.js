@@ -5,18 +5,30 @@ import {
   getPlayerByUsername,
   getUserIdByUsername,
 } from "../../controllers/PlayerController";
+import {
+  Card,
+  Form,
+  Button,
+  InputGroup,
+  FormControl,
+  Alert,
+} from "react-bootstrap";
 
 /**
- * Component to create and send friend requests.
+ * Component for creating and sending friend requests.
+ * @returns {React.Component} A component that allows users to search for other users by username and send friend requests.
  */
 function CreateFriendRequest() {
-  const { currentUser } = useAuth(); // Current user context
-  const [username, setUsername] = useState(""); // State for username input
-  const [userId, setUserId] = useState(null); // State for user ID
-  const [user, setUser] = useState(null); // State for found user
-  const [error, setError] = useState(""); // Error state
+  const { currentUser } = useAuth();
+  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
 
-  // Handles searching for a user by username
+  /**
+   * Handles the search operation to find a user by username.
+   * @param {Object} e - The event object from the form submission.
+   */
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!username) {
@@ -24,7 +36,6 @@ function CreateFriendRequest() {
       return;
     }
     try {
-      // Fetch user details and ID by username
       const foundUser = await getPlayerByUsername(username);
       const foundUserId = await getUserIdByUsername(username);
       setUser(foundUser);
@@ -36,18 +47,17 @@ function CreateFriendRequest() {
     }
   };
 
-  // Handles sending a friend request to the selected user
+  /**
+   * Handles the action of sending a friend request to another user.
+   */
   const handleSendFriendRequest = async () => {
     if (user && currentUser) {
       try {
-        // Create friend request object
         const friendRequest = {
           fromUserId: currentUser.userId,
           toUserId: userId,
         };
-        // Send friend request
-        const response = await createFriendRequest(friendRequest);
-        // Show success message
+        await createFriendRequest(friendRequest);
         alert("Friend request sent successfully!");
         setError("");
       } catch (error) {
@@ -59,41 +69,37 @@ function CreateFriendRequest() {
     }
   };
 
-  // Render component
   return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Send Friend Request</h5>
-        <form onSubmit={handleSearch}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
+    <Card className="mt-3">
+      <Card.Body>
+        <Card.Title>Search for a Friend</Card.Title>
+        <Form onSubmit={handleSearch}>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Enter username"
+              aria-label="Enter username"
+              aria-describedby="basic-addon2"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
             />
-            <button type="submit" className="btn btn-primary mt-2">
+            <Button variant="outline-primary" type="submit">
               Search
-            </button>
-          </div>
-        </form>
+            </Button>
+          </InputGroup>
+        </Form>
         {user && (
-          <div className="card mt-3">
-            <div className="card-body">
-              <p>Username: {user.username}</p>
-              <button
-                onClick={handleSendFriendRequest}
-                className="btn btn-success"
-              >
+          <Card className="mt-3">
+            <Card.Body>
+              <Card.Text>Username: {user.username}</Card.Text>
+              <Button onClick={handleSendFriendRequest} variant="success">
                 Send Friend Request
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Card.Body>
+          </Card>
         )}
-        {error && <div className="alert alert-danger mt-2">{error}</div>}
-      </div>
-    </div>
+        {error && <Alert variant="danger">{error}</Alert>}
+      </Card.Body>
+    </Card>
   );
 }
 

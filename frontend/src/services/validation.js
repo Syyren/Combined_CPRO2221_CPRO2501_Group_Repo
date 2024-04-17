@@ -1,3 +1,8 @@
+/**
+ * Validates a username based on specific criteria.
+ * @param {string} username - The username to be validated.
+ * @returns {string} An error message if validation fails, otherwise an empty string.
+ */
 export function validateUsername(username) {
   return !username.trim()
     ? "Please enter a valid username"
@@ -12,6 +17,11 @@ export function validateUsername(username) {
     : "";
 }
 
+/**
+ * Validates a password based on specific criteria.
+ * @param {string} password - The password to be validated.
+ * @returns {string} An error message if validation fails, otherwise an empty string.
+ */
 export function validatePassword(password) {
   return password.length < 6 || password.length > 30
     ? "Password must be 6 to 30 characters long."
@@ -26,6 +36,11 @@ export function validatePassword(password) {
     : "";
 }
 
+/**
+ * Validates an email address based on standard email format.
+ * @param {string} email - The email address to be validated.
+ * @returns {string} An error message if validation fails, otherwise an empty string.
+ */
 export function validateEmail(email) {
   return !email.trim()
     ? "Please enter a valid email address."
@@ -34,6 +49,12 @@ export function validateEmail(email) {
     : "";
 }
 
+/**
+ * Validates that two passwords match.
+ * @param {string} confirmPassword - The password entered to confirm.
+ * @param {string} password - The original password.
+ * @returns {string} An error message if the passwords do not match, otherwise an empty string.
+ */
 export function validateConfirmPassword(confirmPassword, password) {
   return !confirmPassword.trim()
     ? "Please confirm your password."
