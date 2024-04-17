@@ -162,7 +162,8 @@ const HangmanMultiplayer = () => {
   return (
     <div>
       <h4 style={{ textAlign: 'left' }}>Your Room ID: {roomId}</h4>
-      <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>      {gameState ? (
+      <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>      
+      {gameState ? (
         <>
         <h2 className="display-4 mb-4">{Nine} Lives</h2>
           <Score score={gameState.totalScore} />

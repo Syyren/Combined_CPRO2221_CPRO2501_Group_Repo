@@ -14,6 +14,7 @@ const Hangman = () => {
   const [guessesLeft, setGuessesLeft] = useState(null);
   const { currentUser } = useAuth();
   const [Nine, setNine] = useState(9);
+  const [antiSpam, setAntiSpam] = useState(false)
 
   const fetchGameState = async () => {
     try {
@@ -28,6 +29,7 @@ const Hangman = () => {
 
   const handleLetterSelect = async (letter) => {
     try {
+      setAntiSpam(false);
       const response = await HangmanAPI.handleLetterSelect(letter);
       setGameState(response.data);
       checkGameResult(response.data);
@@ -54,9 +56,6 @@ const Hangman = () => {
 
   const handleNewGame = async () => {
     try {
-      if(gameState && gameState.gameStatus){
-        saveScore();
-      }
       await HangmanAPI.handleNewGame();
       await fetchGameState();
     } catch (error) {
@@ -66,9 +65,6 @@ const Hangman = () => {
 
   const handleContinueGame = async () => {
     try {
-      if(gameState && gameState.gameStatus){
-        saveScore();
-      }
       await HangmanAPI.handleContinueGame()
       await fetchGameState();
     } catch (error) {
@@ -124,6 +120,9 @@ const Hangman = () => {
       console.error("Game state or user not defined, cannot save score.");
       return;
     }
+    if(antiSpam){
+      return;
+    }
     const scoreEntry = {
       gameName: "hangman",
       userId: currentUser.userId,
@@ -132,6 +131,7 @@ const Hangman = () => {
     };
     try {
       const savedScore = await submitScore(scoreEntry);
+      setAntiSpam(true)
       console.log("Score saved successfully:", savedScore);
     } catch (error) {
       console.error("Failed to save score:", error);
@@ -140,6 +140,7 @@ const Hangman = () => {
 
   return (
     <div>
+      <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>
       {gameState ? (
         <>
         <h2 className="display-4 mb-4">{Nine} Lives</h2>

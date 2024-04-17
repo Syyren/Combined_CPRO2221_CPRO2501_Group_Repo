@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import GameList from '../../components/multiplayer/GameList';
-import RoomIdGenerator from '../../components/multiplayer/RoomIdGenerator';
+import GameList from './GameList';
+import RoomIdGenerator from './RoomIdGenerator';
 import { useNavigate } from 'react-router-dom';
 
 function Room() {
@@ -19,12 +19,12 @@ function Room() {
   };
 
   const handleGenerateRoomId = () => {
-    const generatedRoomId = roomIdGenerator.generateRoomId(6);
+    const generatedRoomId = roomIdGenerator.generateRoomId(MAX_ID_LENGTH);
     setRoomId(generatedRoomId);
-    setErrorMessage(''); // Clear any previous error messages
+    setErrorMessage('');
   };
 
-  const handleJoinRoom = () => {
+  const handleJoinRoom = async () => {
     if (roomId.length > MAX_ID_LENGTH) {
       setErrorMessage(`Room ID cannot be greater than ${MAX_ID_LENGTH} characters`);
     } else {
@@ -40,7 +40,7 @@ function Room() {
         id="roomId"
         value={roomId}
         onChange={(e) => setRoomId(e.target.value)}
-        placeholder="Enter Room ID or generate one"
+        placeholder="Enter Room ID or Generate One"
       />
       <button onClick={handleGenerateRoomId}>Generate Room ID</button>
       <button onClick={handleJoinRoom}>Join Room</button>
