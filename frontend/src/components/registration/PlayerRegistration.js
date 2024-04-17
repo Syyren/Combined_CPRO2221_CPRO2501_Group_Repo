@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../controllers/PlayerController";
@@ -9,12 +9,12 @@ import {
   validateEmail,
   validateConfirmPassword,
 } from "../../services/validation";
-
 /**
  * Component for player registration with form validations.
  * @returns {React.Component} A component that renders the player registration form.
  */
 const PlayerRegistration = () => {
+
   const [formData, setFormData] = useState({
     firstName: "",
     username: "",
@@ -107,7 +107,7 @@ const PlayerRegistration = () => {
                   name={field}
                   value={formData[field] || ""}
                   onChange={handleChange}
-                  isInvalid={!!validateField(field, formData[field])}
+                  isInvalid={formData[field] && !!validateField(field, formData[field])}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
