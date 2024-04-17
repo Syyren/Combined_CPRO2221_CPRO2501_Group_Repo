@@ -43,7 +43,8 @@ export default function TictactoeMenu() {
       axios
         .get(`${API_URL}tictactoe/games/` + currentUser.username)
         .then((res) => res.data)
-        .then((data) => setCurrentGames(data));
+        .then((data) => setCurrentGames(data))
+        .catch();
     }
   }, [displayTictactoeGame, currentUser]);
   //console.log(currentGames);
@@ -85,7 +86,7 @@ export default function TictactoeMenu() {
                           (player1) => {
                             getPlayerByUsername(updatedGame.player2).then(
                               (player2) => {
-                                console.log(data);
+                                console.log("player1", player1);
                                 if (data == null) {
                                   setDisplayTictactoeGame(
                                     <TictactoeGame
