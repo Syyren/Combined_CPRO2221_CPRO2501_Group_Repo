@@ -7,7 +7,7 @@ export default function TicTacToeView()
     return (
         <Layout>
             <GameLayout>
-                <h2 className="display-4 mb-4">Tic-Tac-Toe</h2>
+                <h2 className="display-4 mb-4">Tic-Tac-Toebeans</h2>
                 <TicTacToe />
             </GameLayout>
         </Layout> 
