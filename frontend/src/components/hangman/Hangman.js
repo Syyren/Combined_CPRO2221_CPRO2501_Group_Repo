@@ -13,7 +13,7 @@ const Hangman = () => {
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [guessesLeft, setGuessesLeft] = useState(null);
   const { currentUser } = useAuth();
-  const [Nine, setNine] = useState(9);
+  //const [Nine, setNine] = useState(9);
   const [antiSpam, setAntiSpam] = useState(false)
 
   const fetchGameState = async () => {
@@ -34,7 +34,7 @@ const Hangman = () => {
       setGameState(response.data);
       checkGameResult(response.data);
       updateDisabledLetters(letter);
-      setNine(response.data.guessesLeft);
+      //setNine(response.data.guessesLeft);
     } catch (error) {
       console.error("Error selecting letter:", error);
     }
@@ -143,7 +143,7 @@ const Hangman = () => {
       <button className='btn btn-outline-primary' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>
       {gameState ? (
         <>
-        <h2 className="display-4 mb-4">{Nine} Lives</h2>
+        <h2 className="display-4 mb-4">9 Lives</h2>
           <Score score={gameState.totalScore} />
           {renderGallow()}
           {renderMessage(gameState.gameStatus)}

@@ -17,14 +17,14 @@ const HangmanMultiplayer = () => {
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [guessesLeft, setGuessesLeft] = useState(null);
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
-  const [Nine, setNine] = useState(9)
+  //const [Nine, setNine] = useState(9)
   const [antiSpam, setAntiSpam] = useState(false)
 
   useEffect(() => {
     fetchGameState();
       const intervalId = setInterval(() => {
       fetchGameState();
-    }, 5000);
+    }, 100);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -35,7 +35,7 @@ const HangmanMultiplayer = () => {
       setGameState(response.data);
       setDisabledLetters(response.data.lettersGuessed);
       setGuessesLeft(response.data.guessesLeft);
-      setNine(guessesLeft);
+      //setNine(guessesLeft);
       setIsCurrentUserTurn(response.data.turnTaken !== currentUser.userId);
       console.log("isCurrentUserTurn:", isCurrentUserTurn);
       console.log('currentUserId: '+currentUser.userId)
@@ -165,7 +165,7 @@ const HangmanMultiplayer = () => {
       <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>      
       {gameState ? (
         <>
-        <h2 className="display-4 mb-4">{Nine} Lives</h2>
+        <h2 className="display-4 mb-4">9 Lives</h2>
           <Score score={gameState.totalScore} />
           {renderGallow()}
           {renderMessage(gameState.gameStatus)}
