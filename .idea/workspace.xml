@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8412db53-6df2-4d6c-a430-1548b3a79352" name="Changes" comment="A lot of hum and hah about how to do this, created child classes of hangman class and worked in room id logic for multiplayer purposes.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/hangman/Gallow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/hangman/Hangman.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/hangman/Hangman.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/hangman/HangmanMultiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/hangman/HangmanMultiplayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/controllers/HangmanMultiplayerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/controllers/HangmanMultiplayerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Hangman.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/brcg/coolcatgames/feature/hangman/model/Hangman.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

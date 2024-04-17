@@ -11,7 +11,7 @@ public class Hangman {
     private char[] secretWord;
     private char[] displayedWord;
     private char letterGuessed;
-    private HangmanScore score = new HangmanScore();
+    private int score;
     private List<Character> lettersGuessed;
     private String turnTaken;
 
@@ -77,7 +77,7 @@ public class Hangman {
     private void revealLetter(char letterGuessed) {
         for (int i = 0; i < secretWord.length; i++) {
             if (secretWord[i] == letterGuessed) {
-                score.updateScore(scoreOnGuess);
+                score+=scoreOnGuess;
                 this.displayedWord[i] = letterGuessed;
             }
         }
@@ -100,8 +100,8 @@ public class Hangman {
     public void win(){
         //double points on flawless win
         if (flawless == guesses)
-            score.updateScore(scoreOnWin);
-        score.updateScore(scoreOnWin);
+            score+=scoreOnWin;
+        score+=scoreOnWin;
         this.gameStatus = "won";
     }
 
@@ -115,7 +115,7 @@ public class Hangman {
         System.out.println("starting new game");
         this.guesses = 7;
         System.out.println("this.guesses = 7; "+this.guesses);
-        score.resetScore();
+        score=0;
         System.out.println("score.resetScore(); "+this.score);
         getSecretWord();
         System.out.println("getSecretWord(); "+ Arrays.toString(this.secretWord));
@@ -137,7 +137,7 @@ public class Hangman {
     }
     //get total score
     public int getTotalScore(){
-        return score.getScore();
+        return getScore();
     }
 
 }

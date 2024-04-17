@@ -69,7 +69,6 @@ export default function App() {
                 redirectPath="/no-access"
               />} />
           <Route path="/games/run-cat" element={<RunCat />} />
-          <Route path="/games" element={<Games />} />
           <Route path="/games/hangman" element={<Hangman />} />
 
           <Route
