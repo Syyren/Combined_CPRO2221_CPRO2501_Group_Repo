@@ -9,7 +9,7 @@ import React from "react";
  */
 const ArcadeShooterHeader = ({ lives, level, score }) => (
   <header className="d-flex justify-content-between align-items-center bg-primary text-white p-3">
-    <h3 className="h3">Don't let the Dogfighters get past you!</h3>
+    <h3 className="h3">Don't let the Dogfighters past!</h3>
     <div className="d-flex align-items-center">
       <div className="mx-3">
         <strong>Lives:</strong> <span className="badge bg-danger">{lives}</span>
