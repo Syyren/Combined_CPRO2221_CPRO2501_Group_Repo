@@ -102,7 +102,7 @@ const Leaderboard = () => {
   function getGameDisplayName(activeGame) {
     const gameNames = {
       hangman: "9 Lives",
-      tictactoe: "Tic Tac Toe",
+      tictactoe: "Tic Tac Toe Beans",
       "cat-run": "Cat Run!",
       canine_invaders: "Canine Invaders",
     };

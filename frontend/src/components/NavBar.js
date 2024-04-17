@@ -29,6 +29,15 @@ export default function NavBar() {
           </Nav.Link>
           <NavDropdown title="Games" id="basic-nav-dropdown">
             <NavDropdown.Item>
+                <Link
+                  onClick={() => handleGameSelect("hangman")}
+                  className="link link-offset-2 link-underline link-underline-opacity-0"
+                  to="/games/hangman"
+                >
+                  9 Lives
+                </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("canine_invaders")}
                 className="link link-offset-2 link-underline link-underline-opacity-0"
@@ -48,25 +57,15 @@ export default function NavBar() {
             </NavDropdown.Item>
             <NavDropdown.Item>
               <Link
-                onClick={() => handleGameSelect("hangman")}
-                className="link link-offset-2 link-underline link-underline-opacity-0"
-                to="/games/hangman"
-              >
-                Hangman
-              </Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item>
-              <Link
                 onClick={() => handleGameSelect("tictactoe")}
                 className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/tictactoe"
               >
-                Tic-Tac-Toe
+                Tic-Tac-Toebeans
               </Link>
             </NavDropdown.Item>
           </NavDropdown>
-          <div className="d-flex align-items-center">
-            {currentUser && (
+          {currentUser && (
               <>
                 <Nav.Link as={Link} to="/profile">
                   Profile
@@ -76,7 +75,6 @@ export default function NavBar() {
                 </Nav.Link>
               </>
             )}
-          </div>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>
