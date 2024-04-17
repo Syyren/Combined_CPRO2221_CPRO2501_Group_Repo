@@ -101,8 +101,8 @@ const Leaderboard = () => {
   // Function to get the formatted game display name
   function getGameDisplayName(activeGame) {
     const gameNames = {
-      hangman: "Hangman",
-      tictactoe: "Tic Tac Toe",
+      hangman: "9 Lives",
+      tictactoe: "Tic Tac Toe Beans",
       "cat-run": "Cat Run!",
       canine_invaders: "Canine Invaders",
     };

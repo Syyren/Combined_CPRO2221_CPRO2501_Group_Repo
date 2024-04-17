@@ -32,8 +32,15 @@ public class PlayerController {
      */
     @PostMapping("/register")
     public ResponseEntity<String> registerPlayer(@RequestBody @Valid Player player) {
+        // Check if the username is already in use
+        if (playerService.usernameExists(player.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already in use. Please choose another username.");
+        }
+
+        // Encode the password and register the player
         player.setPassword(passwordEncoder.encode(player.getPassword()));
         playerService.register(player);
+
         return ResponseEntity.ok("Player registered successfully with username: " + player.getUsername());
     }
 

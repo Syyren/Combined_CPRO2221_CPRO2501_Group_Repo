@@ -140,7 +140,7 @@ const Hangman = () => {
 
   return (
     <div>
-      <button className='btn' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>
+      <button className='btn btn-outline-primary' onClick={saveScore} style={{ float: 'right' }}>Save your Score</button>
       {gameState ? (
         <>
         <h2 className="display-4 mb-4">{Nine} Lives</h2>
@@ -155,7 +155,7 @@ const Hangman = () => {
           {renderPlayAgain()}
         </>
       ) : (
-        <button onClick={handleNewGame}>Start New Game</button>
+        <button className="btn btn-outline-primary" onClick={handleNewGame}>Start New Game</button>
       )}
     </div>
   );

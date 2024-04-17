@@ -19,7 +19,7 @@ export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={Link} to="/home">
-        <img src={Image} className="logo"></img>
+        <img src={Image} alt="coolcatgames.com logo" className="logo"></img>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -28,6 +28,15 @@ export default function NavBar() {
             Home
           </Nav.Link>
           <NavDropdown title="Games" id="basic-nav-dropdown">
+            <NavDropdown.Item>
+                <Link
+                  onClick={() => handleGameSelect("hangman")}
+                  className="link link-offset-2 link-underline link-underline-opacity-0"
+                  to="/games/hangman"
+                >
+                  9 Lives
+                </Link>
+            </NavDropdown.Item>
             <NavDropdown.Item>
               <Link
                 onClick={() => handleGameSelect("canine_invaders")}
@@ -48,25 +57,15 @@ export default function NavBar() {
             </NavDropdown.Item>
             <NavDropdown.Item>
               <Link
-                onClick={() => handleGameSelect("hangman")}
-                className="link link-offset-2 link-underline link-underline-opacity-0"
-                to="/games/hangman"
-              >
-                Hangman
-              </Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item>
-              <Link
                 onClick={() => handleGameSelect("tictactoe")}
                 className="link link-offset-2 link-underline link-underline-opacity-0"
                 to="/games/tictactoe"
               >
-                Tic-Tac-Toe
+                Tic-Tac-Toebeans
               </Link>
             </NavDropdown.Item>
           </NavDropdown>
-          <div className="d-flex align-items-center">
-            {currentUser && (
+          {currentUser && (
               <>
                 <Nav.Link as={Link} to="/profile">
                   Profile
@@ -76,7 +75,6 @@ export default function NavBar() {
                 </Nav.Link>
               </>
             )}
-          </div>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>

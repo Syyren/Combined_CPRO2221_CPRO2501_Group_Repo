@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,11 +31,26 @@ public class PlayerService implements UserDetailsService {
     /**
      * Registers a new player.
      *
-     * @param player the player to register
+     * @param newPlayer the player to register
      */
-    public void register(Player player) {
-        player.setAchievements(new ArrayList<>());
-        playerRepository.save(player);
+    public void register(Player newPlayer) {
+        newPlayer.setAchievements(new ArrayList<>());
+        newPlayer.setFriends(new ArrayList<>());
+        playerRepository.save(newPlayer);
+    }
+
+    /**
+     * Checks if the username is taken.
+     *
+     * @param username the username to check
+     */
+    public boolean usernameExists(String username) {
+        try {
+            UserDetails user = loadUserByUsername(username);
+            return user != null;
+        } catch (UsernameNotFoundException e) {
+            return false;
+        }
     }
 
     /**
