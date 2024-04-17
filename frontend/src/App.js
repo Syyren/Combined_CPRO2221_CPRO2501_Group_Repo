@@ -14,7 +14,7 @@ import RunCat from "./pages/games/RunCat";
 import Tictactoe from "./pages/games/TicTacToe";
 import Login from "./components/registration/Login";
 import Logout from "./pages/Logout";
-import Rooms from "./pages/multiplayer/Room";
+import Friends from "./pages/FriendsPage";
 import PlayerRegistration from "./components/registration/PlayerRegistration";
 import ArcadeShooter from "./pages/games/ArcadeShooter";
 
@@ -27,13 +27,23 @@ export default function App() {
           <Route index element={<Login />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* Setting a second home path for clean routing */}
-          <Route path="/no-access" element={<NoAccess/>} />
+          <Route path="/no-access" element={<NoAccess />} />
           <Route path="/about" element={<About />} />
           <Route
             path="leaderboard"
             element={
               <PrivateRoute
                 element={LeaderboardTest}
+                roles={["user"]}
+                redirectPath="/no-access"
+              />
+            }
+          />
+          <Route
+            path="friends"
+            element={
+              <PrivateRoute
+                element={Friends}
                 roles={["user"]}
                 redirectPath="/no-access"
               />
