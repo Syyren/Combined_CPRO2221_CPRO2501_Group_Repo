@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,9 @@ public class ScoreEntryService {
      */
     @Transactional
     public ScoreEntry submitScore(ScoreEntry newScore) {
+        // Set createdDate here before any operations
+        newScore.setCreatedDate(new Date());
+
         // Fetch all existing scores for the user and game
         List<ScoreEntry> scores = repository.findByUserIdAndGameName(newScore.getUserId(), newScore.getGameName());
 
@@ -96,6 +100,26 @@ public class ScoreEntryService {
 
         // Fallback scenario, should not be reached as per your game logic
         return null;
+    }
+
+    /**
+     * Update all score entries to include a createdTime if it is missing.
+     */
+    @Transactional
+    public void updateScoresWithCreatedTime() {
+        List<ScoreEntry> scores = repository.findAll();
+        boolean changesMade = false;
+
+        for (ScoreEntry score : scores) {
+            if (score.getCreatedDate() == null) { // Check if the createdDate is missing
+                score.setCreatedDate(new Date()); // Set to current date and time
+                changesMade = true;
+            }
+        }
+
+        if (changesMade) {
+            repository.saveAll(scores); // Save the modified scores back to the database
+        }
     }
 }
 

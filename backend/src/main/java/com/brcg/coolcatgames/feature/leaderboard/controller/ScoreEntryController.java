@@ -72,4 +72,15 @@ public class ScoreEntryController {
         ScoreEntry savedEntry = service.submitScore(scoreEntry);
         return ResponseEntity.ok(savedEntry);
     }
+
+    /**
+     * Update all score entries to include a createdTime if missing.
+     *
+     * @return a ResponseEntity indicating the operation's success or failure
+     */
+    @PutMapping("/updatecreatedtime")
+    public ResponseEntity<String> updateScoresWithCreatedTime() {
+        service.updateScoresWithCreatedTime();
+        return ResponseEntity.ok("All scores have been updated with a created time.");
+    }
 }
