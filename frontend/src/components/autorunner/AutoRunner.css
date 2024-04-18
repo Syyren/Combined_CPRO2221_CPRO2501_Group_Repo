@@ -16,7 +16,23 @@ h1
     height: 300px;
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: darkgreen;
+    color: #1b1b1b;
+    background-color: rgb(105, 194, 201);
+}
+
+@keyframes dayCycle {
+    0% {
+        color: #1b1b1b;
+        background-color: rgb(105, 194, 201); /* Starting color */
+    }
+    50% {
+        color: #ccc;
+        background-color: rgb(21, 36, 48); /* Dark blue color */
+    }
+    100% {
+        color: #1b1b1b;
+        background-color: rgb(105, 194, 201); /* Back to starting color */
+    }
 }
 
 @media screen and (max-width: 900px) 
@@ -47,6 +63,23 @@ h1
 {
     position: absolute;
     bottom: 0;
+    left: 101%;
+}
+
+.fence
+{
+    background-size: contain;
+    position: absolute;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+}
+
+.cloud 
+{
+    width: max-content;
+    position: absolute;
+    bottom: 140px;
     left: 101%;
 }
   
