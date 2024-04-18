@@ -67,7 +67,7 @@ public class EmailNotificationsController {
                         //System.out.println("Testing if score was beaten");
                         if (score2.getGameName().equals(score.getGameName()) && !scoresInMemory.containsKey(score.getGameName()+"_"+score2.getUserId()) && score.getScore() < score2.getScore()) {
                             try{
-                                //System.out.println("Adding 'rival' to list of players who beat score");
+                                System.out.println("Adding "+playerService.getPlayerByID(score2.getUserId()).getUsername()+" to list of players who beat score");
                                 // Error is happening at this line:
                                 rivals.add(playerService.getPlayerByID(score2.getUserId()).getUsername());
                                 //System.out.println("Rival added");
@@ -110,6 +110,7 @@ public class EmailNotificationsController {
             }
             // Since the user information stores all the achievements they have, I don't need to store a key for each user and achievement
             newAchievementsInMemory.put(user.getId(),user.getAchievements());
+            System.out.println("Checks for user "+user.getUsername()+" have completed, status of sendMail: "+sendMail);
             // Send the email
             if (sendMail) {
                 EmailContent += "\n\nThanks for being a part of CoolCatGames Community!";
