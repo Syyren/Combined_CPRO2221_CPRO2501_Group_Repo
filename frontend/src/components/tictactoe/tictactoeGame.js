@@ -21,11 +21,7 @@ import monaPawImg from "../../images/tictactoe/mona_paw.png";
 import odinPawImg from "../../images/tictactoe/odin_paw.png";
 import blank from "../../images/tictactoe/blank.png";
 
-// Authorization, for integration with other features
-const authUserName = "john_doe";
-const authPassword = "password123";
-const preAuthToken = btoa(`${authUserName}:${authPassword}`);
-const authToken = `Basic ${preAuthToken}`;
+import axios from "axios";
 
 export default function TictactoeGame(props) {
   // Some variables. gameTitle is what's displayed at the top of the page. currentGame holds all the info of the current game.
@@ -35,23 +31,18 @@ export default function TictactoeGame(props) {
   const [currentGame, setCurrentGame] = useState();
   const [boardDisplay, setBoardDisplay] = useState([]);
   const [boardState, setBoardState] = useState([]);
+  const [lastPlayerMoved, setLastPlayerMoved] = useState("");
   // This runs and refreshes whenever the variables declared AFTER the function changes.
   useEffect(() => {
     // This checks if a game was selected, and passed as a prop ie <TictactoeGame gameId = "Joel_Kaden" />
     if (props.gameId) {
       // Get the actual data about the game
-      fetch("http://localhost:8090/tictactoe/game/" + props.gameId, {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken,
-        },
-      })
-        .then((res) => res.json())
+      axios
+        .get("http://localhost:8090/tictactoe/game/" + props.gameId)
+        .then((res) => res.data)
         .then((data) => {
           // Store the game data for use later
+          //console.log(data)
           setCurrentGame(data);
           setBoardState(data.boardState);
           setGameTitle(
@@ -59,6 +50,7 @@ export default function TictactoeGame(props) {
               Game between {data.player1} and {data.player2}
             </h1>
           );
+          setLastPlayerMoved(data.lastPlayerMoved);
           // A list/array of images to display if player1 selected that segment
           var X = [
             <div style={{ textAlign: "center", width: "70%" }}>
@@ -273,56 +265,48 @@ export default function TictactoeGame(props) {
                 boardState.map((division, i) => {
                   return (
                     <div style={{ position: "absolute" }}>
-                      {division === data.player1 ? (
-                        // Player 1 played here, so get the JSX from the X list
-                        X[i]
-                      ) : division === data.player2 ? (
-                        // Player 2 played here, so get the JSX from the Y list
-                        O[i]
-                      ) : (
-                        // No player has played here, so display a button
-                        <button
-                          style={{ width: "100%", height: "100%" }}
-                          onClick={async function () {
-                            // When the button is clicked, try to put the player's turn
-                            await fetch(
-                              "http://localhost:8090/tictactoe/update/" +
-                                props.gameId +
-                                "?playerId=" +
-                                props.currentPlayer +
-                                "&position=" +
-                                i,
-                              {
-                                method: "PUT",
-                                mode: "cors",
-                                cache: "no-cache",
-                              }
-                            )
-                              .then((res) => res.json())
-                              .then((data) => {
-                                // Store the game data for use later
-                                setCurrentGame(data);
-                                // Let the parent element know a move has been made
-                                if (props.callback) {
-                                  props.callback(currentGame);
-                                }
-                              });
-                          }}
-                        >
-                          <img
-                            src={blank}
-                            alt="blank space for making button larger"
-                            style={{ width: "80%", height: "80%" }}
-                          ></img>
-                        </button>
-                      )}
+                      {division === data.player1
+                        ? // Player 1 played here, so get the JSX from the X list
+                          X[i]
+                        : division === data.player2
+                        ? // Player 2 played here, so get the JSX from the Y list
+                          O[i]
+                        : // No player has played here, so display a button
+                          props.currentPlayer !== data.lastPlayerMoved && (
+                            <button
+                              style={{ width: "100%", height: "100%" }}
+                              onClick={async function () {
+                                // When the button is clicked, try to put the player's turn
+                                await axios
+                                  .put(
+                                    "http://localhost:8090/tictactoe/update/" +
+                                      props.gameId +
+                                      "?playerId=" +
+                                      props.currentPlayer +
+                                      "&position=" +
+                                      i
+                                  )
+                                  .then((res) => res.data)
+                                  .then((data) => {
+                                    // Store the game data for use later
+                                    setCurrentGame(data);
+                                    // Let the parent element know a move has been made
+                                    if (props.callback) {
+                                      props.callback(currentGame);
+                                    }
+                                  });
+                              }}
+                            >
+                              <p>Play here</p>
+                            </button>
+                          )}
                     </div>
                   );
                 })
               );
             }
           }
-        });
+        }).catch();
     } else {
       // No game has been selected, so display an empty board
       setBoardState([null, null, null, null, null, null, null, null, null]);
@@ -360,10 +344,10 @@ export default function TictactoeGame(props) {
     <div>
       {" "}
       {gameTitle}
-      <div class="container">
-        <div class="row">
+      <div className="container">
+        <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -373,7 +357,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[0]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -384,7 +368,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[1]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderBottom: "solid black 5px",
@@ -395,9 +379,9 @@ export default function TictactoeGame(props) {
           </div>
         </div>
 
-        <div class="row">
+        <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -408,7 +392,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[3]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -420,7 +404,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[4]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -432,9 +416,9 @@ export default function TictactoeGame(props) {
           </div>
         </div>
 
-        <div class="row">
+        <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -444,7 +428,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[6]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
@@ -455,7 +439,7 @@ export default function TictactoeGame(props) {
             {boardDisplay[7]}
           </div>
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",

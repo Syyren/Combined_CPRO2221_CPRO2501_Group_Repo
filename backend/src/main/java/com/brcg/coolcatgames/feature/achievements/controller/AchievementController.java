@@ -16,7 +16,11 @@ public class AchievementController
 {
     //injecting achievementService bean to interface with the controller and repository
     @Autowired
-    private final AchievementService achievementService = new AchievementService();
+    private final AchievementService achievementService;
+
+    public AchievementController(AchievementService achievementService) {
+        this.achievementService = achievementService;
+    }
 
     //inserts a new achievement into the "db" via the service
     @PostMapping("/create")

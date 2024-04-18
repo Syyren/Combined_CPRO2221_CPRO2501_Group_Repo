@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a player.
+ */
 @Data
 @Document(collection = "players")
 public class Player {
@@ -34,4 +37,7 @@ public class Player {
     private String password;
 
     private ArrayList<Integer> achievements;
+
+    // List of Friends ids
+    private ArrayList<String> friends;
 }

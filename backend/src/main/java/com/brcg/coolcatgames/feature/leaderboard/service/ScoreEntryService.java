@@ -9,37 +9,65 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing score entries in the leaderboard.
+ */
 @Service
 public class ScoreEntryService {
+
     @Autowired
     private ScoreEntryRepository repository;
 
+    /**
+     * Retrieve all scores from the leaderboard.
+     * @return List of all score entries, sorted by score in descending order.
+     */
     public List<ScoreEntry> getAllScores() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "score"));
     }
 
+    /**
+     * Retrieve scores for a specific game from the leaderboard.
+     * @param gameName The name of the game.
+     * @return List of score entries for the specified game, sorted by score in descending order.
+     */
     public List<ScoreEntry> getScoresByGame(String gameName) {
         return repository.findByGameName(gameName, Sort.by(Sort.Direction.DESC, "score"));
     }
 
+    /**
+     * Retrieve scores for a specific user from the leaderboard.
+     * @param userId The ID of the user.
+     * @return List of score entries for the specified user, sorted by score in descending order.
+     */
     public List<ScoreEntry> getScoresByUser(String userId) {
         return repository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "score"));
     }
 
+    /**
+     * Retrieve scores for a specific user and game from the leaderboard.
+     * @param userId The ID of the user.
+     * @param gameName The name of the game.
+     * @return List of score entries for the specified user and game.
+     */
     public List<ScoreEntry> getScoresByUserAndGame(String userId, String gameName) {
-        List<ScoreEntry> scores = repository.findByUserIdAndGameName(userId, gameName);
-
-        // Scores sorted in descending order
-        return scores.stream()
-                .sorted(Comparator.comparing(ScoreEntry::getScore).reversed())
-                .collect(Collectors.toList());
+        return repository.findByUserIdAndGameName(userId, gameName);
     }
 
+    /**
+     * Submit a new score entry to the leaderboard.
+     * @param newScore The new score entry to submit.
+     * @return The saved score entry if it meets the leaderboard criteria, otherwise null.
+     */
     @Transactional
     public ScoreEntry submitScore(ScoreEntry newScore) {
+        // Set createdDate here before any operations
+        newScore.setCreatedDate(new Date());
+
         // Fetch all existing scores for the user and game
         List<ScoreEntry> scores = repository.findByUserIdAndGameName(newScore.getUserId(), newScore.getGameName());
 
@@ -72,6 +100,26 @@ public class ScoreEntryService {
 
         // Fallback scenario, should not be reached as per your game logic
         return null;
+    }
+
+    /**
+     * Update all score entries to include a createdTime if it is missing.
+     */
+    @Transactional
+    public void updateScoresWithCreatedTime() {
+        List<ScoreEntry> scores = repository.findAll();
+        boolean changesMade = false;
+
+        for (ScoreEntry score : scores) {
+            if (score.getCreatedDate() == null) { // Check if the createdDate is missing
+                score.setCreatedDate(new Date()); // Set to current date and time
+                changesMade = true;
+            }
+        }
+
+        if (changesMade) {
+            repository.saveAll(scores); // Save the modified scores back to the database
+        }
     }
 }
 

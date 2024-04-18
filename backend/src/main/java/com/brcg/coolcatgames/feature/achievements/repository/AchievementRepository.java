@@ -50,7 +50,7 @@ public class AchievementRepository
     public Achievement update(int id, Achievement updatedData)
     {
         validate.String(title, updatedData.getAchievementTitle());
-        validate.String(description, updatedData.getAchievementTitle());
+        validate.String(description, updatedData.getAchievementDescription());
         Achievement achievement = findById(id);
         validate.Achievement(achievement, id);
         achievement.setAchievementTitle(updatedData.getAchievementTitle());

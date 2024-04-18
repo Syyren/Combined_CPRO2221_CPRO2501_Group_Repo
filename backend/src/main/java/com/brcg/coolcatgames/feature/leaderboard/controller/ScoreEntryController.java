@@ -8,40 +8,79 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for managing score entries.
+ */
 @RestController
 @RequestMapping("/scores")
 public class ScoreEntryController {
     @Autowired
     private ScoreEntryService service;
 
-    // Gets all Scores in the DB
+    /**
+     * Retrieves all scores in the database.
+     *
+     * @return a list of all scores
+     */
     @GetMapping("/allscores")
     public List<ScoreEntry> getAllScores() {
         return service.getAllScores();
     }
 
-    // Gets all Scores for a specific Game
+    /**
+     * Retrieves all scores for a specific game.
+     *
+     * @param gameName the name of the game
+     * @return a list of scores for the specified game
+     */
     @GetMapping("/game/{gameName}")
     public List<ScoreEntry> getScoresByGame(@PathVariable String gameName) {
         return service.getScoresByGame(gameName);
     }
 
-    // Gets all Scores for a specific User
+    /**
+     * Retrieves all scores for a specific user.
+     *
+     * @param userId the ID of the user
+     * @return a list of scores for the specified user
+     */
     @GetMapping("/user/{userId}")
     public List<ScoreEntry> getScoresByUser(@PathVariable String userId) {
         return service.getScoresByUser(userId);
     }
 
-    // Gets all Scores for a specific User AND Game
+    /**
+     * Retrieves all scores for a specific user and game.
+     *
+     * @param userId   the ID of the user
+     * @param gameName the name of the game
+     * @return a list of scores for the specified user and game
+     */
     @GetMapping("/user/{userId}/game/{gameName}")
     public List<ScoreEntry> getScoresByUserAndGame(@PathVariable String userId, @PathVariable String gameName) {
         return service.getScoresByUserAndGame(userId, gameName);
     }
 
-    // Posts a Score
+    /**
+     * Submits a score.
+     *
+     * @param scoreEntry the score entry to submit
+     * @return the saved score entry
+     */
     @PostMapping("/save")
     public ResponseEntity<ScoreEntry> submitScore(@RequestBody ScoreEntry scoreEntry) {
         ScoreEntry savedEntry = service.submitScore(scoreEntry);
         return ResponseEntity.ok(savedEntry);
+    }
+
+    /**
+     * Update all score entries to include a createdTime if missing.
+     *
+     * @return a ResponseEntity indicating the operation's success or failure
+     */
+    @PutMapping("/updatecreatedtime")
+    public ResponseEntity<String> updateScoresWithCreatedTime() {
+        service.updateScoresWithCreatedTime();
+        return ResponseEntity.ok("All scores have been updated with a created time.");
     }
 }

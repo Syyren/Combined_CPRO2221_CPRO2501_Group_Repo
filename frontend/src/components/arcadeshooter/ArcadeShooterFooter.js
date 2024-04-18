@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * Footer component for the Arcade Shooter game, containing controls information and game action buttons.
+ *
+ * @param {Function} onQuit - Callback function to handle quitting the game.
+ * @param {Function} onPause - Callback function to handle pausing or resuming the game.
+ */
 const ArcadeShooterFooter = ({ onQuit, onPause }) => {
   return (
     <footer className="d-flex justify-content-between align-items-center bg-primary p-3">

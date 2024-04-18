@@ -1,14 +1,19 @@
 package com.brcg.coolcatgames.feature.hangman.model;
 
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Data
 public class Hangman {
     private char[] secretWord;
     private char[] displayedWord;
     private char letterGuessed;
-    private HangmanScore score = new HangmanScore();
+    private int score;
+    private List<Character> lettersGuessed;
+    private String turnTaken;
 
     private boolean again;
     private String gameStatus;
@@ -21,6 +26,7 @@ public class Hangman {
 
     //constructor
     public Hangman(){
+        this.lettersGuessed = new ArrayList<>();
         getSecretWord();
         setDisplayedWord();
     }
@@ -71,7 +77,7 @@ public class Hangman {
     private void revealLetter(char letterGuessed) {
         for (int i = 0; i < secretWord.length; i++) {
             if (secretWord[i] == letterGuessed) {
-                score.updateScore(scoreOnGuess);
+                score+=scoreOnGuess;
                 this.displayedWord[i] = letterGuessed;
             }
         }
@@ -94,8 +100,8 @@ public class Hangman {
     public void win(){
         //double points on flawless win
         if (flawless == guesses)
-            score.updateScore(scoreOnWin);
-        score.updateScore(scoreOnWin);
+            score+=scoreOnWin;
+        score+=scoreOnWin;
         this.gameStatus = "won";
     }
 
@@ -106,23 +112,32 @@ public class Hangman {
 
     //New game, score resets
     public void newGame(){
+        System.out.println("starting new game");
         this.guesses = 7;
-        score.resetScore();
+        System.out.println("this.guesses = 7; "+this.guesses);
+        score=0;
+        System.out.println("score.resetScore(); "+this.score);
         getSecretWord();
+        System.out.println("getSecretWord(); "+ Arrays.toString(this.secretWord));
+        this.lettersGuessed.clear();
+        System.out.println("this.lettersGuessed.clear(); "+ this.lettersGuessed);
         setDisplayedWord();
+        System.out.println("setDisplayedWord(); "+ Arrays.toString(this.displayedWord));
         this.gameStatus = "in progress";
+        System.out.println("this.gameStatus: "+this.gameStatus);
     }
 
     //Continue Game, score persists
     public void continueGame(){
         this.guesses = 7;
         getSecretWord();
+        this.lettersGuessed.clear();
         setDisplayedWord();
         this.gameStatus = "in progress";
     }
     //get total score
     public int getTotalScore(){
-        return score.getScore();
+        return getScore();
     }
 
 }
