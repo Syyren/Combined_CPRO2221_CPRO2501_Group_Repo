@@ -8,6 +8,7 @@ import {
 import { getPlayerById } from "../../controllers/PlayerController";
 import { useAuth } from "../../context/AuthContext";
 import { useGame } from "../../context/GameContext";
+import "./Leaderboard.css";
 
 /**
  * Component for displaying the leaderboard.
@@ -127,6 +128,7 @@ const Leaderboard = () => {
             rank={index + 1}
             name={score.username}
             score={score.score}
+            timestamp={score.createdDate}
             game={formattedGameName}
             currentUser={currentUser && currentUser.username}
           />

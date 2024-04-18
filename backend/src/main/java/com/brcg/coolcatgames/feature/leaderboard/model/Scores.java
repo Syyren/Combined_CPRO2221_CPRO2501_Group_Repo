@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 
 /**
  * Abstract class representing scores in different games.
@@ -29,4 +31,6 @@ public abstract class Scores {
 
     // Use either the values "Score" or "Elo"
     private String leaderboard;
+
+    private Date createdDate;
 }
