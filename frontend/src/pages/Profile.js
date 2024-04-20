@@ -10,13 +10,14 @@ export default function Profile() {
     <Layout>
         <h2 className="display-4 mt-5 mb-4">{username}'s Profile</h2>
         <div className="d-flex mt-5 align-itmes-center justify-content-evenly">
+            {/* Achievements List */}
             <div className="">
                 <div>
                     <AchievementList />
                 </div>
             </div>
 
-        {/* Friends List */}
+            {/* Friends List */}
             <div className="col-md-4 mb-3">
                 <div className="card h-100 shadow-sm">
                     <div className="card-body">
