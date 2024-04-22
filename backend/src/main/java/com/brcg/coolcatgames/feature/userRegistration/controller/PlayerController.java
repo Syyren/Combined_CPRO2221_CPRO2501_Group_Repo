@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * Controller class for managing player registration and related operations.
  */
@@ -151,4 +153,54 @@ public class PlayerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @PostMapping("/get-user-by-email")
+    public ResponseEntity<?> getUserByEmail(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        Player player = playerService.findUserByEmail(email);
+        if (player != null) {
+            return ResponseEntity.ok(player);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/check-QnA")
+    public ResponseEntity<?> checkSecurityQuestion(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String securityQuestion = requestBody.get("securityQuestion");
+        String answer = requestBody.get("answer");
+
+        // Check if the security question and answer match an account
+        Player player = playerService.findUserByEmail(email);
+        if (player != null && playerService.checkSecurityQuestion(email, securityQuestion, answer)) {
+            return ResponseEntity.ok(player);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect security question or answer.");
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePasswordByEmail(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String newPassword = requestBody.get("newPassword");
+
+        Player player = playerService.findUserByEmail(email);
+        if (player != null) {
+            // Encode the new password and update the player's password
+            player.setPassword(passwordEncoder.encode(newPassword));
+            playerService.updatePlayer(player.getId(), player);
+
+            return ResponseEntity.ok("Password changed successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with provided email not found.");
+        }
+    }
+
+
+
+
+
+
+
 }
