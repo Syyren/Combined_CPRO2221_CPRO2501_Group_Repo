@@ -118,12 +118,12 @@ const HangmanMultiplayer = () => {
     let buttons = [];
     if (gameState && gameState.gameStatus === 'won') {
       buttons.push(
-        <button key="newGameButton" onClick={handleNewGame}>Start New Game</button>,
-        <button key="continueGameButton" onClick={handleContinueGame}>Continue Game</button>
+        <button className="btn btn-outline-primary" key="newGameButton" onClick={handleNewGame}>Start New Game</button>,
+        <button className="btn btn-outline-primary" key="continueGameButton" onClick={handleContinueGame}>Continue Game</button>
       );
     } else if (gameState && gameState.gameStatus === 'lost') {
       buttons.push(
-        <button key="newGameButton" onClick={handleNewGame}>Start New Game</button>
+        <button className="btn btn-outline-primary" key="newGameButton" onClick={handleNewGame}>Start New Game</button>
       );
     }
     return buttons;
@@ -166,7 +166,7 @@ const HangmanMultiplayer = () => {
           {!isCurrentUserTurn && renderPlayAgain()}
         </>
       ) : (
-        <button onClick={handleNewGame}>Start New Game</button>
+        <button className="btn btn-outline-primary" onClick={handleNewGame}>Start New Game</button>
       )}
     </div>
   );

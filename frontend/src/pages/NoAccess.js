@@ -12,10 +12,10 @@ const NoAccess = () => {
         </div>
         <div>
           <Link to="/login">
-            <button className="btn btn-secondary mb-2">Login</button>
+            <button className="btn btn-secondary mb-2 me-2">Login</button>
           </Link>
           <Link to="/register">
-            <button className="btn btn-secondary">Create Account</button>
+            <button className="btn btn-secondary mb-2">Create Account</button>
           </Link>
         </div>
       </div>
