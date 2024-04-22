@@ -64,7 +64,7 @@ public class EmailNotificationsController {
                 if (!gamesChecked.contains(score.getGameName())) {
                     Boolean isHighestScore = true;
                     for (ScoreEntry score3 : userScores) {
-                        if (score.getScore() < score3.getScore()) {
+                        if (score.getScore() < score3.getScore() && score.getGameName().equals(score3.getGameName())) {
                             isHighestScore = false;
                         }
                     }
