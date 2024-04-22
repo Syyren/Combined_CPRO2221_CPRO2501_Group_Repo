@@ -38,7 +38,7 @@ public class EmailNotificationsController {
 
     // This should run every 12 hours
     // as long as fixedRate = 43200000
-    @Scheduled(fixedRate = 43200000)
+    @Scheduled(fixedRate = 300000)
     public void performTask() {
         System.out.println("Starting email check");
         Iterable<Player> users = playerService.listAll();
@@ -59,40 +59,53 @@ public class EmailNotificationsController {
             List<ScoreEntry> userScores = scoreEntryService.getScoresByUser(user.getId());
             //System.out.println("UserId checked:"+user.getId());
             List<ScoreEntry> allScores = scoreEntryService.getAllScores();
+            List<String> gamesChecked = new ArrayList<String>();
             for (ScoreEntry score :userScores) {
-                String scoreKey = score.getGameName()+"_"+score.getUserId();
-                if (scoresInMemory.containsKey(scoreKey) ) {
-                    List<String> rivals = new ArrayList<>();
-                    // See if the score has been beaten since last time it was checked
-                    for (ScoreEntry score2 : allScores) {
-                        String score2Key = score2.getGameName()+"_"+score2.getUserId();
-                        //System.out.println("Testing if score was beaten");
-                        if (score2.getGameName().equals(score.getGameName()) && ((!scoresInMemory.containsKey(score2Key)) || scoresInMemory.get(score2Key) < score2.getScore() )&& score.getScore() < score2.getScore()) {
-                            try{
-                                //System.out.println("Adding "+playerService.getPlayerByID(score2.getUserId()).getUsername()+" to list of players who beat score");
-                                String rivalName = playerService.getPlayerByID(score2.getUserId()).getUsername();
-                                if (!rivals.contains(rivalName)) {
-                                    rivals.add(rivalName);
-                                    //System.out.println("Rival added");
+                if (!gamesChecked.contains(score.getGameName())) {
+                    Boolean isHighestScore = true;
+                    for (ScoreEntry score3 : userScores) {
+                        if (score.getScore() < score3.getScore()) {
+                            isHighestScore = false;
+                        }
+                    }
+                    if (isHighestScore) {
+                        gamesChecked.add(score.getGameName());
+                        String scoreKey = score.getGameName() + "_" + score.getUserId();
+                        if (scoresInMemory.containsKey(scoreKey)) {
+                            List<String> rivals = new ArrayList<>();
+                            // See if the score has been beaten since last time it was checked
+                            for (ScoreEntry score2 : allScores) {
+                                String score2Key = score2.getGameName() + "_" + score2.getUserId();
+                                //System.out.println("Testing if score was beaten");
+                                if (score2.getGameName().equals(score.getGameName()) && ((!scoresInMemory.containsKey(score2Key)) || scoresInMemory.get(score2Key) < score2.getScore()) && score.getScore() < score2.getScore()) {
+                                    try {
+                                        //System.out.println("Adding "+playerService.getPlayerByID(score2.getUserId()).getUsername()+" to list of players who beat score");
+                                        String rivalName = playerService.getPlayerByID(score2.getUserId()).getUsername();
+                                        if (!rivals.contains(rivalName)) {
+                                            rivals.add(rivalName);
+                                            //System.out.println("Rival added");
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println("Skipped score due to error:");
+                                        System.out.println(e.toString());
+                                    }
                                 }
                             }
-                            catch (Exception e) {
-                                System.out.println("Skipped score due to error:");
-                                System.out.println(e.toString());
+                            if (rivals.size() > 0) {
+                                for (String rival : rivals) {
+                                    EmailContent += rival + " has beaten your high score in " + score.getGameName() + "\n";
+                                    sendMail = true;
+                                }
                             }
+                            if (scoresInMemory.get(scoreKey) < score.getScore()) {
+                                newScoresInMemory.put(scoreKey, score.getScore());
+                            }
+
+                        } else {
+                            newScoresInMemory.put(scoreKey, score.getScore());
                         }
                     }
-                    if (rivals.size() > 0) {
-                        for (String rival : rivals) {
-                        EmailContent += rival + " has beaten your high score in "+ score.getGameName() +"\n";
-                        sendMail = true;
-                        }
-                    }
-                    if (scoresInMemory.get(scoreKey) < score.getScore()) {
-                        newScoresInMemory.put(scoreKey,score.getScore());
-                    }
-                } else {
-                newScoresInMemory.put(scoreKey,score.getScore());}
+                }
             }
             //System.out.println("Successfully checked scores");
 
