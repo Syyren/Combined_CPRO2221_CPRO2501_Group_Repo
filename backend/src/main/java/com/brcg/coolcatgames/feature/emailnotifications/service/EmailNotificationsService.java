@@ -56,6 +56,7 @@ public class EmailNotificationsService {
 
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(Username);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
