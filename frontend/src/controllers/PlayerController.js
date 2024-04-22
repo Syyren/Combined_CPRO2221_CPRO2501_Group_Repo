@@ -1,6 +1,58 @@
 import axios from "axios";
 
+// Base URL for the players API
 const API_URL = "http://localhost:8090/api/players";
+
+// Function to check if email exit
+const handleForgotPassword = async (email) => {
+  try {
+    const response = await axios.post(`${API_URL}/get-user-by-email`, { email });
+    return response.data;
+  } catch (error) {
+    console.error("Error checking account:", error);
+    throw error;
+  }
+};
+
+// Function to check QnA exit
+const handleSecurityQnA = async (email, securityQuestion, answer) => {
+  try {
+    const response = await axios.post(`${API_URL}/check-QnA`, { email, securityQuestion, answer });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+
+      console.error("Unauthorized: Incorrect security question or answer.");
+      throw new Error("Unauthorized: Incorrect security question or answer.");
+    } else {
+      console.error("Error verifying QnA", error);
+      throw error;
+    }
+  }
+};
+
+
+//Function to change password
+const handleSetNewPassword = async (email, newPassword, setError) => {
+  try {
+    const response = await axios.post(`${API_URL}/change-password`, { email, newPassword });
+    return response.data; 
+  } catch (error) {
+    console.error("Failed to reset password", error);
+    if (setError) {
+      setError("Failed to reset password. Please try again."); 
+    }
+    throw error; 
+  }
+};
+
+
+
+
+
+
+
+
 
 // Function to register a player
 const register = async (player) => {
@@ -16,7 +68,7 @@ const register = async (player) => {
 // Function to fetch all players
 const getAllPlayers = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/all`);
+    const { data } = await axios.get(`${API_URL}/get/all`);
     return data;
   } catch (error) {
     console.error("Error fetching players:", error);
@@ -83,6 +135,9 @@ const getUserIdByUsername = async (username) => {
 };
 
 export {
+  handleForgotPassword,
+  handleSecurityQnA,
+  handleSetNewPassword,
   register,
   getAllPlayers,
   getPlayerByUsername,
