@@ -38,7 +38,7 @@ public class EmailNotificationsController {
 
     // This should run every 12 hours
     // as long as fixedRate = 43200000
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 43200000)
     public void performTask() {
         System.out.println("Starting email check");
         Iterable<Player> users = playerService.listAll();
