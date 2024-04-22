@@ -38,7 +38,7 @@ public class EmailNotificationsController {
 
     // This should run every 12 hours
     // as long as fixedRate = 43200000
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 43200000)
     public void performTask() {
         System.out.println("Starting email check");
         Iterable<Player> users = playerService.listAll();
@@ -60,17 +60,21 @@ public class EmailNotificationsController {
             //System.out.println("UserId checked:"+user.getId());
             List<ScoreEntry> allScores = scoreEntryService.getAllScores();
             for (ScoreEntry score :userScores) {
-                if (scoresInMemory.containsKey(score.getGameName()+"_"+user.getId()) ) {
+                String scoreKey = score.getGameName()+"_"+user.getId();
+                if (scoresInMemory.containsKey(scoreKey) ) {
                     List<String> rivals = new ArrayList<>();
                     // See if the score has been beaten since last time it was checked
                     for (ScoreEntry score2 : allScores) {
+                        String score2Key = score.getGameName()+"_"+score2.getUserId();
                         //System.out.println("Testing if score was beaten");
-                        if (score2.getGameName().equals(score.getGameName()) && !scoresInMemory.containsKey(score.getGameName()+"_"+score2.getUserId()) && score.getScore() < score2.getScore()) {
+                        if (score2.getGameName().equals(score.getGameName()) && ((!scoresInMemory.containsKey(score2Key)) || scoresInMemory.get(score2Key) < score2.getScore() )&& score.getScore() < score2.getScore()) {
                             try{
-                                System.out.println("Adding "+playerService.getPlayerByID(score2.getUserId()).getUsername()+" to list of players who beat score");
-                                // Error is happening at this line:
-                                rivals.add(playerService.getPlayerByID(score2.getUserId()).getUsername());
-                                //System.out.println("Rival added");
+                                //System.out.println("Adding "+playerService.getPlayerByID(score2.getUserId()).getUsername()+" to list of players who beat score");
+                                String rivalName = playerService.getPlayerByID(score2.getUserId()).getUsername();
+                                if (!rivals.contains(rivalName)) {
+                                    rivals.add(rivalName);
+                                    //System.out.println("Rival added");
+                                }
                             }
                             catch (Exception e) {
                                 System.out.println("Skipped score due to error:");
@@ -80,12 +84,15 @@ public class EmailNotificationsController {
                     }
                     if (rivals.size() > 0) {
                         for (String rival : rivals) {
-                        EmailContent += rival + " has beaten your high score in"+ score.getGameName() +"\n";
+                        EmailContent += rival + " has beaten your high score in "+ score.getGameName() +"\n";
                         sendMail = true;
                         }
                     }
-                }
-                newScoresInMemory.put(score.getGameName()+"_"+user.getId(),score.getScore());
+                    if (scoresInMemory.get(scoreKey) < score.getScore()) {
+                        newScoresInMemory.put(scoreKey,score.getScore());
+                    }
+                } else {
+                newScoresInMemory.put(scoreKey,score.getScore());}
             }
             //System.out.println("Successfully checked scores");
 
@@ -97,7 +104,8 @@ public class EmailNotificationsController {
                         ArrayList<Integer> lastRememberedAchievements = achievementsInMemory.get(user.getId());
                         Integer achievementId = achievement.getAchievementId();
                         if (user.getAchievements().contains(achievementId) && !lastRememberedAchievements.contains(achievementId)) {
-                            EmailContent += "You achieved x achievement!\n";
+                            String achievementName = achievement.getAchievementTitle();
+                            EmailContent += "You achieved the achievement "+achievementName+" since we last updated you!\n";
                             sendMail = true;
                         }
                     }
@@ -113,9 +121,15 @@ public class EmailNotificationsController {
             System.out.println("Checks for user "+user.getUsername()+" have completed, status of sendMail: "+sendMail);
             // Send the email
             if (sendMail) {
-                EmailContent += "\n\nThanks for being a part of CoolCatGames Community!";
-                String subject = "An update from CoolCatGames.com!";
-                emailService.sendEmail(user.getEmail(), subject,EmailContent);
+                try {
+                    EmailContent += "\n\nThanks for being a part of CoolCatGames Community!";
+                    String subject = "An update from CoolCatGames.com!";
+                    emailService.sendEmail(user.getEmail(), subject, EmailContent);
+                    wait(300000);
+                }
+                catch (Exception e) {
+                    System.out.println(e);
+                }
             }
 
         }
