@@ -60,12 +60,12 @@ public class EmailNotificationsController {
             //System.out.println("UserId checked:"+user.getId());
             List<ScoreEntry> allScores = scoreEntryService.getAllScores();
             for (ScoreEntry score :userScores) {
-                String scoreKey = score.getGameName()+"_"+user.getId();
+                String scoreKey = score.getGameName()+"_"+score.getUserId();
                 if (scoresInMemory.containsKey(scoreKey) ) {
                     List<String> rivals = new ArrayList<>();
                     // See if the score has been beaten since last time it was checked
                     for (ScoreEntry score2 : allScores) {
-                        String score2Key = score.getGameName()+"_"+score2.getUserId();
+                        String score2Key = score2.getGameName()+"_"+score2.getUserId();
                         //System.out.println("Testing if score was beaten");
                         if (score2.getGameName().equals(score.getGameName()) && ((!scoresInMemory.containsKey(score2Key)) || scoresInMemory.get(score2Key) < score2.getScore() )&& score.getScore() < score2.getScore()) {
                             try{
