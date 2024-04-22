@@ -7,6 +7,18 @@ import {
   giveAchievement,
 } from "../../controllers/AchievementController";
 
+/**
+ * Component for the main game screen of the Arcade Shooter game.
+ *
+ * @param {boolean} isPaused - Flag indicating whether the game is paused.
+ * @param {Function} setScore - Function to set the player's score.
+ * @param {Function} setLives - Function to set the player's remaining lives.
+ * @param {number} level - Current level of the game.
+ * @param {number} lives - Remaining lives of the player.
+ * @param {number} score - Current score of the player.
+ * @param {Function} setLevel - Function to set the current level.
+ * @param {object} currentUser - Current user object.
+ */
 const ArcadeShooterGame = ({
   isPaused,
   setScore,
@@ -17,18 +29,24 @@ const ArcadeShooterGame = ({
   setLevel,
   currentUser,
 }) => {
-  const canvasRef = useRef(null);
   const enemiesRef = useRef([]);
-  const playerShipRef = useRef(new Ship(390, 560));
+  const playerShipRef = useRef(new Ship(400, 515));
   const keys = { right: false, left: false, space: false };
   const [userAchievements, setUserAchievements] = useState([]);
   const [achievement1Flag, setAchievement1Flag] = useState(false);
   const [achievement2Flag, setAchievement2Flag] = useState(false);
   const [achievementTitle, setAchievementTitle] = useState("");
+  const canvasRef = useRef(null);
+  const [canvasWidth, setCanvasWidth] = useState(
+    window.innerWidth > 1000 ? 775 : window.innerWidth > 770 ? 700 : 0
+  );
 
   const achievement1Id = 7;
   const achievement2Id = 8;
 
+  /**
+   * Fetches user achievements from the server.
+   */
   const fetchAchievements = async () => {
     if (currentUser) {
       const achievements = await getUserAchievements(currentUser.userId);
@@ -67,14 +85,41 @@ const ArcadeShooterGame = ({
     }
   }, [score, level, currentUser, achievement1Flag, achievement2Flag, lives]);
 
+  const handleResize = () => {
+    const newCanvasWidth =
+      window.innerWidth > 1000 ? 775 : window.innerWidth > 770 ? 700 : 0;
+
+    if (newCanvasWidth !== canvasWidth) {
+      setCanvasWidth(newCanvasWidth);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [canvasWidth]);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [currentUser]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 600;
+    if (!canvasWidth) {
+      return;
+    }
 
+    canvas.width = canvasWidth;
+    canvas.height = 550;
+
+    const context = canvas.getContext("2d");
     let animationFrameId;
 
+    /**
+     * Spawns enemies based on the current level.
+     */
     const spawnEnemies = () => {
       const numberOfEnemies = 3 + level;
       enemiesRef.current = [];
@@ -84,6 +129,11 @@ const ArcadeShooterGame = ({
       }
     };
 
+    /**
+     * Handles key down events for player controls.
+     *
+     * @param {Event} e - The keydown event object.
+     */
     const keyDownHandler = (e) => {
       e.preventDefault();
       if (e.key === "ArrowRight") keys.right = true;
@@ -94,6 +144,11 @@ const ArcadeShooterGame = ({
       }
     };
 
+    /**
+     * Handles key up events for player controls.
+     *
+     * @param {Event} e - The keyup event object.
+     */
     const keyUpHandler = (e) => {
       e.preventDefault();
       if (e.key === "ArrowRight") keys.right = false;
@@ -104,6 +159,9 @@ const ArcadeShooterGame = ({
     window.addEventListener("keydown", keyDownHandler);
     window.addEventListener("keyup", keyUpHandler);
 
+    /**
+     * Checks for collisions between bullets and enemies.
+     */
     const checkCollisions = () => {
       playerShipRef.current.bullets.forEach((bullet, bulletIndex) => {
         enemiesRef.current.forEach((enemy, enemyIndex) => {
@@ -116,7 +174,7 @@ const ArcadeShooterGame = ({
             enemy.hit();
             if (!enemy.isAlive()) {
               enemiesRef.current.splice(enemyIndex, 1);
-              setScore((prevScore) => prevScore + 10); // Increment score for killing an enemy
+              setScore((prevScore) => prevScore + 10);
             }
             playerShipRef.current.bullets.splice(bulletIndex, 1);
           }
@@ -124,11 +182,14 @@ const ArcadeShooterGame = ({
       });
     };
 
+    /**
+     * Updates the game state and draws on the canvas.
+     */
     const updateGame = () => {
       if (isPaused) return;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = "#000022"; // Dark blue, like a night sky
+      context.fillStyle = "#000022";
       context.fillRect(0, 0, canvas.width, canvas.height);
       playerShipRef.current.draw(context);
       playerShipRef.current.drawBullets(context);
@@ -136,9 +197,8 @@ const ArcadeShooterGame = ({
       enemiesRef.current.forEach((enemy) => {
         enemy.update(canvas.width, canvas.height);
         if (enemy.y >= canvas.height - (enemy.height + 10)) {
-          // Enemy reaches the bottom
           setLives((prevLives) => prevLives - 1);
-          enemiesRef.current.splice(enemiesRef.current.indexOf(enemy), 1); // Remove enemy
+          enemiesRef.current.splice(enemiesRef.current.indexOf(enemy), 1);
         }
         enemy.draw(context);
       });
@@ -157,7 +217,7 @@ const ArcadeShooterGame = ({
       animationFrameId = window.requestAnimationFrame(updateGame);
     };
 
-    spawnEnemies(); // Initial spawn
+    spawnEnemies();
     updateGame();
 
     return () => {
@@ -165,7 +225,11 @@ const ArcadeShooterGame = ({
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };
-  }, [isPaused, setScore, setLives, level, setLevel]);
+  }, [canvasWidth, isPaused, setScore, setLives, level, setLevel]);
+
+  if (!canvasWidth) {
+    return <div>Cannot play Canine Invaders on this small of a screen!</div>;
+  }
 
   return (
     <div className="game-canvas-container">

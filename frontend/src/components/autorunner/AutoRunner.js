@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
 import { getUserAchievements, giveAchievement } from "../../controllers/AchievementController";
 import { getScoresByUserAndGame } from '../../controllers/LeaderboardController';
 import AchievementNotification from "../../components/achievements/AchievementNotification";
 import catImage from './images/cat.png';
 import catWalkImage from './images/catwalk.gif'
 import obstacleImage from './images/obstacle.gif';
+import fenceImage from './images/fence.png';
+import cloudImage from './images/cloud.png';
 import { useAuth } from '../../context/AuthContext';
 import './AutoRunner.css';
 import { saveScore } from '../../controllers/AutoRunnerController';
@@ -20,10 +23,17 @@ const AutoRunner = () => {
     const [catSrc, setCatSrc] = useState(catImage);
     const [achievementTitle, setAchievementTitle] = useState('');
     const [achievement1Flag, setAchievement1Flag] = useState(false);
+    const [animateBackground, setAnimateBackground] = useState(false);
     const achievement1Id = 6;
     const [userAchievements, setUserAchievements] = useState([]);
+    const [fencePosition, setFencePosition] = useState(0);
+    const fenceSpeed = 5;
+    const cloudSpeed = 2;
+    const minBottom = 50;
+    const maxBottom = 160;
     const catRef = useRef(null);
     const obstacleRef = useRef(null);
+    const cloudRef = useRef(null);
     const gameAreaRef = useRef(null);
     const { currentUser } = useAuth();
     const MAX_SPEED = 25
@@ -98,8 +108,9 @@ const AutoRunner = () => {
         else
         {
             setCatSrc(catImage);
+            setAnimateBackground(false);
             clearInterval(gameTimer);
-            if (score === highScore && score != 0) { saveScore(currentUser.userId, score) }
+            if (score === highScore && score !== 0) { saveScore(currentUser.userId, score) }
         }
 
         return () => clearInterval(gameTimer);
@@ -146,8 +157,10 @@ const AutoRunner = () => {
         setBenchmark(500);
         setIsPlaying(true);
         setScore(0);
+        setAnimateBackground(true);
         catRef.current.style.bottom = '0px';
         obstacleRef.current.style.left = '101%';
+        cloudRef.current.style.left = '101%';
     };
 
     const jump = () => {
@@ -163,6 +176,7 @@ const AutoRunner = () => {
     const updateGameArea = () => {
         const catBottom = parseInt(window.getComputedStyle(catRef.current).getPropertyValue('bottom'));
         const obstacleLeft = parseInt(window.getComputedStyle(obstacleRef.current).getPropertyValue('left'));
+        const cloudLeft = parseInt(window.getComputedStyle(cloudRef.current).getPropertyValue('left'));
 
         //checks for collision
         if (obstacleLeft < 50 && obstacleLeft > 0 && catBottom < 50) 
@@ -174,28 +188,53 @@ const AutoRunner = () => {
         //moves the obstacle
         obstacleRef.current.style.left = `${obstacleLeft - speed}px`;
 
+        //moves the fence
+        setFencePosition((prevPosition) => prevPosition - fenceSpeed);
+
+        //moves the cloud
+        cloudRef.current.style.left = `${cloudLeft - cloudSpeed}px`;
+
         //increments the score
-        if (obstacleLeft < -10) 
+        if (obstacleLeft < -50) 
         {
             obstacleRef.current.style.left = '101%';
+        }
+
+        if (cloudLeft < -100)
+        {
+            cloudRef.current.style.left = '101%';
+            let randomBottom = Math.random() * (maxBottom - minBottom) + minBottom;
+            cloudRef.current.style.bottom = `${randomBottom}px`;
         }
     };
 
     return (
         isLoading ? (
-          <div>Loading...</div>
+            <Container className="text-center mt-5">
+                <Spinner animation="border" />
+            </Container>
         ) : (
             <div className="gameBody">
                 {/* notification component that pops up the achievement */}
                 {achievementTitle && <AchievementNotification achievementTitle={achievementTitle} />}
         
                 <div className="d-flex align-items-center justify-content-center">
-                    <div className="game-area" ref={gameAreaRef}>
+                    <div className="game-area" 
+                    ref={gameAreaRef}
+                    style={{ animation: animateBackground ? 'dayCycle 240s infinite alternate' : 'none' }}
+                    >
                         <div className="scores">
-                        <p className="mt-2">High Score: {highScore}</p>
-                        <p>Score: {score}</p>
+                            <p className="mt-2">High Score: {highScore}</p>
+                            <p className="">Score: {score}</p>
                         </div>
-                        <p>{gameText}</p>
+                        <p className="">{gameText}</p>
+                        <img
+                        className="cloud"
+                        ref={cloudRef}
+                        src={cloudImage}
+                        alt="Cloud"
+                        />
+                        <div className="fence" style={{ backgroundImage: `url(${fenceImage})`, backgroundPositionX: `${fencePosition}px`, backgroundRepeat: 'repeat-x' }}></div>
                         <img
                         className={`cat ${isPlaying ? 'running' : ''}`}
                         ref={catRef}
@@ -208,7 +247,7 @@ const AutoRunner = () => {
                         ref={obstacleRef}
                         src={obstacleImage}
                         alt="Obstacle"
-                        />
+                        />       
                     </div>
                 </div>
             </div>

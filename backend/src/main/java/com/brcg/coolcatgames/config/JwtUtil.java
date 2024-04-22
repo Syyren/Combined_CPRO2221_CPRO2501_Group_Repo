@@ -9,11 +9,20 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.function.Function;
 
+/**
+ * Utility class for JWT token generation, validation, and extraction.
+ */
 @Service
 public class JwtUtil {
 
     private final String secret = "secret";
 
+    /**
+     * Generates a JWT token for the provided UserDetails.
+     *
+     * @param userDetails the UserDetails for which the token is generated
+     * @return the JWT token
+     */
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -23,6 +32,13 @@ public class JwtUtil {
                 .compact();
     }
 
+    /**
+     * Validates the JWT token for the provided UserDetails.
+     *
+     * @param token       the JWT token to validate
+     * @param userDetails the UserDetails to validate against
+     * @return true if the token is valid, false otherwise
+     */
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -32,10 +48,22 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
+    /**
+     * Extracts the username from the JWT token.
+     *
+     * @param token the JWT token
+     * @return the username extracted from the token
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Extracts the expiration date from the JWT token.
+     *
+     * @param token the JWT token
+     * @return the expiration date extracted from the token
+     */
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }

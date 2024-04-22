@@ -7,6 +7,9 @@ import GameOverScreen from "./GameOverScreen";
 import { ArcadeShooterApi } from "../../controllers/ArcadeShooterController";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Component representing the main game interface for the arcade shooter game.
+ */
 const ArcadeShooter = () => {
   // State for managing game status, score, levels, and user session.
   const [lives, setLives] = useState(3);

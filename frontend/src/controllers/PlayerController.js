@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Base URL for the players API
 const API_URL = "http://localhost:8090/api/players";
 
 // Function to register a player

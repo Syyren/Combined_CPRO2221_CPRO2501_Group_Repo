@@ -7,20 +7,27 @@ import {
 } from "../../controllers/LeaderboardController";
 import { getPlayerById } from "../../controllers/PlayerController";
 import { useAuth } from "../../context/AuthContext";
+import { useGame } from "../../context/GameContext";
+import "./Leaderboard.css";
 
+/**
+ * Component for displaying the leaderboard.
+ */
 const Leaderboard = () => {
+  const { game } = useGame();
   const { currentUser } = useAuth();
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeGame, setActiveGame] = useState("canine_invaders");
+  const [activeGame, setActiveGame] = useState(game);
   const [activeScoreType, setActiveScoreType] = useState("global");
 
+  // Get the formatted game name based on the game ID
   const formattedGameName = getGameDisplayName(activeGame);
 
+  // Fetch leaderboard scores when active game or score type changes
   useEffect(() => {
     const fetchAndSetScores = async () => {
-      console.log(currentUser);
       setLoading(true);
       setError(null);
       try {
@@ -34,23 +41,31 @@ const Leaderboard = () => {
           );
         } else if (activeScoreType === "friends" && currentUser) {
           const user = await getPlayerById(currentUser.userId);
-          const allUserIds = [currentUser.userId, ...user.friends];
-
-          const friendsScoresPromises = allUserIds.map((userId) =>
-            getScoresByUserAndGame(userId, activeGame)
-          );
-          const friendsScoresArrays = await Promise.all(friendsScoresPromises);
-          fetchedScores = friendsScoresArrays.flat();
+          if (user.friends != null) {
+            const allUserIds = [currentUser.userId, ...user.friends];
+            const friendsScoresPromises = allUserIds.map((userId) =>
+              getScoresByUserAndGame(userId, activeGame)
+            );
+            const friendsScoresArrays = await Promise.all(
+              friendsScoresPromises
+            );
+            fetchedScores = friendsScoresArrays.flat();
+          } else {
+            fetchedScores = await getScoresByUserAndGame(
+              currentUser.userId,
+              activeGame
+            );
+          }
         }
 
-        // Fetch user names for all scores
+        // Fetch usernames for all scores
         const scoresWithUsernames = await Promise.all(
           fetchedScores.map(async (score) => {
             try {
               const player = await getPlayerById(score.userId);
               return { ...score, username: player.username };
             } catch (error) {
-              console.error("Failed to fetch user name:", error);
+              console.error("Failed to fetch username:", error);
               return { ...score, username: "Unknown" };
             }
           })
@@ -68,23 +83,27 @@ const Leaderboard = () => {
     fetchAndSetScores();
   }, [activeGame, activeScoreType, currentUser]);
 
+  // Memoize filtered scores to prevent unnecessary re-renders
   const filteredScores = useMemo(() => {
     const sortedScores = [...scores].sort((a, b) => b.score - a.score);
     return sortedScores.slice(0, 10);
   }, [scores]);
 
+  // Handle game change event
   const handleGameChange = (game) => {
     setActiveGame(game);
   };
 
+  // Handle score type change event
   const handleScoreTypeChange = (scoreType) => {
     setActiveScoreType(scoreType);
   };
 
+  // Function to get the formatted game display name
   function getGameDisplayName(activeGame) {
     const gameNames = {
-      hangman: "Hangman",
-      tictactoe: "Tic Tac Toe",
+      hangman: "9 Lives",
+      tictactoe: "Tic Tac Toe Beans",
       "cat-run": "Cat Run!",
       canine_invaders: "Canine Invaders",
     };
@@ -92,9 +111,7 @@ const Leaderboard = () => {
     return gameNames[activeGame] || "Game";
   }
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
+  // Render component
   return (
     <div className="container">
       <h3 className="mb-5">{formattedGameName} Leaderboard</h3>
@@ -111,6 +128,7 @@ const Leaderboard = () => {
             rank={index + 1}
             name={score.username}
             score={score.score}
+            timestamp={score.createdDate}
             game={formattedGameName}
             currentUser={currentUser && currentUser.username}
           />

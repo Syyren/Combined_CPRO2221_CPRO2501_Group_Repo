@@ -418,7 +418,7 @@ export default function TictactoeGame(props) {
 
         <div className="row">
           <div
-            class="col-4"
+            className="col-4"
             style={{
               paddingBottom: divHeight,
               borderTop: "solid black 5px",
