@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../controllers/PlayerController";
@@ -9,38 +9,26 @@ import {
   validateEmail,
   validateConfirmPassword,
 } from "../../services/validation";
-/**
- * Component for player registration with form validations.
- * @returns {React.Component} A component that renders the player registration form.
- */
-const PlayerRegistration = () => {
 
+const PlayerRegistration = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     username: "",
     email: "",
     password: "",
     confirm_password: "",
+    securityQuestion: "", 
+    securityAnswer: "", 
   });
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
-  /**
-   * Handles form data changes and updates state.
-   * @param {Object} e - The event object.
-   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /**
-   * Validates a field based on the input name and value.
-   * @param {string} name - The name of the field to validate.
-   * @param {string} value - The value of the field to validate.
-   * @returns {string} An error message if validation fails, otherwise an empty string.
-   */
   const validateField = (name, value) => {
     switch (name) {
       case "firstName":
@@ -53,24 +41,24 @@ const PlayerRegistration = () => {
         return validatePassword(value);
       case "confirm_password":
         return validateConfirmPassword(value, formData.password);
+      case "securityQuestion":
+        return !value.trim() ? "Security question is required." : "";
+      case "securityAnswer":
+        return !value.trim() ? "Security answer is required." : "";
       default:
         return "";
     }
   };
 
-  /**
-   * Handles form submission, including validation and registration.
-   * @param {Object} event - The event object.
-   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      const formErrors = Object.values(formData)
-        .map((field) => validateField(field, formData[field]))
-        .some((error) => error);
+      const formErrors = Object.keys(formData).map((field) =>
+        validateField(field, formData[field])
+      ).some((error) => error);
       if (!formErrors) {
         try {
           await register(formData);
@@ -115,6 +103,38 @@ const PlayerRegistration = () => {
                 </Form.Control.Feedback>
               </Form.Group>
             ))}
+            <Form.Group className="mb-3" controlId="formSecurityQuestion">
+              <Form.Label>Security Question</Form.Label>
+              <Form.Select
+                name="securityQuestion"
+                value={formData.securityQuestion || ""}
+                onChange={handleChange}
+                isInvalid={formData.securityQuestion && !!validateField("securityQuestion", formData.securityQuestion)}
+                required
+              >
+                <option value="">Select a security question</option>
+                <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {validateField("securityQuestion", formData.securityQuestion)}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formSecurityAnswer">
+              <Form.Label>Security Answer</Form.Label>
+              <Form.Control
+                type="text"
+                name="securityAnswer"
+                value={formData.securityAnswer || ""}
+                onChange={handleChange}
+                isInvalid={formData.securityAnswer && !!validateField("securityAnswer", formData.securityAnswer)}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {validateField("securityAnswer", formData.securityAnswer)}
+              </Form.Control.Feedback>
+            </Form.Group>
             <Button variant="primary" type="submit">
               Register
             </Button>
