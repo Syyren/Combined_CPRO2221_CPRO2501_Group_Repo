@@ -154,4 +154,26 @@ public class PlayerService implements UserDetailsService {
         }
         return null;
     }
+
+    public Player findUserByEmail(String email) {
+        return playerRepository.findByEmail(email);
+    }
+
+    /**
+     * Checks if the provided security question and answer match an account.
+     *
+     * @param email            the email of the account
+     * @param securityQuestion the security question
+     * @param answer           the answer to the security question
+     * @return true if the security question and answer match an account, false otherwise
+     */
+    public boolean checkSecurityQuestion(String email, String securityQuestion, String answer) {
+        // Retrieve the player by email
+        Player player = playerRepository.findByEmail(email);
+        if (player != null) {
+            // Check if the security question and answer match the player's security question and answer
+            return securityQuestion.equals(player.getSecurityQuestion()) && answer.equals(player.getSecurityAnswer());
+        }
+        return false;
+    }
 }
