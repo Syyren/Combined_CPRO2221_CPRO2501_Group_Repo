@@ -47,10 +47,10 @@ const Hangman = () => {
   const checkGameResult = (gameState) => {
     if (gameState.gameStatus === "won") {
       renderMessage("won");
-      
+      saveScore();
     } else if (gameState.gameStatus === "lost") {
       renderMessage("lost");
-      
+      saveScore();
     }
   };
 
@@ -152,7 +152,6 @@ const Hangman = () => {
             onLetterSelect={handleLetterSelect}
             disabledLetters={disabledLetters}
           />}
-          <button className='btn btn-outline-primary' onClick={saveScore} >Save your Score</button>
           {renderPlayAgain()}
 
         </>

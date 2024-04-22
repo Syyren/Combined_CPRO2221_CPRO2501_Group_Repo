@@ -9,13 +9,11 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const { currentUser } = useAuth();
-
   // Check if user is logged in
   if (!currentUser) {
     //redirect to login page or supplied path on auth failure
     return <Navigate to={redirectPath} />;
   }
-
   //render component if user passes auth
   return <Element {...rest} />;
 };
@@ -23,7 +21,7 @@ const PrivateRoute = ({
 export default PrivateRoute;
 
 // HOW TO USE:
-// IN FILE WHERE ROUTING IS HANDLED (App.js)
+// IN FILE WHERE ROUTING IS HANDLED (typically App.js)
 // <BrowserRouter>
 //  <Routes>
 
@@ -38,8 +36,8 @@ export default PrivateRoute;
 //          element={UserSupport}        //Page/Component you want to restrict goes in element={} without its < />
 //          roles={["user", "agent"]} /> //Roles allowed access as List
 //          redirectPath ="/about"       //Path to be redirected to (OPTIONAL) default is "/login"
-//      }                                //Closing Route element
-//    />
+//      }                                //Closing Route element prop
+//    />                                 //Closing Route fragment
 
 //  </Routes>
 // </BrowserRouter>

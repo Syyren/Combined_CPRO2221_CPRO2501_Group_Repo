@@ -13,7 +13,7 @@ function GameList({ onSelectGame }) {
     <div>
       <DropdownButton variant="outline-secondary" title={selectedGame ? selectedGame : "Select a game"} onSelect={handleChange}>
         <Dropdown.Item eventKey="hangman">Hangman</Dropdown.Item>
-        <Dropdown.Item eventKey="tic-tac-toe">Tic Tac Toe</Dropdown.Item>
+        {/*<Dropdown.Item eventKey="tic-tac-toe">Tic Tac Toe</Dropdown.Item>*/}
       </DropdownButton>
     </div>
   );

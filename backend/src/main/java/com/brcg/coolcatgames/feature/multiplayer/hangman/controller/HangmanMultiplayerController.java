@@ -2,6 +2,7 @@ package com.brcg.coolcatgames.feature.multiplayer.hangman.controller;
 
 import com.brcg.coolcatgames.feature.hangman.model.Hangman;
 import com.brcg.coolcatgames.feature.hangman.model.HangmanGameState;
+import com.brcg.coolcatgames.feature.multiplayer.hangman.model.Room;
 import com.brcg.coolcatgames.feature.multiplayer.hangman.service.HangmanMultiplayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,20 @@ public class HangmanMultiplayerController {
     public ResponseEntity<Hangman> guessLetter(@PathVariable String roomId, @RequestParam char letterGuessed, @RequestParam String userId) {
         Hangman updatedHangman = hangmanMultiplayerService.guessLetter(roomId, letterGuessed, userId);
         return ResponseEntity.ok(updatedHangman);
+    }
+
+    @PostMapping("/{roomId}/add-user-to-room")
+    public void addUser(@PathVariable String roomId, @RequestParam String userId) {
+        hangmanMultiplayerService.addUser(roomId, userId);
+    }
+    @GetMapping("/{roomId}/get-room")
+    public ResponseEntity<Room> getRoomById(@PathVariable String roomId) {
+        Room room = hangmanMultiplayerService.getRoomById(roomId);
+        if (room != null) {
+            return ResponseEntity.ok(room);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

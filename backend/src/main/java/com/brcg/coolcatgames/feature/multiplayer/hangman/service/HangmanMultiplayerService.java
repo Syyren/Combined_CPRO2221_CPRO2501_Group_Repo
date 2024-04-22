@@ -2,15 +2,18 @@ package com.brcg.coolcatgames.feature.multiplayer.hangman.service;
 
 import com.brcg.coolcatgames.feature.hangman.model.Hangman;
 import com.brcg.coolcatgames.feature.hangman.model.HangmanGameState;
+import com.brcg.coolcatgames.feature.multiplayer.hangman.model.Room;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class HangmanMultiplayerService {
 
 
+    private final Map<String, Room> rooms = new HashMap<>();
     private final Map<String, Hangman> hangmanGames = new HashMap<>();
 
     public HangmanGameState getGameState(String roomId) {
@@ -53,6 +56,18 @@ public class HangmanMultiplayerService {
             hangmanGames.put(roomId, hangman);
         }
         return hangman;
+    }
+    public void addUser(String roomId, String userId) {
+        Room room = rooms.get(roomId);
+        if (room == null) {
+            room = new Room(roomId, userId, null);
+        } else if (room.getUser2() == null && !Objects.equals(room.getUser1(), userId)) {
+            room.setUser2(userId);
+        }
+        rooms.put(roomId, room);
+    }
+    public Room getRoomById(String roomId) {
+        return rooms.get(roomId);
     }
 
 }

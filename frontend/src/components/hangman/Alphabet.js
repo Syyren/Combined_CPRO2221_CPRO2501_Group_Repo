@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Alphabet = ({ disabledLetters, onLetterSelect }) => {
-    // Alphabet
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     return (

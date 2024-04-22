@@ -14,7 +14,6 @@ const fetchGameState = async (roomId) => {
     }
 };
 
-
 const handleLetterSelect = async (letter, roomId, userId) => {
     try {
         const response = await axios.post(BASE_URL + `${roomId}/guess`, null, {
@@ -52,9 +51,34 @@ const handleContinueGame = async (roomId) => {
     }
 };
 
+const getUsersInRoom = async (roomId) => {
+    try{
+        const response = await axios.get(BASE_URL+`${roomId}/get-room`);
+        console.log("Room obtained: ", response);
+        const userArray = [response.data.user1, response.data.user2]; 
+        return userArray;
+    } catch (error){ 
+        console.error("Error obtaining room: ", error);
+        throw error;
+    }
+}
+const addUserToRoom = async (roomId, userId) =>{
+    try{
+        await axios.post(BASE_URL+`${roomId}/add-user-to-room`, null, {
+            params: { userId: userId }
+        });
+        console.log("Adding user "+userId+" to room ", roomId);
+    } catch (error){
+        console.error("Error adding user to room: ", error);
+        throw error;
+    }
+}
+
 export const HangmanMultiplayerAPI = {
     fetchGameState,
     handleLetterSelect,
     handleNewGame,
     handleContinueGame,
+    getUsersInRoom,
+    addUserToRoom
 };
