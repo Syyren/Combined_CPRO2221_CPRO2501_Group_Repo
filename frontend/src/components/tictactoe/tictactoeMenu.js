@@ -75,119 +75,7 @@ export default function TictactoeMenu() {
                 <TictactoeGame
                   gameId={currentGame.id}
                   currentPlayer={currentUser.username}
-                  callback={function (updatedGame) {
-                    console.log(updatedGame);
-                    console.log(updatedGame.id);
-                    axios
-                      .get(`${API_URL}tictactoe/checkWinner/` + updatedGame.id)
-                      .then((res) => res.data)
-                      .then((data) => {
-                        getUserIdByUsername(updatedGame.player1).then(
-                          (player1) => {
-                            getUserIdByUsername(updatedGame.player2).then(
-                              (player2) => {
-                                console.log("player1", player1);
-                                if (data == null) {
-                                  setDisplayTictactoeGame(
-                                    <TictactoeGame
-                                      gameId={updatedGame.id}
-                                      currentPlayer={currentUser.username}
-                                    />
-                                  );
-                                } else if (data === updatedGame.player1) {
-                                  axios
-                                    .put(
-                                      `${API_URL}scores/tictactoe/update/` +
-                                        player1 +
-                                        "?deltaScore=" +
-                                        10 +
-                                        "&conclusion=WINNER"
-                                    )
-                                    .then(
-                                      axios
-                                        .put(
-                                          `${API_URL}scores/tictactoe/update/` +
-                                            player2 +
-                                            "?deltaScore=" +
-                                            -10 +
-                                            "&conclusion=LOSER"
-                                        )
-                                        .then(
-                                          setDisplayTictactoeGame(
-                                            <TictactoeGame />
-                                          ).then(
-                                            axios.delete(
-                                              `${API_URL}tictactoe/delete/` +
-                                                updatedGame.id
-                                            )
-                                          )
-                                        )
-                                    );
-                                } else if (data === updatedGame.player2) {
-                                  axios
-                                    .put(
-                                      `${API_URL}scores/tictactoe/update/` +
-                                        player1 +
-                                        "?deltaScore=" +
-                                        -10 +
-                                        "&conclusion=LOSER"
-                                    )
-                                    .then(
-                                      axios
-                                        .put(
-                                          `${API_URL}scores/tictactoe/update/` +
-                                            player2 +
-                                            "?deltaScore=" +
-                                            10 +
-                                            "&conclusion=WINNER"
-                                        )
-                                        .then(
-                                          setDisplayTictactoeGame(
-                                            <TictactoeGame />
-                                          ).then(
-                                            axios.delete(
-                                              `${API_URL}tictactoe/delete/` +
-                                                updatedGame.id
-                                            )
-                                          )
-                                        )
-                                    );
-                                } else if (data === "draw") {
-                                  axios
-                                    .put(
-                                      `${API_URL}scores/tictactoe/update/` +
-                                        player1 +
-                                        "?deltaScore=" +
-                                        0 +
-                                        "&conclusion=DRAW"
-                                    )
-                                    .then(
-                                      axios
-                                        .put(
-                                          `${API_URL}scores/tictactoe/update/` +
-                                            player2 +
-                                            "?deltaScore=" +
-                                            0 +
-                                            "&conclusion=DRAW"
-                                        )
-                                        .then(
-                                          setDisplayTictactoeGame(
-                                            <TictactoeGame />
-                                          ).then(
-                                            axios.delete(
-                                              `${API_URL}tictactoe/delete/` +
-                                                updatedGame.id
-                                            )
-                                          )
-                                        )
-                                    );
-                                }
-                              }
-                            );
-                          }
-                        );
-                      });
-                  }}
+                  callback={callBack}
                 />
               );
             }}
@@ -199,6 +87,109 @@ export default function TictactoeMenu() {
         </li>
       );
     });
+  }
+
+  function callBack(updatedGame) {
+    if (updatedGame) {
+      console.log(updatedGame);
+      console.log(updatedGame.id);
+      axios
+        .get(`${API_URL}tictactoe/checkWinner/` + updatedGame.id)
+        .then((res) => res.data)
+        .then((data) => {
+          console.log(data);
+          getUserIdByUsername(updatedGame.player1).then((player1) => {
+            getUserIdByUsername(updatedGame.player2).then((player2) => {
+              console.log("player1", player1);
+              if (data == null) {
+                setDisplayTictactoeGame(
+                  <TictactoeGame
+                    gameId={updatedGame.id}
+                    currentPlayer={currentUser.username}
+                  />
+                );
+              } else if (data === updatedGame.player1) {
+                axios
+                  .put(
+                    `${API_URL}scores/tictactoe/update/` +
+                      player1 +
+                      "?deltaScore=" +
+                      10 +
+                      "&conclusion=WINNER"
+                  )
+                  .then(() => {
+                    axios
+                      .put(
+                        `${API_URL}scores/tictactoe/update/` +
+                          player2 +
+                          "?deltaScore=" +
+                          -10 +
+                          "&conclusion=LOSER"
+                      )
+                      .then(() => {
+                        setDisplayTictactoeGame(<TictactoeGame />);
+                        axios.delete(
+                          `${API_URL}tictactoe/delete/` + updatedGame.id
+                        );
+                      });
+                  });
+              } else if (data === updatedGame.player2) {
+                axios
+                  .put(
+                    `${API_URL}scores/tictactoe/update/` +
+                      player1 +
+                      "?deltaScore=" +
+                      -10 +
+                      "&conclusion=LOSER"
+                  )
+                  .then(
+                    axios
+                      .put(
+                        `${API_URL}scores/tictactoe/update/` +
+                          player2 +
+                          "?deltaScore=" +
+                          10 +
+                          "&conclusion=WINNER"
+                      )
+                      .then(
+                        setDisplayTictactoeGame(<TictactoeGame />).then(
+                          axios.delete(
+                            `${API_URL}tictactoe/delete/` + updatedGame.id
+                          )
+                        )
+                      )
+                  );
+              } else if (data === "draw") {
+                axios
+                  .put(
+                    `${API_URL}scores/tictactoe/update/` +
+                      player1 +
+                      "?deltaScore=" +
+                      0 +
+                      "&conclusion=DRAW"
+                  )
+                  .then(
+                    axios
+                      .put(
+                        `${API_URL}scores/tictactoe/update/` +
+                          player2 +
+                          "?deltaScore=" +
+                          0 +
+                          "&conclusion=DRAW"
+                      )
+                      .then(
+                        setDisplayTictactoeGame(<TictactoeGame />).then(
+                          axios.delete(
+                            `${API_URL}tictactoe/delete/` + updatedGame.id
+                          )
+                        )
+                      )
+                  );
+              }
+            });
+          });
+        });
+    }
   }
 
   useEffect(() => {
@@ -231,14 +222,7 @@ export default function TictactoeMenu() {
                         <TictactoeGame
                           gameId={tempId}
                           currentPlayer={currentUser.username}
-                          callback={function (updatedGame) {
-                            setDisplayTictactoeGame(
-                              <TictactoeGame
-                                gameId={updatedGame.id}
-                                currentPlayer={currentUser.username}
-                              />
-                            );
-                          }}
+                          callback={callBack}
                         />
                       );
                     });

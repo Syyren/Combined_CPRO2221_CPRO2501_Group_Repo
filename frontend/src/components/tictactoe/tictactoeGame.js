@@ -36,277 +36,314 @@ export default function TictactoeGame(props) {
   useEffect(() => {
     // This checks if a game was selected, and passed as a prop ie <TictactoeGame gameId = "Joel_Kaden" />
     if (props.gameId) {
-      // Get the actual data about the game
-      axios
-        .get("http://localhost:8090/tictactoe/game/" + props.gameId)
-        .then((res) => res.data)
-        .then((data) => {
-          // Store the game data for use later
-          //console.log(data)
-          setCurrentGame(data);
-          setBoardState(data.boardState);
-          setGameTitle(
-            <h1>
-              Game between {data.player1} and {data.player2}
-            </h1>
-          );
-          setLastPlayerMoved(data.lastPlayerMoved);
-          // A list/array of images to display if player1 selected that segment
-          var X = [
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={maxwellHeadImg}
-                alt="(X) Maxwell the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Maxwell (X)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={bobaHeadImg}
-                alt="(X) Boba the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Boba (X)
-                <br /> Image source: Ryan McGrandle
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={kiwiHeadImg}
-                alt="(X) Kiwi the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Kiwi (X)
-                <br /> Image source: Samantha Lysons
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={monaHeadImg}
-                alt="(X) Mona the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Mona (X)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={alvanHeadImg}
-                alt="(X) Anonymous cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Anonymous (X)
-                <br /> Image source: Alvan Nee/Unsplash
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={tenleyHeadImg}
-                alt="(X) Tenley the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Tenley (X)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={happyBobaHeadImg}
-                alt="(X) Boba the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Boba (X)
-                <br /> Image source: Ryan McGrandle
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={odinHeadImg}
-                alt="(X) Odin the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Odin (X)
-                <br /> Image source: Samantha Lysons
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={hyperBobaHeadImg}
-                alt="(X) Boba the cat's face"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Boba (X)
-                <br /> Image source: Ryan McGrandle
-              </p>
-            </div>,
-          ];
-          // A list/array of images to display if player2 selected that segment
-          var O = [
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={maxwellPawImg}
-                alt="(O) Maxwell the cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Maxwell (O)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={odinPawImg}
-                alt="(O) Odin the cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Odin (O)
-                <br /> Image source: Samantha Lysons
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={azazPawImg}
-                alt="(O) an anonymous cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Anonymous (O)
-                <br />
-                Image source: Azaz Merchant/Unsplash
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={alvanPawImg}
-                alt="(X) Anonymous cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Anonymous (O)
-                <br /> Image source: Alvan Nee/Unsplash
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={tenleyPawImg}
-                alt="(O) Tenley the cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Tenley (O)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={michellePawImg}
-                alt="(O) an anonymous cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Anonymous (O)
-                <br />
-                Image source: Michelle Calderon/Unsplash
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={bobaPawImg}
-                alt="(X) Boba the cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Boba (O)
-                <br /> Image source: Ryan McGrandle
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={martinPawImg}
-                alt="(O) an anonymous cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Anonymous (O)
-                <br />
-                Image source: Martin Ruegner/Getty Images
-              </p>
-            </div>,
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <img
-                src={monaPawImg}
-                alt="(O) Mona the cat's paw"
-                style={{ width: "100%" }}
-              ></img>
-              <p style={{ fontSize: "0.6em" }}>
-                Mona (O)
-                <br /> Image source: Travis Boblin
-              </p>
-            </div>,
-          ];
-          // set up the boardDisplay variable with a list of images or buttons to display given the current board state
-          if (boardState) {
-            if (boardState.constructor === Array) {
-              setBoardDisplay(
-                boardState.map((division, i) => {
-                  return (
-                    <div style={{ position: "absolute" }}>
-                      {division === data.player1
-                        ? // Player 1 played here, so get the JSX from the X list
-                          X[i]
-                        : division === data.player2
-                        ? // Player 2 played here, so get the JSX from the Y list
-                          O[i]
-                        : // No player has played here, so display a button
-                          props.currentPlayer !== data.lastPlayerMoved && (
-                            <button
-                              style={{ width: "100%", height: "100%" }}
-                              onClick={async function () {
-                                // When the button is clicked, try to put the player's turn
-                                await axios
-                                  .put(
-                                    "http://localhost:8090/tictactoe/update/" +
-                                      props.gameId +
-                                      "?playerId=" +
-                                      props.currentPlayer +
-                                      "&position=" +
-                                      i
-                                  )
-                                  .then((res) => res.data)
-                                  .then((data) => {
-                                    // Store the game data for use later
-                                    setCurrentGame(data);
-                                    // Let the parent element know a move has been made
-                                    if (props.callback) {
-                                      props.callback(currentGame);
-                                    }
-                                  });
-                              }}
-                            >
-                              <p>Play here</p>
-                            </button>
-                          )}
-                    </div>
-                  );
-                })
-              );
+      try {
+        // Get the actual data about the game
+        axios
+          .get("http://localhost:8090/tictactoe/game/" + props.gameId)
+          .then((res) => res.data)
+          .then((data) => {
+            // Store the game data for use later
+            //console.log(data)
+            setCurrentGame(data);
+            setBoardState(data.boardState);
+            setGameTitle(
+              <h1>
+                Game between {data.player1} and {data.player2}
+              </h1>
+            );
+            setLastPlayerMoved(data.lastPlayerMoved);
+            // A list/array of images to display if player1 selected that segment
+            var X = [
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={maxwellHeadImg}
+                  alt="(X) Maxwell the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Maxwell (X)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={bobaHeadImg}
+                  alt="(X) Boba the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Boba (X)
+                  <br /> Image source: Ryan McGrandle
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={kiwiHeadImg}
+                  alt="(X) Kiwi the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Kiwi (X)
+                  <br /> Image source: Samantha Lysons
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={monaHeadImg}
+                  alt="(X) Mona the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Mona (X)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={alvanHeadImg}
+                  alt="(X) Anonymous cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Anonymous (X)
+                  <br /> Image source: Alvan Nee/Unsplash
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={tenleyHeadImg}
+                  alt="(X) Tenley the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Tenley (X)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={happyBobaHeadImg}
+                  alt="(X) Boba the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Boba (X)
+                  <br /> Image source: Ryan McGrandle
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={odinHeadImg}
+                  alt="(X) Odin the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Odin (X)
+                  <br /> Image source: Samantha Lysons
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={hyperBobaHeadImg}
+                  alt="(X) Boba the cat's face"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Boba (X)
+                  <br /> Image source: Ryan McGrandle
+                </p>
+              </div>,
+            ];
+            // A list/array of images to display if player2 selected that segment
+            var O = [
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={maxwellPawImg}
+                  alt="(O) Maxwell the cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Maxwell (O)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={odinPawImg}
+                  alt="(O) Odin the cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Odin (O)
+                  <br /> Image source: Samantha Lysons
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={azazPawImg}
+                  alt="(O) an anonymous cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Anonymous (O)
+                  <br />
+                  Image source: Azaz Merchant/Unsplash
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={alvanPawImg}
+                  alt="(X) Anonymous cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Anonymous (O)
+                  <br /> Image source: Alvan Nee/Unsplash
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={tenleyPawImg}
+                  alt="(O) Tenley the cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Tenley (O)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={michellePawImg}
+                  alt="(O) an anonymous cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Anonymous (O)
+                  <br />
+                  Image source: Michelle Calderon/Unsplash
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={bobaPawImg}
+                  alt="(X) Boba the cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Boba (O)
+                  <br /> Image source: Ryan McGrandle
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={martinPawImg}
+                  alt="(O) an anonymous cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Anonymous (O)
+                  <br />
+                  Image source: Martin Ruegner/Getty Images
+                </p>
+              </div>,
+              <div style={{ textAlign: "center", width: "70%" }}>
+                <img
+                  src={monaPawImg}
+                  alt="(O) Mona the cat's paw"
+                  style={{ width: "100%" }}
+                ></img>
+                <p style={{ fontSize: "0.6em" }}>
+                  Mona (O)
+                  <br /> Image source: Travis Boblin
+                </p>
+              </div>,
+            ];
+            // set up the boardDisplay variable with a list of images or buttons to display given the current board state
+            if (boardState) {
+              if (boardState.constructor === Array) {
+                setBoardDisplay(
+                  boardState.map((division, i) => {
+                    return (
+                      <div style={{ position: "absolute" }}>
+                        {division === data.player1
+                          ? // Player 1 played here, so get the JSX from the X list
+                            X[i]
+                          : division === data.player2
+                          ? // Player 2 played here, so get the JSX from the Y list
+                            O[i]
+                          : // No player has played here, so display a button
+                            props.currentPlayer !== data.lastPlayerMoved && (
+                              <button
+                                style={{ width: "100%", height: "100%" }}
+                                onClick={async function () {
+                                  // When the button is clicked, try to put the player's turn
+                                  await axios
+                                    .put(
+                                      "http://localhost:8090/tictactoe/update/" +
+                                        props.gameId +
+                                        "?playerId=" +
+                                        props.currentPlayer +
+                                        "&position=" +
+                                        i
+                                    )
+                                    .then((res) => res.data)
+                                    .then((data) => {
+                                      // Store the game data for use later
+                                      setCurrentGame(data);
+                                      // Let the parent element know a move has been made
+                                      if (props.callback) {
+                                        props.callback(currentGame);
+                                      }
+                                    });
+                                }}
+                              >
+                                <p>Play here</p>
+                              </button>
+                            )}
+                      </div>
+                    );
+                  })
+                );
+              }
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            setBoardState([
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+            ]);
+            if (boardState) {
+              if (boardState.constructor === Array) {
+                setBoardDisplay(
+                  boardState.map((data, i) => {
+                    return <div style={{ position: "absolute" }}></div>;
+                  })
+                );
+              }
+            }
+          });
+      } catch (error) {
+        console.log(error);
+        setBoardState([null, null, null, null, null, null, null, null, null]);
+        if (boardState) {
+          if (boardState.constructor === Array) {
+            setBoardDisplay(
+              boardState.map((data, i) => {
+                return <div style={{ position: "absolute" }}></div>;
+              })
+            );
           }
-        }).catch();
+        }
+      }
     } else {
       // No game has been selected, so display an empty board
       setBoardState([null, null, null, null, null, null, null, null, null]);
