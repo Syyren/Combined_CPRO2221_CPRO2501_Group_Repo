@@ -75,6 +75,9 @@ export default function NavBar() {
                 </Nav.Link>
               </>
             )}
+          <Nav.Link as={Link} to="/room">
+            Play Together
+          </Nav.Link>
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>

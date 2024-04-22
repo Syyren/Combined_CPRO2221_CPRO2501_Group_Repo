@@ -58,11 +58,17 @@ export default function App() {
               />}/>
 
             
-          <Route path="/room" element={<PrivateRoute
+          <Route 
+            path="/room" 
+            element={
+              <PrivateRoute
                 element={Rooms}
                 roles={["user"]}
                 redirectPath="/no-access"
-              />}/>
+              />
+            }
+          />
+          
           <Route
             path="/games/hangman/:roomId"
             element={

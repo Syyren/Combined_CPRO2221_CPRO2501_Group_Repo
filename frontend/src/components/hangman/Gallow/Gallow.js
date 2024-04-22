@@ -11,7 +11,7 @@ import { colours } from './Colours';
 
 class Gallow extends React.Component {
     render() {
-        const { guessesRemaining } = this.props; // Assuming guessesRemaining is passed as a prop
+        const { guessesRemaining } = this.props;
 
         return (
             <div style={{ width: '20vw', margin: '0 auto' }}>
