@@ -14,4 +14,6 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
      * @return the player with the specified username, or null if not found
      */
     Player findByUsername(String userName);
+
+    Player findByEmail(String email);
 }
